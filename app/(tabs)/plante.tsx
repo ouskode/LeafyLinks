@@ -1,19 +1,14 @@
 import { StyleSheet } from 'react-native';
 
-import SearchBar from '../../components/SearchBar';
 import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
-import ProductGrid from '../../components/ProductGrid'
-import BillBoard from '../../components/BillBoard';
 
-export default function TabOneScreen() {
+export default function TabPlanteScreen() {
   return (
     <View style={styles.container}>
-      <BillBoard></BillBoard>
-      <SearchBar></SearchBar>
+      <Text style={styles.title}>Plante</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <ProductGrid></ProductGrid>
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
+      <EditScreenInfo path="app/(tabs)/plante.tsx" />
     </View>
   );
 }
@@ -24,7 +19,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
- 
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
   separator: {
     marginVertical: 30,
     height: 1,
