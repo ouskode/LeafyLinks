@@ -1,6 +1,6 @@
 import * as React from "react";
-import {Text, StyleSheet, View} from "react-native";
-
+import {StyleSheet} from "react-native";
+import { Text, View } from '../components/Themed';
 const BillBoard = () => {
   	
   	return (
@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
     		fontSize: 16,
     		lineHeight: 22,
     		fontWeight: "500",
-    		fontFamily: "SF Pro Display",
     		color: "#000",
     		textAlign: "center",
     		display: "flex",

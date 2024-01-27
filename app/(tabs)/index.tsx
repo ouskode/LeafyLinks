@@ -6,11 +6,15 @@ import { Text, View } from '../../components/Themed';
 import ProductGrid from '../../components/ProductGrid'
 import BillBoard from '../../components/BillBoard';
 
+
+
+
 export default function TabOneScreen() {
+
   return (
     <View style={styles.container}>
       <BillBoard></BillBoard>
-      <SearchBar></SearchBar>
+      <SearchBar/>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <ProductGrid></ProductGrid>
       <EditScreenInfo path="app/(tabs)/index.tsx" />

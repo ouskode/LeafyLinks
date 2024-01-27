@@ -1,6 +1,7 @@
 // SearchBar.tsx
 import React from 'react';
-import { View, TextInput, StyleSheet } from 'react-native';
+import {TextInput, StyleSheet } from 'react-native';
+import { Text, View } from '../components/Themed';
 
 const SearchBar: React.FC = () => {
   return (
@@ -14,14 +15,22 @@ const SearchBar: React.FC = () => {
   );
 };
 
+// styles
 const styles = StyleSheet.create({
   container: {
-    // ajoutez ici les styles pour le conteneur de la barre de recherche
+    margin: 15,
+    justifyContent: "flex-start",
+    alignItems: "center",
+    flexDirection: "row",
+    width: "90%",
+
   },
   input: {
-    // ajoutez ici les styles pour le champ de saisie
+    fontSize: 20,
+    marginLeft: 10,
+    width: "90%",
   },
-  // ajoutez d'autres styles si nécessaire
 });
 
 export default SearchBar;
+

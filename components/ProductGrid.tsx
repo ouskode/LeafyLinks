@@ -1,7 +1,7 @@
 // ProductGrid.tsx
 import React from 'react';
-import { View, Image, Text, StyleSheet, ScrollView } from 'react-native';
-
+import {Image, StyleSheet, ScrollView } from 'react-native';
+import { Text, View } from '../components/Themed';
 const ProductGrid: React.FC = () => {
   // Remplacez ceci par les données récupérées via une API ou un state
   const products = [
@@ -11,10 +11,10 @@ const ProductGrid: React.FC = () => {
   ];
 
   return (
-    <ScrollView style={styles.grid}>
-      {products.map((product) => (
+    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.grid}>
+      {products.map((product, index) => (
         <View key={product.id} style={styles.productItem}>
-          <Image source={{ uri: product.image }} style={styles.productImage} />
+          <Image key={index} source={{ uri: product.image }} style={styles.productImage} />
           <Text style={styles.productName}>{product.name}</Text>
           <Text style={styles.productPrice}>{product.price}</Text>
           {/* Vous pouvez ajouter ici d'autres éléments comme des icônes ou des boutons */}
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ddd',
     borderRadius: 4,
-    padding: 10,
+    padding: 5,
     marginBottom: 10,
   },
   productImage: {
