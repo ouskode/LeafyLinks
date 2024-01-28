@@ -1,23 +1,31 @@
 import * as React from "react";
-import {Image, StyleSheet, View, Text} from "react-native";
+import {StyleSheet} from "react-native";
+import { Text, View } from '../components/Themed';
+import { Image } from 'expo-image';
 
-const List1 = () => {
-  	
+const CommentaryList: React.FC = () => {
+	const commentary = [
+		{ id: 1, name: 'Rosa pendulina', author: 'John Doe' ,  contains: '10 Tips for a Cozy Home', image:'../assets/images/public/image-1@2x.png' },
+	  ];
+	const article = [
+		{ id: 1, name: 'Hyacinthoides non-scripta', author: 'Jane Smith', contains: 'Comment choisir la fleur idéale pour vous', image:'../assets/images/public/image@2x.png' },
+	];
   	return (
     		<View style={styles.list}>
-      			<View style={styles.articleFlexBox}>
+				{commentary.map((commentary, index) => (
+      			<View key={commentary.id} style={styles.articleFlexBox}>
         				<View style={styles.imageContainer}>
-          					<Image style={[styles.imageIcon, styles.imageIconLayout]} resizeMode="cover" source="image.png" />
+          					<Image key={index} style={[styles.imageIcon, styles.imageIconLayout]} contentFit="cover" source={{ uri: commentary.image }} />
         				</View>
         				<View style={styles.titleParent}>
           					<Text style={styles.title}>Dernier commentaire</Text>
-          					<Text style={[styles.subtitle, styles.subtitleTypo]}>By John Doe</Text>
-          					<Text style={[styles.subtitle1, styles.subtitleTypo]}>10 Tips for a Cozy Home</Text>
+          					<Text style={[styles.subtitle, styles.subtitleTypo]}>By {commentary.author}</Text>
+          					<Text style={[styles.subtitle1, styles.subtitleTypo]}>{commentary.contains}</Text>
           					<View style={styles.user}>
             						<View style={[styles.avatar, styles.avatarFlexBox]}>
               							<View style={styles.avatar1} />
               							<View style={styles.titleWrapper}>
-                								<Text style={[styles.title1, styles.subtitleTypo]} numberOfLines={1}>John Doe</Text>
+                								<Text style={[styles.title1, styles.subtitleTypo]} numberOfLines={1}>{commentary.author}</Text>
               							</View>
             						</View>
             						<View style={[styles.iconButtons, styles.avatarFlexBox]}>
@@ -25,21 +33,24 @@ const List1 = () => {
             						</View>
           					</View>
         				</View>
-        				<Image style={[styles.articleChild, styles.imageIconLayout]} resizeMode="cover" source="Vector 200.png" />
+						<View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       			</View>
-      			<View style={[styles.article1, styles.articleFlexBox]}>
+				))}
+				{article.map((article, index) => (
+      			<View key={article.id} style={[styles.article1, styles.articleFlexBox]}>
         				<View style={styles.imageContainer}>
           					<View style={styles.image} />
-          					<Image style={styles.image5Icon} resizeMode="cover" imag="image 5.png" />
+          					<Image key={index} style={styles.image5Icon} contentFit="cover" source={{ uri: article.image }} />
         				</View>
         				<View style={styles.titleParent}>
           					<Text style={styles.title}>Article en vedette</Text>
-          					<Text style={[styles.subtitle1, styles.subtitleTypo]}>Comment choisir la fleur idéale pour vous</Text>
+          					<Text style={[styles.subtitle, styles.subtitleTypo]}>By {article.author}</Text>
+          					<Text style={[styles.subtitle1, styles.subtitleTypo]}>{article.contains}</Text>
           					<View style={styles.user}>
             						<View style={[styles.avatar, styles.avatarFlexBox]}>
               							<View style={styles.avatar1} />
               							<View style={styles.titleWrapper}>
-                								<Text style={[styles.title1, styles.subtitleTypo]} numberOfLines={1}>Jane Smith</Text>
+                								<Text style={[styles.title1, styles.subtitleTypo]} numberOfLines={1}>{article.author}</Text>
               							</View>
             						</View>
             						<View style={[styles.iconButtons, styles.avatarFlexBox]}>
@@ -47,8 +58,9 @@ const List1 = () => {
             						</View>
           					</View>
         				</View>
-        				<Image style={[styles.articleChild, styles.imageIconLayout]} resizeMode="cover" source="Vector 200.png" />
+        				<View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       			</View>
+				))}
     		</View>);
 };
 
@@ -90,18 +102,15 @@ const styles = StyleSheet.create({
   	},
   	title: {
     		textAlign: "left",
-    		color: "#064a09",
     		fontWeight: "500",
     		lineHeight: 20,
     		fontSize: 16,
     		alignSelf: "stretch"
   	},
   	subtitle: {
-    		color: "rgba(0, 0, 0, 0.5)",
     		lineHeight: 20
   	},
   	subtitle1: {
-    		color: "#064a09",
     		fontSize: 12,
     		lineHeight: 20
   	},
@@ -115,7 +124,6 @@ const styles = StyleSheet.create({
   	title1: {
     		lineHeight: 16,
     		height: 16,
-    		color: "#064a09",
     		fontSize: 12,
     		fontWeight: "500",
     		overflow: "hidden"
@@ -183,7 +191,12 @@ const styles = StyleSheet.create({
     		width: "100%",
     		flex: 1,
     		alignSelf: "stretch"
-  	}
+  	},
+	separator: {
+		marginVertical: 30,
+		height: 1,
+		width: '80%',
+	  },
 });
 
-export default List1;
+export default CommentaryList;

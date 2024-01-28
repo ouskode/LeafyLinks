@@ -28,11 +28,10 @@ const styles = StyleSheet.create({
   	title: {
     		marginTop: -8,
     		top: "50%",
-    		left: 16,
+    		left: 14,
     		fontSize: 16,
     		lineHeight: 22,
     		fontWeight: "500",
-    		color: "#000",
     		textAlign: "center",
     		display: "flex",
     		width: 358,

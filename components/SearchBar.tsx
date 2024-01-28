@@ -1,7 +1,7 @@
 // SearchBar.tsx
 import React from 'react';
-import {TextInput, StyleSheet } from 'react-native';
-import { Text, View } from '../components/Themed';
+import { StyleSheet } from 'react-native';
+import { TextInput, View } from '../components/Themed';
 
 const SearchBar: React.FC = () => {
   return (
@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginLeft: 10,
     width: "90%",
+    border: "solid",
   },
 });
 

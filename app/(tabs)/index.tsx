@@ -5,6 +5,7 @@ import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
 import ProductGrid from '../../components/ProductGrid'
 import BillBoard from '../../components/BillBoard';
+import CommentaryList from '../../components/CommentaryList';
 
 
 
@@ -17,7 +18,7 @@ export default function TabOneScreen() {
       <SearchBar/>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <ProductGrid></ProductGrid>
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
+      <CommentaryList></CommentaryList>
     </View>
   );
 }

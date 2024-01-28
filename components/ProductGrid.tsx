@@ -2,6 +2,7 @@
 import React from 'react';
 import {Image, StyleSheet, ScrollView } from 'react-native';
 import { Text, View } from '../components/Themed';
+
 const ProductGrid: React.FC = () => {
   // Remplacez ceci par les données récupérées via une API ou un state
   const products = [
