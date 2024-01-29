@@ -1,21 +1,20 @@
 import * as React from "react";
-import {StyleSheet} from "react-native";
-import { Text, View } from '../components/Themed';
+import {StyleSheet, Text, View} from "react-native";
 import { Image } from 'expo-image';
 
 const CommentaryList: React.FC = () => {
 	const commentary = [
-		{ id: 1, name: 'Rosa pendulina', author: 'John Doe' ,  contains: '10 Tips for a Cozy Home', image:'../assets/images/public/image-1@2x.png' },
+		{ id: 1, name: 'Rosa pendulina', author: 'John Doe' ,  contains: '10 Tips for a Cozy Home', image: require('../assets/images/imageRose.png') },
 	  ];
 	const article = [
-		{ id: 1, name: 'Hyacinthoides non-scripta', author: 'Jane Smith', contains: 'Comment choisir la fleur idéale pour vous', image:'../assets/images/public/image@2x.png' },
+		{ id: 1, name: 'Hyacinthoides non-scripta', author: 'Jane Smith', contains: 'Comment choisir la fleur idéale pour vous', image: require('../assets/images/image5.png') },
 	];
   	return (
     		<View style={styles.list}>
 				{commentary.map((commentary, index) => (
       			<View key={commentary.id} style={styles.articleFlexBox}>
         				<View style={styles.imageContainer}>
-          					<Image key={index} style={[styles.imageIcon, styles.imageIconLayout]} contentFit="cover" source={{ uri: commentary.image }} />
+          					<Image key={index} style={[styles.imageIcon, styles.imageIconLayout]} contentFit="cover" source={commentary.image} />
         				</View>
         				<View style={styles.titleParent}>
           					<Text style={styles.title}>Dernier commentaire</Text>
@@ -33,14 +32,14 @@ const CommentaryList: React.FC = () => {
             						</View>
           					</View>
         				</View>
-						<View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       			</View>
 				))}
+				<View style={styles.separator} />
 				{article.map((article, index) => (
       			<View key={article.id} style={[styles.article1, styles.articleFlexBox]}>
         				<View style={styles.imageContainer}>
           					<View style={styles.image} />
-          					<Image key={index} style={styles.image5Icon} contentFit="cover" source={{ uri: article.image }} />
+          					<Image key={index} style={styles.image5Icon} contentFit="cover" source={article.image} />
         				</View>
         				<View style={styles.titleParent}>
           					<Text style={styles.title}>Article en vedette</Text>
@@ -58,9 +57,9 @@ const CommentaryList: React.FC = () => {
             						</View>
           					</View>
         				</View>
-        				<View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       			</View>
 				))}
+				<View style={styles.separator} />
     		</View>);
 };
 
@@ -193,9 +192,10 @@ const styles = StyleSheet.create({
     		alignSelf: "stretch"
   	},
 	separator: {
-		marginVertical: 30,
+		marginVertical: 5,
 		height: 1,
-		width: '80%',
+		width: '95%',
+		backgroundColor: '#303030'
 	  },
 });
 

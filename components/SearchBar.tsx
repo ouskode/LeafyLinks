@@ -1,36 +1,35 @@
 // SearchBar.tsx
-import React from 'react';
+
+import React, { useState } from 'react';
+import { SearchBar } from '@rneui/themed';
 import { StyleSheet } from 'react-native';
 import { TextInput, View } from '../components/Themed';
 
-const SearchBar: React.FC = () => {
-  return (
-    <View style={styles.container}>
-      <TextInput
-        placeholder="Recherche"
-        style={styles.input}
-        // Ajoutez ici les props nécessaires pour la fonctionnalité de recherche
-      />
-    </View>
-  );
+
+type SearchBarComponentProps = {};
+
+const SwitchComponent: React.FunctionComponent<SearchBarComponentProps> = () => {
+const [search, setSearch] = useState("");
+
+const updateSearch = (search: React.SetStateAction<string>) => {
+  setSearch(search);
 };
 
-// styles
-const styles = StyleSheet.create({
-  container: {
-    margin: 15,
-    justifyContent: "flex-start",
-    alignItems: "center",
-    flexDirection: "row",
-    width: "90%",
+return (
+  <View style={styles.view}>
+    <SearchBar
+      placeholder="Type Here..."
+      onChangeText={updateSearch}
+      value={search}
+    />
+  </View>
+);
+};
 
-  },
-  input: {
-    fontSize: 20,
-    marginLeft: 10,
-    width: "90%",
-    border: "solid",
-  },
+const styles = StyleSheet.create({
+view: {
+  margin: 10,
+},
 });
 
 export default SearchBar;
