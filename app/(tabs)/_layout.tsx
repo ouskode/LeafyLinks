@@ -2,7 +2,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Link, Tabs } from 'expo-router';
-import { Pressable, useColorScheme } from 'react-native';
+import { Pressable, useColorScheme, Animated } from 'react-native';
 
 import Colors from '../../constants/Colors';
 
@@ -23,12 +23,14 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarStyle: { position: 'absolute' },
+ 
       }}>
       <Tabs.Screen
         name="index"
         options={{
           title: 'Accueil',
-          tabBarIcon: ({ color }) => <FontAwesome name="home" color={color} />,
+          tabBarIcon: ({  }) => <FontAwesome name="home" color='blue' />,
           headerRight: () => (
             <Link href="/modal" asChild>
               <Pressable>
@@ -49,7 +51,7 @@ export default function TabLayout() {
         name="plante"
         options={{
           title: 'Plantes',
-          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="flower-outline" color={color} />,
+          tabBarIcon: ({ }) => <MaterialCommunityIcons name="flower-outline" color='green' />,
         }}
       />
        <Tabs.Screen

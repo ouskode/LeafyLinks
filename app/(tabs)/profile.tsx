@@ -1,14 +1,18 @@
 import { StyleSheet } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 
-import EditScreenInfo from '../../components/EditScreenInfo';
+
+import ProfileHeader from '../../components/ProfileHeader';
+import UserInfo from '../../components/UserInfo';
+
 import { Text, View } from '../../components/Themed';
 
 export default function TabProfileScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Profile</Text>
+      <ProfileHeader></ProfileHeader>
+      <UserInfo></UserInfo>
       {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
-      <EditScreenInfo path="app/(tabs)/profile.tsx" />
     </View>
   );
 }
