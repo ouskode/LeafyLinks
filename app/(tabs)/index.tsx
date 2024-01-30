@@ -4,6 +4,7 @@ import SearchBar from '../../components/SearchBar';
 import ProductGrid from '../../components/ProductGrid'
 import BillBoard from '../../components/BillBoard';
 import CommentaryList from '../../components/CommentaryList';
+import TopProduct from '../../components/TopProduct';
 
 
 
@@ -18,7 +19,7 @@ export default function TabOneScreen() {
       <View style={styles.separator} />
       <ProductGrid></ProductGrid>
       <CommentaryList></CommentaryList>
-      
+      <TopProduct></TopProduct>
       <View style={styles.separator} />
     </ScrollView>
   );
