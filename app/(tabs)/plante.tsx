@@ -6,9 +6,6 @@ export default function TabPlanteScreen() {
   return (
     <ScrollView style={styles.container}>
       <ItemCard></ItemCard>
-      <ItemCard></ItemCard>
-      <ItemCard></ItemCard>
-      <ItemCard></ItemCard>
     </ScrollView>
   );
 }
