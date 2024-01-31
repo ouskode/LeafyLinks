@@ -1,7 +1,14 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image, Dimensions } from 'react-native';
 
-const ItemCard = () => {
+
+type SelectionProps = {
+  title: string;
+  number: number;
+  image: any;
+};
+
+const ItemCard: React.FC<SelectionProps> = () => {
   return (
     <View style={styles.itemCard}>
       <Image
@@ -16,11 +23,12 @@ const ItemCard = () => {
 };
 
 const screenWidth = Dimensions.get('window').width;
-const cardWidth = screenWidth * 0.45; // Ajustez la largeur de la carte comme nécessaire
+const cardWidth = screenWidth * 0.40;
 
 const styles = StyleSheet.create({
   itemCard: {
-    width: cardWidth,
+    maxWidth: cardWidth,
+    maxHeight: '25%',
     borderRadius: 8,
     overflow: 'hidden',
     borderColor: '#000',

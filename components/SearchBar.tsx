@@ -2,8 +2,7 @@
 
 import React, { useState } from 'react';
 import { SearchBar } from '@rneui/themed';
-import { StyleSheet } from 'react-native';
-import { TextInput, View } from '../components/Themed';
+import { StyleSheet, View } from 'react-native';
 
 
 type SearchBarComponentProps = {};
