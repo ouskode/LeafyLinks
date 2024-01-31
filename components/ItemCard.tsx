@@ -7,7 +7,7 @@ const ItemCard = () => {
       <Image
         style={styles.mediaIcon}
         resizeMode="cover"
-        source={require('./path/to/Media.png')} // Assurez-vous que le chemin vers l'image est correct
+        source={require('../assets/images/media23x.png')}
       />
       <Text style={[styles.text, styles.vegetables]}>Plantes d’intérieur</Text>
       <Text style={styles.text}>(43)</Text>

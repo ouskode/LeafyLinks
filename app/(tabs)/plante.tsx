@@ -1,21 +1,22 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ScrollView} from 'react-native';
 
 import ItemCard from '../../components/ItemCard';
-import { Text, View } from '../../components/Themed';
 
 export default function TabPlanteScreen() {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <ItemCard></ItemCard>
-    </View>
+      <ItemCard></ItemCard>
+      <ItemCard></ItemCard>
+      <ItemCard></ItemCard>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    margin: 15
   },
   title: {
     fontSize: 20,
