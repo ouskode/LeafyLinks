@@ -1,4 +1,5 @@
 LeafyLinks
+
 Bienvenue sur le README de LeafyLinks, une application mobile conçue pour aider les passionnés de plantes à les entretenir de d'autre personne de manière optimale. Développée avec React Native et Expo, LeafyLinks offre une interface intuitive pour le suivi et la gestion de vos plantes.
 
 Description
