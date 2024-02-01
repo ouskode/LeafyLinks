@@ -1,16 +1,17 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, Dimensions } from 'react-native';
+import { StyleSheet, View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
 
 
 type SelectionProps = {
   title: string;
   number: number;
   image: any;
+
 };
 
 const ItemCard: React.FC<SelectionProps> = ({title, number, image}) => {
   return (
-    <View style={styles.itemCard}>
+    <TouchableOpacity style={styles.itemCard}>
       <Image
         source={image}
         style={styles.image}
@@ -18,7 +19,7 @@ const ItemCard: React.FC<SelectionProps> = ({title, number, image}) => {
       />
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.subtitle}>({number})</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 

@@ -1,13 +1,17 @@
-import { StyleSheet, ScrollView, Image} from 'react-native';
-
+import { StyleSheet, ScrollView, View, Image, Pressable} from 'react-native';
+import React from 'react';
 import ItemCard from '../../components/ItemCard';
-import { View } from '../../components/Themed';
+import { Link } from 'expo-router';
 
 export default function TabPlanteScreen() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.container1}>
+      <Link href="/profile">
+      <Pressable onPress={() => navigator}>
       <ItemCard title="Plantes d'intérieur" number={43} image={require('../../assets/images/media23x.png')}></ItemCard>
+      </Pressable>
+      </Link>
       <ItemCard title="Plantes d'extérieur" number={32} image={require('../../assets/images/media43x.png')}></ItemCard>
       </View>
       <View style={styles.container1}>

@@ -52,6 +52,17 @@ export default function TabLayout() {
         options={{
           title: 'Plantes',
           tabBarIcon: ({ }) => <MaterialCommunityIcons name="flower-outline" color='green' />,
+          headerLeft: () => (
+            <Link href="/" asChild>
+            <Pressable>
+              {({ pressed }) => (
+                <AntDesign name="leftcircleo" size={24} color="black"
+                  style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                />
+              )}
+            </Pressable>
+          </Link>
+        ),
         }}
       />
        <Tabs.Screen
