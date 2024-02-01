@@ -7,7 +7,7 @@ const article = [
 ];
 
 const opinion = [
-    { id: 1, author: 'Client 2', contains: "J'adore la couleur de mes fleurs" , tags:'', image: require('../assets/images/imageRose.png') },
+    { id: 1, author: 'Client 2', contains: "J'adore la couleur de mes fleurs", image: require('../assets/images/imageRose.png') },
   ];
 
 

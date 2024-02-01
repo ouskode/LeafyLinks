@@ -8,27 +8,26 @@ type SelectionProps = {
   image: any;
 };
 
-const ItemCard: React.FC<SelectionProps> = () => {
+const ItemCard: React.FC<SelectionProps> = ({title, number, image}) => {
   return (
     <View style={styles.itemCard}>
       <Image
-        source={require('../assets/images/media23x.png')}
+        source={image}
         style={styles.image}
         resizeMode="cover"
       />
-      <Text style={styles.title}>Plantes d’intérieur</Text>
-      <Text style={styles.subtitle}>(43)</Text>
+      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.subtitle}>({number})</Text>
     </View>
   );
 };
 
 const screenWidth = Dimensions.get('window').width;
-const cardWidth = screenWidth * 0.40;
+const cardWidth = screenWidth * 0.35;
 
 const styles = StyleSheet.create({
   itemCard: {
-    maxWidth: cardWidth,
-    maxHeight: '25%',
+    maxWidth: cardWidth * 1.05,
     borderRadius: 8,
     overflow: 'hidden',
     borderColor: '#000',
