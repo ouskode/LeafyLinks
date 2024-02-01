@@ -4,18 +4,19 @@ import { StyleSheet, View, Image, Text } from "react-native";
 const ItemRowView = () => {
   return (
     <View style={styles.itemRowView}>
-      <View style={styles.container} />
-      <Image style={styles.mediaIcon} resizeMode="cover" source={image} />
-      <Text style={styles.title}>{title}</Text>
+      <View style={styles.mediaContainer}>
+        <Image
+          style={styles.image}
+          resizeMode="cover"
+          source={image}
+        />
+      </View>
+      <Text style={[styles.bostonLettuce, styles.textTypo]}>
+        Bonsai Ulmus Parvifolia
+      </Text>
       <View style={styles.price}>
         <Text style={[styles.text, styles.textTypo]}>x.xx</Text>
-        <Text style={styles.prix}>{prix}</Text>
-      </View>
-      <View style={[styles.buttonSecondary, styles.buttonSecondarySpaceBlock]}>
-        <Image style={styles.iconHeartLayout} resizeMode="cover" source={imageBasket} />
-      </View>
-      <View style={[styles.iconHeartWrapper, styles.buttonSecondarySpaceBlock]}>
-        <Image style={[styles.iconHeart, styles.iconHeartLayout]} resizeMode="cover" source={imageLike} />
+        <Text style={styles.piece}>€ / Jours</Text>
       </View>
     </View>
   );
@@ -29,47 +30,31 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     letterSpacing: 0,
   },
-  buttonSecondarySpaceBlock: {
-    paddingVertical: 10,
-    paddingHorizontal: 29,
-    alignItems: "center",
-    top: 104,
+  itemRowView: {
     flexDirection: "row",
+    height: 160,
+    width: "100%",
+    borderRadius: 8,
+    overflow: "hidden",
+    backgroundColor: "#fff",
+    marginVertical: 8,
+  },
+  mediaContainer: {
+    width: "40%",
     overflow: "hidden",
     borderRadius: 8,
-    position: "absolute",
-  },
-  iconHeartLayout: {
-    height: 20,
-    width: 20,
-  },
-  container: {
-    flex: 1,
-    position: "absolute",
-    width: "100%",
   },
   mediaIcon: {
-    height: "80%",
-    right: "52.42%",
-    bottom: "10%",
-    left: "4.83%",
-    maxWidth: "100%",
-    maxHeight: "100%",
-    overflow: "hidden",
+    flex: 1,
+    width: "100%",
     borderRadius: 8,
-    top: "10%",
-    width: "42.75%",
-    position: "absolute",
   },
   bostonLettuce: {
-    height: "15%",
-    left: "52.42%",
+    flex: 1,
     fontSize: 18,
     fontWeight: "600",
-    top: "10%",
-    width: "42.75%",
-    textAlign: "left",
-    position: "absolute",
+    marginLeft: 8,
+    marginTop: 8,
   },
   text: {
     fontSize: 22,
@@ -85,35 +70,33 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
   },
   price: {
-    top: 52,
-    alignItems: "flex-end",
     flexDirection: "row",
-    left: 218,
-    overflow: "hidden",
-    position: "absolute",
-  },
-  buttonSecondary: {
-    left: 316,
-    backgroundColor: "#0bce83",
-  },
-  iconHeart: {
-    overflow: "hidden",
-  },
-  iconHeartWrapper: {
-    backgroundColor: "#fff",
-    borderStyle: "solid",
-    borderColor: "#d9d0e3",
-    borderWidth: 1,
-    left: 218,
-    paddingVertical: 10,
-    paddingHorizontal: 29,
     alignItems: "center",
-    top: 104,
+    marginRight: 8,
   },
-  itemRowView: {
-    flex: 1,
-    height: 160,
-    width: "100%",
+  buttonContainer: {
+    backgroundColor: "#0bce83",
+    paddingHorizontal: 16,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 8,
+  },
+  iconheartContainer: {
+    backgroundColor: "#fff",
+    borderWidth: 1,
+    borderColor: "#d9d0e3",
+    paddingHorizontal: 16,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 8,
+    marginLeft: 8,
+  },
+  iconheartLayout: {
+    height: 20,
+    width: 20,
+  },
+  iconheart: {
+    overflow: "hidden",
   },
 });
 

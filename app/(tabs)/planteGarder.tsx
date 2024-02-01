@@ -4,40 +4,12 @@ import { Text, StyleSheet, View, Image, Scrollview } from "react-native";
 
 import ItemCard from '../../components/ItemGarderRow';
 import { View } from '../../components/Themed';
+import ItemRowView from "../../components/ItemGarderRow";
 
 const PlanteGarder = () => {
   return (
     <View style={styles.planteGarder}>
-      <View style={styles.bottomNav}>
-        <View style={styles.tab}>
-          <Text style={[styles.icon, styles.iconFlexBox]} numberOfLines={1}>
-            🏠
-          </Text>
-          <Text style={[styles.title, styles.iconFlexBox]} numberOfLines={1}>
-            Accueil
-          </Text>
-        </View>
-        <View style={styles.tab}>
-          <Text style={[styles.icon, styles.iconFlexBox]} numberOfLines={1}>
-            🌿
-          </Text>
-          <Text style={[styles.title, styles.iconFlexBox]} numberOfLines={1}>
-            Plantes
-          </Text>
-        </View>
-        <View style={styles.tab}>
-          <Image
-            style={styles.iconuser}
-            resizeMode="cover"
-            source={require("./icon/user.png")}
-          />
-          <Text style={[styles.title, styles.iconFlexBox]} numberOfLines={1}>
-            Profile
-          </Text>
-        </View>
-      </View>
-      <View style={[styles.itemRowView, styles.itemViewLayout]}>
-      </View>
+        <ItemRowView></ItemRowView>
     </View>
   );
 };
