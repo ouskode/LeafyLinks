@@ -27,7 +27,8 @@ const cardWidth = screenWidth * 0.35;
 
 const styles = StyleSheet.create({
   itemCard: {
-    maxWidth: cardWidth * 1.05,
+    maxWidth: cardWidth * 1.1,
+    minWidth: cardWidth,
     borderRadius: 8,
     overflow: 'hidden',
     borderColor: '#000',
