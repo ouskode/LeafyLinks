@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
   },
   labelText: {
     fontSize: 12,
-    fontFamily: "SF Pro Display",
     color: "#064a09",
     textAlign: "left",
   },

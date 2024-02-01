@@ -14,6 +14,8 @@ const UserInfo = () => {
         <Text style={styles.subtitle}>+33XXXXXXX</Text>
         <Text style={styles.itemChild}  />
       </View>
+      <View style={styles.separator} />
+
 
       <View style={styles.item}>
         <View style={styles.frame}>
@@ -25,6 +27,7 @@ const UserInfo = () => {
         <Text style={styles.subtitle}>johndoe@example.com</Text>
         <Text style={styles.itemChild}  />
       </View>
+      <View style={styles.separator} />
 
       <View style={styles.item}>
         <View style={styles.frame}>
@@ -36,6 +39,7 @@ const UserInfo = () => {
         <Text style={styles.subtitle}>Client</Text>
         <Text style={styles.itemChild}  />
       </View>
+      <View style={styles.separator} />
     </View>
   );
 };
@@ -104,6 +108,13 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     position: "absolute",
   },
+  separator: {
+		marginVertical: 5,
+		height: 1,
+		width: '95%',
+		backgroundColor: '#303030',
+    opacity: 0.2
+	  },
 });
 
 export default UserInfo;
