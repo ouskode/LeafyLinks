@@ -6,3 +6,23 @@ LeafyLinks est une application mobile qui permet aux utilisateurs de garder une 
 
 Installation
 Suivez ces étapes pour installer et exécuter LeafyLinks sur votre machine locale :
+
+Clonez le dépôt :
+```bash
+git clone [URL du dépôt Git]
+cd LeafyLinks
+```
+Installez les dépendances :
+```bash
+npm install
+```
+Lancez l'application avec Expo :
+```bash
+npx expo start
+```
+Prérequis
+---------
+
+*   Node.js
+*   npm ou yarn
+*   Expo CLI (installé globalement) : `npm install -g expo-cli`
