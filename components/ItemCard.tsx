@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
-
+import { StyleSheet, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router';
 
 type SelectionProps = {
   title: string;
@@ -9,9 +9,17 @@ type SelectionProps = {
 
 };
 
+
+
 const ItemCard: React.FC<SelectionProps> = ({title, number, image}) => {
+
+  const router = useRouter();
+  const handlePress = () => {
+    router.push('/profile')
+  };
+
   return (
-    <TouchableOpacity style={styles.itemCard}>
+    <TouchableOpacity style={styles.itemCard} onPress={handlePress}>
       <Image
         source={image}
         style={styles.image}
