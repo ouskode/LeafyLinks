@@ -9,22 +9,22 @@ export default function TabPlanteScreen() {
       <View style={styles.container1}>
       <Link href="/profile">
       <Pressable onPress={() => navigator}>
-      <ItemCard title="Plantes d'intérieur" number={43} image={require('../../assets/images/media23x.png')}></ItemCard>
+      <ItemCard title="Plantes d'intérieur" number={43} image={require('../../assets/images/media23x.png')} path={'/profile'}></ItemCard>
       </Pressable>
       </Link>
-      <ItemCard title="Plantes d'extérieur" number={32} image={require('../../assets/images/media43x.png')}></ItemCard>
+      <ItemCard title="Plantes d'extérieur" number={32} image={require('../../assets/images/media43x.png')} path={'/profile'}></ItemCard>
       </View>
       <View style={styles.container1}>
-      <ItemCard title="Plantes aromatiques" number={22} image={require('../../assets/images/media33x.png')}></ItemCard>
-      <ItemCard title="Plantes grasses" number={56} image={require('../../assets/images/media53x.png')}></ItemCard>
+      <ItemCard title="Plantes aromatiques" number={22} image={require('../../assets/images/media33x.png')} path={'/profile'}></ItemCard>
+      <ItemCard title="Plantes grasses" number={56} image={require('../../assets/images/media53x.png')} path={'/profile'}></ItemCard>
       </View>
       <View style={styles.container1}>
-      <ItemCard title="Plantes à fleurs" number={52} image={require('../../assets/images/media3x.png')}></ItemCard>
-      <ItemCard title="Plantes facile d'entretien" number={24} image={require('../../assets/images/media13x.png')}></ItemCard>
+      <ItemCard title="Plantes à fleurs" number={52} image={require('../../assets/images/media3x.png')} path={'/profile'}></ItemCard>
+      <ItemCard title="Plantes facile d'entretien" number={24} image={require('../../assets/images/media13x.png')} path={'/profile'}></ItemCard>
       </View>
       <View style={styles.container1}>
-      <ItemCard title="Plantes de saison" number={23} image={require('../../assets/images/media3x.png')}></ItemCard>
-      <ItemCard title="Plantes potagères" number={15} image={require('../../assets/images/media33x.png')}></ItemCard>
+      <ItemCard title="Plantes de saison" number={23} image={require('../../assets/images/media3x.png')} path={'/profile'}></ItemCard>
+      <ItemCard title="Plantes potagères" number={15} image={require('../../assets/images/media33x.png')} path={'/profile'}></ItemCard>
       </View>
     </ScrollView>
   );

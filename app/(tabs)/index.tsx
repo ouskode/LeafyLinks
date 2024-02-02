@@ -12,10 +12,15 @@ import TopProduct from '../../components/TopProduct';
 
 export default function TabOneScreen() {
 
+  const performSearch = (query: any) => {
+    // Effectuez la recherche avec la requête `query`
+    console.log('Recherche pour :', query);
+  }
+
   return (
     <ScrollView style={styles.container} scrollEventThrottle={16}>
       <BillBoard/>
-      <SearchBar/>
+      <SearchBar onSearch={performSearch}/>
       <View style={styles.separator} />
       <ProductGrid></ProductGrid>
       <CommentaryList></CommentaryList>

@@ -1,35 +1,64 @@
-// SearchBar.tsx
-
 import React, { useState } from 'react';
-import { SearchBar } from '@rneui/themed';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, TextInput, TouchableOpacity, Image } from 'react-native';
 
 
-type SearchBarComponentProps = {};
-
-const SwitchComponent: React.FunctionComponent<SearchBarComponentProps> = () => {
-const [search, setSearch] = useState("");
-
-const updateSearch = (search: React.SetStateAction<string>) => {
-  setSearch(search);
+type SearchBarProps = {
+  onSearch: (query: string) => void;
 };
 
-return (
-  <View style={styles.view}>
-    <SearchBar
-      placeholder="Type Here..."
-      onChangeText={updateSearch}
-      value={search}
-    />
-  </View>
-);
+const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = () => {
+    onSearch(searchQuery);
+  };
+
+
+  return (
+    <View style={styles.container}>
+      <TextInput
+        style={styles.input}
+        placeholder="Rechercher..."
+        placeholderTextColor="#888"
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+        returnKeyType="search"
+        onSubmitEditing={handleSearch}
+      />
+      <TouchableOpacity onPress={handleSearch} style={styles.iconButton}>
+        <Image
+          source={require('../assets/images/icsearch3x.png')} // Replace with your search icon image
+          style={styles.icon}
+        />
+      </TouchableOpacity>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-view: {
-  margin: 10,
-},
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
+  input: {
+    flex: 1,
+    fontSize: 16,
+    backgroundColor: 'transparent'
+  },
+  iconButton: {
+    padding: 5,
+  },
+  icon: {
+    width: 20,
+    height: 20,
+    backgroundColor: 'black'
+  },
 });
 
 export default SearchBar;
-

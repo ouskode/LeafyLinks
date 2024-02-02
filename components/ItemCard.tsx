@@ -1,21 +1,22 @@
 import React from 'react';
-import { StyleSheet, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, Image, Dimensions, TouchableOpacity, ImageSourcePropType } from 'react-native';
 import { useRouter } from 'expo-router';
 
 type SelectionProps = {
   title: string;
   number: number;
-  image: any;
+  image: ImageSourcePropType;
+  path: any;
 
 };
 
 
 
-const ItemCard: React.FC<SelectionProps> = ({title, number, image}) => {
+const ItemCard: React.FC<SelectionProps> = ({title, number, image, path}) => {
 
   const router = useRouter();
   const handlePress = () => {
-    router.push('/profile')
+    router.push(path)
   };
 
   return (
