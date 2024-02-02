@@ -7,11 +7,8 @@ export default function TabPlanteScreen() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.container1}>
-      <Link href="/profile">
-      <Pressable onPress={() => navigator}>
-      <ItemCard title="Plantes d'intérieur" number={43} image={require('../../assets/images/media23x.png')} path={'/profile'}></ItemCard>
-      </Pressable>
-      </Link>
+  
+      <ItemCard title="Plantes d'intérieur" number={43} image={require('../../assets/images/media23x.png')} path={'/plantegarder'}></ItemCard>
       <ItemCard title="Plantes d'extérieur" number={32} image={require('../../assets/images/media43x.png')} path={'/profile'}></ItemCard>
       </View>
       <View style={styles.container1}>
