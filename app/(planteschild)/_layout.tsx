@@ -1,8 +1,6 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
 import { Link, Stack, Tabs } from 'expo-router';
 import { Pressable, useColorScheme, Animated } from 'react-native';
+import AddButton from '../../components/AddButton';
 
 export const unstable_settings = {
 
@@ -13,17 +11,18 @@ export const unstable_settings = {
 export default function Layout() {
 
   return (
-    <><Stack
+    <Stack
           screenOptions={{
               title: "Fleurs & Plantes ornementales",
-              headerStyle: {
-                  backgroundColor: '#f4511e',
-              },
-              headerTintColor: '#fff',
-              headerTitleStyle: {
-                  fontWeight: 'bold',
-              },
-          }} /><Stack.Screen name="(planteschild)" options={{ headerShown: false }} /></>
+              headerRight: () => (
+                <Link href="/modal" asChild>
+                  <Pressable>
+                    <AddButton/>
+                  </Pressable>
+                </Link>
+              ),
+                  
+          }} />
     
   );
 }
