@@ -5,7 +5,12 @@ import PlantsList from '../../components/PlantsList';
 
 
 
-
+const plantschild = [
+  { id: 1, name: 'Bonsai Ulmus Parvifolia', price: 15.5, image: require('../../assets/images/bonzai1.png') },
+  { id: 2, name: 'Bonsai Carmona', price: 15.5, image: require('../../assets/images/bonzai2.png') },
+  { id: 3, name: 'Savoy Cabbage', price: 15.5, image: require('../../assets/images/bonzai3.png') },
+  
+];
 
 export default function PlantesChildsScreen() {
 
@@ -18,11 +23,9 @@ export default function PlantesChildsScreen() {
     <View>
       <SearchBar onSearch={performSearch}/>
       <ScrollView style={styles.container}>
-        <PlantsList></PlantsList>
-        <PlantsList></PlantsList>
-        <PlantsList></PlantsList>
-        <PlantsList></PlantsList>
-        <PlantsList></PlantsList>
+        {plantschild.map((plantschild, index) => (
+        <PlantsList key={plantschild.id} title={plantschild.name} price={plantschild.price} image={plantschild.image}></PlantsList>
+        ))}
       </ScrollView>
     </View>
 
@@ -34,6 +37,9 @@ const styles = StyleSheet.create({
   container: {
     margin: 15
   },
+  searchbar: {
+    margin: 10
+  }
  
 
 });

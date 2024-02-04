@@ -1,25 +1,31 @@
 import React from "react";
-import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Image, Text, ImageSourcePropType } from "react-native";
 import ButtonAddToCart from "./ButtonAddToCart";
 import HeartButton from "./HeartButton";
 
-const PlantsList = () => {
-  // Assurez-vous que le chemin des images est correct et adapté à la structure de votre projet
-  const mediaImage = require('../assets/images/bonzai1.png');
+
+type SelectionProps = {
+  title: string;
+  price: number;
+  image: ImageSourcePropType;
+
+};
+
+const PlantsList: React.FC<SelectionProps>  =  ({title, price, image}) => {
 
 
   return (
     <View style={styles.itemRowView}>
-      <Image style={styles.mediaIcon} resizeMode="cover" source={mediaImage} />
+      <Image style={styles.mediaIcon} resizeMode="cover" source={image} />
       <View style={styles.detailsContainer}>
-        <Text style={[styles.bostonLettuce, styles.textTypo]}>Bonsai Ulmus Parvifolia</Text>
+        <Text style={[styles.bostonLettuce, styles.textTypo]}>{title}</Text>
         <View style={styles.priceContainer}>
-          <Text style={[styles.text, styles.textTypo]}>x.xx</Text>
+          <Text style={[styles.text, styles.textTypo]}>{price}</Text>
           <Text style={styles.piece}>€ / Jours</Text>
         </View>
         <View style={styles.buttonContainer}>
-        <ButtonAddToCart onPress={() => console.log('Ajout au panier')} />
         <HeartButton onPress={() => console.log('Ajouté aux favoris')} />
+        <ButtonAddToCart onPress={() => console.log('Ajout au panier')} />
         </View>
       </View>
     </View>

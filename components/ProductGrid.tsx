@@ -1,4 +1,3 @@
-// ProductGrid.tsx
 import React from 'react';
 import {Image, StyleSheet, ScrollView, Text, View } from 'react-native';
 
@@ -10,7 +9,6 @@ const ProductGrid: React.FC = () => {
     { id: 2, name: 'Hyacinthoides non-scripta', price: 'XX.XX€', day:'5 j', image: require('../assets/images/image2x.png') },
     { id: 3, name: 'Product 3', price: 'XX.XX€', day:'5 j', image: require('../assets/images/image5x.png') }
     
-    // Ajoutez d'autres produits ici...
   ];
 
   return (
@@ -29,11 +27,9 @@ const ProductGrid: React.FC = () => {
 
 const styles = StyleSheet.create({
   grid: {
-    // Styles pour la vue englobante de la grille
     padding: 10,
   },
   productItem: {
-    // Styles pour chaque élément de produit
     borderWidth: 1,
     borderColor: '#ddd',
     borderRadius: 4,
@@ -42,7 +38,6 @@ const styles = StyleSheet.create({
     minWidth: 230
   },
   productImage: {
-    // Styles pour l'image du produit
     width: '100%',
     height: 150,
     borderRadius: 4,
@@ -51,13 +46,11 @@ const styles = StyleSheet.create({
 
   },
   productName: {
-    // Styles pour le nom du produit
     marginTop: 8,
     fontSize: 16,
     fontWeight: 'bold',
   },
   productPrice: {
-    // Styles pour le prix du produit
     fontSize: 14,
     color: '#666',
     marginTop: 4,
