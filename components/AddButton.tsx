@@ -1,13 +1,22 @@
+import { useRouter } from "expo-router";
 import * as React from "react";
-import {Image, StyleSheet, Text, View} from "react-native";
+import {Image, StyleSheet, Text, TouchableOpacity} from "react-native";
 
-const AddButton = () => {
-  	
+type SelectionProps = {
+	path:any;
+}
+
+const AddButton:React.FC<SelectionProps> = ({path}) => {
+	
+	const router = useRouter();
+	const handlePress = () => {
+	  router.push(path)
+	};
   	return (
-    		<View style={styles.ajouter}>
+    		<TouchableOpacity style={styles.ajouter} onPress={handlePress}>
       			<Image style={styles.iconplus} resizeMode="cover" source={require('../assets/images/plus.png')} />
       			<Text style={styles.add}>Ajouter</Text>
-    		</View>);
+    		</TouchableOpacity>);
 };
 
 const styles = StyleSheet.create({

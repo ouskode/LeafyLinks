@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, ScrollView } from 'react-native';
 
 import SearchBar from '../../components/SearchBar';
 import PlantsList from '../../components/PlantsList';
+import AddButton from '../../components/AddButton';
 
 
 

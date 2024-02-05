@@ -15,11 +15,9 @@ export default function Layout() {
           screenOptions={{
               title: "Fleurs & Plantes ornementales",
               headerRight: () => (
-                <Link href="/modal" asChild>
                   <Pressable>
-                    <AddButton/>
+                    <AddButton path={'/addplants'}/>
                   </Pressable>
-                </Link>
               ),
                   
           }} />
