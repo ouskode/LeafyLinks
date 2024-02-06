@@ -22,6 +22,8 @@ export default function PlantesChildsScreen() {
 
   return (
     <View>
+      <Text style={styles.title}>{`Fleurs &
+Plantes ornementales`}</Text>
       <SearchBar onSearch={performSearch}/>
       <ScrollView style={styles.container}>
         {plantschild.map((plantschild, index) => (
@@ -39,6 +41,13 @@ const styles = StyleSheet.create({
     margin: 15
   },
   searchbar: {
+    margin: 10,
+  },
+  title: {
+    fontSize: 30,
+    letterSpacing: 0,
+    lineHeight: 41,
+    fontWeight: 'bold',
     margin: 10
   }
  

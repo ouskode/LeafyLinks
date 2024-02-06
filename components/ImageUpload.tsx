@@ -53,7 +53,8 @@ const ImageUpload = () => {
   return (
     <View style={styles.imageContainer}>
       <TouchableOpacity style={styles.image} onPress={pickImage}>
-        {!imageUri && <Text style={styles.title}>Upload votre photo</Text>}
+        {!imageUri && <Text style={styles.title}>Upload votre photo 
+        📷</Text>}
         {imageUri && <Image source={{ uri: imageUri }} style={styles.fullImage} />}
       </TouchableOpacity>
       <TouchableOpacity onPress={takePhoto} style={styles.takePhotoButton}>

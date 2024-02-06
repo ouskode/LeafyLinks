@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
   },
   detailsContainer: {
     flex: 1,
+    alignContent:"space-between"
   },
   bostonLettuce: {
     fontSize: 18,

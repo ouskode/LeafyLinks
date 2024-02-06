@@ -1,8 +1,6 @@
 import { Link, Stack, Tabs } from 'expo-router';
 import { Pressable, useColorScheme, Animated } from 'react-native';
 import AddButton from '../../components/AddButton';
-import { Component } from 'react';
-import PlantesChildsScreen from './plantschilds';
 import { AntDesign, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 
 export const unstable_settings = {
@@ -17,33 +15,28 @@ export default function Layout() {
     <Stack
           screenOptions={{
               title: "",
+              headerStyle:{
+                backgroundColor: 'transparent'
+              },
               headerRight: () => (
                   <Pressable>
                     <AddButton path={'/addplants'}/>
                   </Pressable>
-              ),          
+              ),
+             /*  headerLeft: () => (
+                <Link href="../index">
+                <Pressable>
+                  {({ pressed }) => (
+                  <FontAwesome
+                    name="info-circle"
+                    size={25}
+                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                  />
+                )}
+                </Pressable>
+                </Link>
+            ),             */
           } }>
-    <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Accueil',
-          tabBarIcon: ({  }) => <FontAwesome name="home" color='blue' />,
-        }}
-      />
-      <Tabs.Screen
-        name="plante"
-        options={{
-          title: 'Plantes',
-          tabBarIcon: ({ }) => <MaterialCommunityIcons name="flower-outline" color='green' />,
-        }}
-      />
-       <Tabs.Screen
-        name="profile"
-        options={{
-          title: 'Profile',
-          tabBarIcon: ({ color }) => <AntDesign name="profile" color={color} />,
-        }}
-      />
     </Stack>
     
   );
