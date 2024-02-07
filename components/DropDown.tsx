@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 
-const DropDown = ({ options, onSelect }) => {
+type SelectionProps = {
+  options: any;
+  onSelect: any;
+};
+
+const DropDown: React.FC<SelectionProps> = ({ options, onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
 
-  const handleSelectOption = (option) => {
+  const handleSelectOption = (option: React.SetStateAction<null>) => {
     setSelectedOption(option);
     setIsOpen(false);
     onSelect(option);
@@ -14,11 +19,11 @@ const DropDown = ({ options, onSelect }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={() => setIsOpen(!isOpen)}>
-        <Text style={styles.buttonText}>{selectedOption || 'Select an option'}</Text>
+        <Text style={styles.buttonText}>{selectedOption || 'Selectioner la catégorie'}</Text>
       </TouchableOpacity>
       {isOpen && (
         <ScrollView style={styles.optionsContainer}>
-          {options.map((option: string | number | boolean | React.SetStateAction<null> | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | undefined, index: React.Key | null | undefined) => (
+          {options.map((option:React.SetStateAction<null>, index: React.Key | null | undefined) => (
             <TouchableOpacity
               key={index}
               style={styles.option}
@@ -35,7 +40,7 @@ const DropDown = ({ options, onSelect }) => {
 
 const styles = StyleSheet.create({
   container: {
-    alignSelf: 'stretch',
+    alignSelf: 'auto',
   },
   button: {
     backgroundColor: '#007bff',
@@ -49,7 +54,6 @@ const styles = StyleSheet.create({
   optionsContainer: {
     maxHeight: 200, // Limite la hauteur du conteneur d'options pour éviter qu'il prenne trop de place
     backgroundColor: '#f0f0f0',
-    marginTop: 5,
     borderRadius: 5,
   },
   option: {

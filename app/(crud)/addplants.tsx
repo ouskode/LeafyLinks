@@ -6,7 +6,8 @@ import DropDown from '../../components/DropDown';
 
 
 export default function AddPlants() {
-  const options = ['Option 1', 'Option 2', 'Option 3'];
+
+  const options = ["Plantes d'intérieur", "Plantes d'extérieur", "Plantes aromatiques", "Plantes grasses", "Plantes à fleurs", "Plantes facile d'entretien", "Plantes de saison", "Plantes potagères"];
 
   const handleSelect = (option: any) => {
     console.log('Selected:', option);
