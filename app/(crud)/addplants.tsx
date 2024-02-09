@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import ImageUpload from '../../components/ImageUpload';
 import DropDown from '../../components/DropDown';
+import Location from '../../components/Location';
 
 
 
@@ -14,19 +15,20 @@ export default function AddPlants() {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text>Prendre ou upload photo</Text>
       <ImageUpload></ImageUpload>
-      <View style={{ marginTop: 50, marginHorizontal: 20 }}>
+      <Location style={styles.map}></Location>
+      <View style={{marginHorizontal: 20 }}>
       <DropDown options={options} onSelect={handleSelect} />
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    margin: 0
+    flex: 1
   },
 
 });
