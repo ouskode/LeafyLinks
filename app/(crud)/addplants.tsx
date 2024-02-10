@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import React , { StyleSheet, Text, View, ScrollView } from 'react-native';
 import ImageUpload from '../../components/ImageUpload';
 import DropDown from '../../components/DropDown';
 import Location from '../../components/Location';
@@ -18,7 +18,7 @@ export default function AddPlants() {
     <ScrollView style={styles.container}>
       <Text>Prendre ou upload photo</Text>
       <ImageUpload></ImageUpload>
-      <Location style={styles.map}></Location>
+      <Location></Location>
       <View style={{marginHorizontal: 20 }}>
       <DropDown options={options} onSelect={handleSelect} />
       </View>
