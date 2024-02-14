@@ -2,6 +2,7 @@ import React , { StyleSheet, Text, View, ScrollView } from 'react-native';
 import ImageUpload from '../../components/ImageUpload';
 import DropDown from '../../components/DropDown';
 import Location from '../../components/Location';
+import DateTime from '../../components/DateTime';
 
 
 
@@ -15,20 +16,45 @@ export default function AddPlants() {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <Text>Prendre ou upload photo</Text>
-      <ImageUpload></ImageUpload>
+    <ScrollView contentContainerStyle={styles.scrollView}>
+      <View>
       <Location></Location>
-      <View style={{marginHorizontal: 20 }}>
+      </View>
+      <Text style={styles.title}>Prendre ou upload Photo</Text>
+      <View>
+      <ImageUpload ></ImageUpload>
+      </View>
+      <View>
+      <Text style={styles.title}>Catégorie de plantes</Text>
       <DropDown options={options} onSelect={handleSelect} />
       </View>
+      <View style={styles.View}>
+      <Text style={styles.title}>Durée de la garde</Text>
+      </View>
+      <DateTime></DateTime>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollView: {
+    flex: 1, // Utilisez flex: 1 pour s'assurer que ScrollView utilise tout l'espace disponible
+  },
+  View: {
+    flex: 1,
+  },
   container: {
-    flex: 1
+    flexGrow: 1,
+
+    alignItems: 'center', // Centre les enfants horizontalement
+    padding: 10, // Ajoute un peu d'espace autour des bords du conteneur parent
+  },
+  title: {
+    alignSelf: "stretch",
+    paddingTop: 15,
+    fontSize: 20,
+    lineHeight: 20,
+    fontWeight: "700",
   },
 
 });

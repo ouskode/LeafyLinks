@@ -2,6 +2,7 @@ import { Link, Stack, Tabs } from 'expo-router';
 import { Pressable, useColorScheme, Animated } from 'react-native';
 import AddButton from '../../components/AddButton';
 import { AntDesign, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
+import React from 'react';
 
 export const unstable_settings = {
 

@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, View, Image, Text, ImageSourcePropType } from "react-native";
 import ButtonAddToCart from "./ButtonAddToCart";
 import HeartButton from "./HeartButton";
+import { router } from "expo-router";
 
 
 type SelectionProps = {
@@ -25,7 +26,7 @@ const PlantsList: React.FC<SelectionProps>  =  ({title, price, image}) => {
         </View>
         <View style={styles.buttonContainer}>
         <HeartButton onPress={() => console.log('Ajouté aux favoris')} />
-        <ButtonAddToCart onPress={() => console.log('Ajout au panier')} />
+        <ButtonAddToCart onPress={() => router.push('/(planteschild)/plantsmodal')} />
         </View>
       </View>
     </View>
@@ -70,6 +71,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: "row",
+    gap:10,
     marginTop: 4,
   },
   buttonSecondary: {

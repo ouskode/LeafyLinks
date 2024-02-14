@@ -16,8 +16,8 @@ const MapComponent: React.FC = () => {
       <MapView
         style={styles.map}
         initialRegion={{
-          latitude: 37.7749, // Exemple de coordonnées initiales (San Francisco)
-          longitude: -122.4194,
+          latitude: 43.600857, // Exemple de coordonnées initiales (San Francisco)
+          longitude: 3.911669,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
@@ -33,12 +33,14 @@ const MapComponent: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    ...StyleSheet.absoluteFillObject,
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
   map: {
-    ...StyleSheet.absoluteFillObject,
+    marginTop: 10,
+    width: 400, // Largeur fixe en pixels
+    height: 300, // Hauteur fixe en pixels
+    borderRadius: 10, // Optionnel: arrondit les coins de la carte
   },
 });
 

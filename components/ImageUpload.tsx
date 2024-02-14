@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 20,
+    marginTop: 5,
   },
   image: {
     borderRadius: 6,

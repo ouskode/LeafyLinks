@@ -3,6 +3,7 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import { useFonts, loadAsync } from 'expo-font';
 
 import { SplashScreen, Stack } from 'expo-router';
+import React from 'react';
 import { useEffect, useState } from 'react';
 import { useColorScheme } from 'react-native';
 
