@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, Image, Dimensions, TouchableOpacity, ImageSourcePropType } from 'react-native';
-import { useRouter } from 'expo-router';
+import { router } from 'expo-router';
 
 type SelectionProps = {
   title: string;
@@ -14,7 +14,6 @@ type SelectionProps = {
 
 const ItemCard: React.FC<SelectionProps> = ({title, number, image, path}) => {
 
-  const router = useRouter();
   const handlePress = () => {
     router.push(path)
   };
@@ -49,7 +48,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: undefined,
-    aspectRatio: 1, // Assurez-vous que l'image reste carrée
+    aspectRatio: 1,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
   },

@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { ImageBackground, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
-import Backdrop from '../../components/BackdropModal';
+import BackDropModal from '../../components/BackdropModal';
 import ImageModal from '../../components/ImageModal';
 
 
@@ -9,9 +9,7 @@ export default function PlantsModalScreen() {
   return (
     <ScrollView style={styles.container}>
       <ImageModal></ImageModal>
-      <Backdrop></Backdrop>
-      {/* Use a light status bar on iOS to account for the black space above the modal */}
-      <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
+      <BackDropModal id={0}></BackDropModal>
     </ScrollView>
   );
 }

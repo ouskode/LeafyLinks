@@ -2,28 +2,68 @@ import * as React from "react";
 import {StyleSheet, View, Text, Image} from "react-native";
 import HeartButton from "./HeartButton";
 import ButtonAddToCart from "./ButtonAddToCart";
+import { useEffect, useState } from "react";
+import Commentary from "./Commentary";
 
-const Backdrop = () => {
-  	
+type Props = {
+	id: number
+}
+
+type ApiData = {
+
+	name: string;
+	description: string;
+	assistant_start : EpochTimeStamp
+	assistant_end : EpochTimeStamp
+	price: string;
+  };
+
+const BackDropModal: React.FC<Props> = ({id}) => {
+	const [data, setData] = useState<ApiData | null>(null);
+
+	useEffect(() => {
+	  const fetchData = async () => {
+		try {
+		  const response = await fetch(`URL_DE_VOTRE_API/${id}`); // Remplacez par votre URL d'API réelle
+		  const jsonData = await response.json();
+		  setData(jsonData); // Stockez les données de l'API dans l'état
+		} catch (error) {
+		  console.error("Erreur lors du fetch des données de l'API :", error);
+		}
+	  };
+  
+	  fetchData();
+	}, [id]); // Le fetch est redéclenché si l'id change
+  
+	// Affichage conditionnel selon que les données sont chargées ou non
+	if (!data) {
+	  return <Text>Chargement...</Text>;
+	}
+  
   	return (
     		<View style={styles.backdrop}>
       			<View style={styles.backdropBase} />
       			<Text style={styles.bonsaiUlmusParvifolia}>Bonsai Ulmus Parvifolia</Text>
-      			<View style={[styles.buttonSecondary, styles.priceFlexBox]}>
+      		
+      			<View style={[styles.price, styles.priceFlexBox]}>
+        				<Text style={[styles.xxx, styles.xxxLayout]}>{data.price}</Text>
+        				<Text style={[styles.jours, styles.xxxLayout]}>€ / Jours</Text>
+      			</View>
+      			<Text style={[styles.title, styles.titleTypo]}>Instruction spéciales</Text>
+      			<Text style={[styles.text, styles.textTypo]}>{data.description}</Text>
+      			<Text style={[styles.text1, styles.textTypo]}>{`~ Durée estimée de X Jours
+        				Du  au XX/XX/XXXX`}</Text>
+				<View style={[styles.buttonSecondary, styles.priceFlexBox]}>
                   <HeartButton onPress={() => console.log('Ajouté aux favoris')} />
       			</View>
       			<View style={[styles.buttonprimaryWithIcon, styles.priceFlexBox]}>
                     <ButtonAddToCart onPress={() => console.log('Ajout au panier')} />
       			</View>
-      			<View style={[styles.price, styles.priceFlexBox]}>
-        				<Text style={[styles.xxx, styles.xxxLayout]}>X.XX</Text>
-        				<Text style={[styles.jours, styles.xxxLayout]}>€ / Jours</Text>
-      			</View>
       			<Text style={[styles.title, styles.titleTypo]}>Instruction spéciales</Text>
-      			<Text style={[styles.text, styles.textTypo]}>Lettuce is an annual plant of the daisy family, Asteraceae. It is most often grown as a leaf vegetable, but sometimes for its stem and seeds. Lettuce is most often used for salads, although it is also seen in other kinds of food, such as soups, sandwiches and wraps; it can also be grilled.</Text>
-      			<Text style={[styles.text1, styles.textTypo]}>{`~ Durée estimée de X Jours
-        				Du XX/XX/XXXX au XX/XX/XXXX`}</Text>
-    		</View>);
+				<Commentary></Commentary>
+    		</View>
+			
+			);
 };
 
 const styles = StyleSheet.create({
@@ -160,4 +200,4 @@ const styles = StyleSheet.create({
   	}
 });
 
-export default Backdrop;
+export default BackDropModal;

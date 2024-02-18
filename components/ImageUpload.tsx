@@ -6,7 +6,7 @@ const ImageUpload = () => {
   const [imageUri, setImageUri] = useState<string | null>(null);
 
   const getPermissionAsync = async () => {
-    // Demande de permission pour accéder à la caméra et à la bibliothèque d'images
+
     const cameraStatus = await ImagePicker.requestCameraPermissionsAsync();
     const cameraRollStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
@@ -24,7 +24,7 @@ const ImageUpload = () => {
       });
 
       if (!result.canceled) {
-        setImageUri(result.assets[0].uri); // Utilisation correcte de 'uri'
+        setImageUri(result.assets[0].uri);
       }
     } catch (E) {
       console.log(E);
@@ -39,7 +39,7 @@ const ImageUpload = () => {
       });
 
       if (!result.canceled) {
-        setImageUri(result.assets[0].uri); // Utilisation correcte de 'uri'
+        setImageUri(result.assets[0].uri); 
       }
     } catch (E) {
       console.log(E);
@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
   imageContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 5,
   },
   image: {
     borderRadius: 6,

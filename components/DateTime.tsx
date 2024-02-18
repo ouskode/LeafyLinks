@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-const DateTime = () => {
+type Props ={
+  title : String
+}
+
+const DateTime: React.FC<Props> = ({title}) => {
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
 
@@ -18,7 +22,7 @@ const DateTime = () => {
 
   return (
     <View style={styles.input}>
-      <Text style={styles.title}>Date de début</Text>
+      <Text style={styles.title}>{title}</Text>
       <TouchableOpacity onPress={showDatePicker} style={[styles.textfield, styles.infoSpaceBlock]}>
         <Text style={[styles.text, styles.textTypo]} numberOfLines={1}>
           {date.toLocaleDateString()}
