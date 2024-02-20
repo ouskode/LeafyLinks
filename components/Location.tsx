@@ -2,13 +2,20 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
-const MapComponent: React.FC = () => {
-  const [markerCoords, setMarkerCoords] = useState<{ latitude: number; longitude: number; } | null>(null);
+type Props = {
+  onSelect: any
+}
+
+const Location: React.FC<Props> = ({ onSelect }) => {
+  const [markerPosition, setMarkerPosition] = useState<{ latitude: number; longitude: number; } | null>(null);
 
   // La fonction de rappel pour gérer la pression sur la carte. Type d'événement inféré.
   const handleMapPress = (e: any) => {
-    setMarkerCoords(e.nativeEvent.coordinate);
-    // Ici, vous pouvez traiter les coordonnées, par exemple les envoyer à une API
+    const newLocation = {
+      latitude: e.nativeEvent.coordinate.latitude,
+      longitude: e.nativeEvent.coordinate.longitude,
+    };
+    onSelect(newLocation); // Appelle la fonction de rappel avec les nouvelles coordonnées
   };
 
   return (
@@ -23,9 +30,7 @@ const MapComponent: React.FC = () => {
         }}
         onPress={handleMapPress} // Gestionnaire pour la pression sur la carte
       >
-        {markerCoords && (
-          <Marker coordinate={markerCoords} /> // Marqueur positionné là où l'utilisateur a appuyé
-        )}
+        {markerPosition && (<Marker coordinate={markerPosition} />)}
       </MapView>
     </View>
   );
@@ -41,7 +46,18 @@ const styles = StyleSheet.create({
     width: 400, // Largeur fixe en pixels
     height: 300, // Hauteur fixe en pixels
     borderRadius: 10, // Optionnel: arrondit les coins de la carte
+    ...StyleSheet.absoluteFillObject,
+  },
+  coordinates: {
+    position: 'absolute',
+    bottom: 10,
+    backgroundColor: 'rgba(255,255,255,0.7)',
+    padding: 5,
   },
 });
 
-export default MapComponent;
+export default Location;
+function setMarkerCoords(coordinate: any) {
+  throw new Error('Function not implemented.');
+}
+
