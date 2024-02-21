@@ -3,12 +3,11 @@ jobs:
   preview:
     runs-on: ubuntu-latest
     steps:
-      - name: Check for EXPO_TOKEN
-        run: |
-          if [ -z "$(( secrets.EXPO_TOKEN ))" ]; then
-            echo "You must provide an EXPO_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
-            exit 1
-          fi
+      - name: "check is EXPO_TOKEN exists"
+        env:
+          super_secret: ${{ secrets.EXPO_TOKEN }}
+        if: ${{ env.super_secret == '' }}
+        run: 'echo "echo the secret \"EXPO_TOKEN\" has not been made; echo please go to \"settings \> secrets \> actions\" to create it'
 
       - name: 🏗 Setup repo
         uses: actions/checkout@v3
