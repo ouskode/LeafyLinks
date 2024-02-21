@@ -1,7 +1,13 @@
 import * as React from "react";
 import {Image, StyleSheet} from "react-native";
 
-const ImageModal = () => {
+
+
+type Props = {
+	id: number
+}
+
+const ImageModal: React.FC<Props> = ({id})  => {
   	
   	return (
     		<Image style={styles.mediaIcon} resizeMode="cover" source={require('../assets/images/bonzai3.png')} />);

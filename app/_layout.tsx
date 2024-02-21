@@ -2,7 +2,8 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts, loadAsync } from 'expo-font';
 import axios from 'axios';
-import { SplashScreen, Stack } from 'expo-router';
+import { AuthProvider } from '../context/AuthContext';
+import { Slot, SplashScreen, Stack } from 'expo-router';
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { useColorScheme } from 'react-native';
@@ -44,7 +45,10 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return (
+      <RootLayoutNav />
+  
+  );
 }
 
 function RootLayoutNav() {
@@ -52,11 +56,14 @@ function RootLayoutNav() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <AuthProvider>
+      <Slot/>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="(planteschild)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
       </Stack>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

@@ -8,7 +8,7 @@ import ImageModal from '../../components/ImageModal';
 export default function PlantsModalScreen() {
   return (
     <ScrollView style={styles.container}>
-      <ImageModal></ImageModal>
+      <ImageModal id={0}></ImageModal>
       <BackDropModal id={0}></BackDropModal>
     </ScrollView>
   );
