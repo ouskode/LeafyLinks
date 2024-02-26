@@ -24,6 +24,7 @@
       }
     },
     "android": {
+      "package": "com.leafylinks.LeafyLinks",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#ffffff"
