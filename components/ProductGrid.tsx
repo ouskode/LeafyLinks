@@ -1,15 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {Image, StyleSheet, ScrollView, Text, View } from 'react-native';
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
+
+type productstype = {
+  id: number;
+  name: string;
+  price: string;
+  day: string;
+  image: any;
+}
 
 const ProductGrid: React.FC = () => {
-  // Remplacez ceci par les données récupérées via une API ou un state
-  const products = [
-    { id: 1, name: 'Rosa pendulina', price: 'XX.XX€', day:'10 j', image: require('../assets/images/imageRose.png') },
-    { id: 2, name: 'Hyacinthoides non-scripta', price: 'XX.XX€', day:'5 j', image: require('../assets/images/image2x.png') },
-    { id: 3, name: 'Product 3', price: 'XX.XX€', day:'5 j', image: require('../assets/images/image5x.png') }
-    
-  ];
+  const [products, setProducts] = useState<productstype[]>([]); // Define state for products
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://leafylinks.maxim-le-cookie.fr/api/plants', {
+          headers: {
+            Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_KEY}`, // Replace with your actual bearer token
+            // Include other required headers, if any
+          },
+        }); // Replace with your API endpoint
+        if (!response.ok) {
+          throw new Error(`API request failed with status ${response.status}`);
+        }
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        // Handle errors appropriately, e.g., display an error message to the user
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.grid}>

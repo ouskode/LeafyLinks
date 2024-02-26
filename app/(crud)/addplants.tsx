@@ -20,7 +20,7 @@ export default function AddPlants() {
 
   const handleLocationSelect = (selectedLocation: { latitude: number; longitude: number; }) => {
     setLocation(selectedLocation);
-    // Ici, vous pouvez également effectuer d'autres actions comme préparer les données à envoyer à une API
+
   };
   const sendDataToAPI = async () => {
     try {
@@ -41,7 +41,6 @@ export default function AddPlants() {
         throw new Error('Something went wrong!');
       }
 
-      // Traiter la réponse de l'API ici
       const data = await response.json();
       console.log(data);
       Alert.alert("Succès", "Les données ont été envoyées avec succès.");
