@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { ImageBackground, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
-import BackDropModal from '../../components/BackdropModal';
-import ImageModal from '../../components/ImageModal';
+import BackDropModal from '../../../components/BackdropModal';
+import ImageModal from '../../../components/ImageModal';
 
 
 export default function PlantsModalScreen() {

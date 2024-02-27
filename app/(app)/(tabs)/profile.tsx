@@ -2,9 +2,9 @@ import { StyleSheet, Text, View } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
 
-import ProfileHeader from '../../components/ProfileHeader';
-import UserInfo from '../../components/UserInfo';
-import UserProfileCommentary from '../../components/UserProfileCommentary';
+import ProfileHeader from '../../../components/ProfileHeader';
+import UserInfo from '../../../components/UserInfo';
+import UserProfileCommentary from '../../../components/UserProfileCommentary';
 import React from 'react';
 
 

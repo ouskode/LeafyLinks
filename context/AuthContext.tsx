@@ -1,88 +1,53 @@
-// src/contexts/AuthContext.tsx
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
+import React from 'react';
+import { useStorageState } from './useStorageState';
 
-// Créez les types pour les valeurs du contexte
-type AuthContextType = {
-  userToken: string | null;
+// Définition du type pour le contexte d'authentification
+interface AuthContextType {
+  signIn: () => void;
+  signOut: () => void;
+  session?: string | null;
   isLoading: boolean;
-  signIn: (email: string, password: string) => Promise<void>;
-  signOut: () => Promise<void>;
-  register: (email: string,username:string, password: string) => Promise<void>;
-};
+}
 
-// Initialisez votre contexte avec une valeur par défaut
-export const AuthContext = createContext<AuthContextType>({
-  userToken: null,
-  isLoading: true,
-  signIn: async () => {},
-  signOut: async () => {},
-  register: async () => {},
+const AuthContext = React.createContext<AuthContextType>({
+  signIn: () => null, // Vous pouvez choisir de ne rien retourner dans ces fonctions ou d'ajuster selon la logique désirée.
+  signOut: () => null,
+  session: null,
+  isLoading: false,
 });
 
-// Créez un type pour les props du fournisseur
-type AuthProviderProps = {
-  children: ReactNode;
-};
+// Utilisation de l'interface pour les props du SessionProvider pour une meilleure typage des enfants (children)
+interface SessionProviderProps extends React.PropsWithChildren<{}> {}
 
-// Créez le fournisseur de contexte
-export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [userToken, setUserToken] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Chargez le jeton au démarrage de l'application
-  useEffect(() => {
-    const loadToken = async () => {
-      let token: any;
-      try {
-        token = await AsyncStorage.getItem('userToken');
-      } catch (e) {
-        console.error('Failed to load the token');
-      }
-      setUserToken(token);
-      setIsLoading(false);
-    };
-
-    loadToken();
-  }, []);
-
-  // Connectez l'utilisateur
-  const signIn = async (email: string, password: string) => {
-    try {
-      const response = await axios.post('api/users/login', { email, password });
-      const { token } = response.data;
-      await AsyncStorage.setItem('userToken', token);
-      setUserToken(token);
-    } catch (error) {
-      console.error('Failed to sign in', error);
+// Ce hook peut être utilisé pour accéder aux informations de l'utilisateur.
+export function useSession(): AuthContextType {
+  const value = React.useContext(AuthContext);
+  if (process.env.NODE_ENV !== 'production') {
+    if (!value) {
+      throw new Error('useSession must be wrapped in a <SessionProvider />');
     }
-  };
+  }
 
-  // Déconnectez l'utilisateur
-  const signOut = async () => {
-    try {
-      await AsyncStorage.removeItem('userToken');
-      setUserToken(null);
-    } catch (error) {
-      console.error('Failed to sign out', error);
-    }
-  };
+  return value;
+}
 
-  const register = async (email: string,username: string, password: string) => {
-    try {
-      const response = await axios.post('api/users/register', { email,username, password });
-      const { token } = response.data;
-      await AsyncStorage.setItem('userToken', token);
-      setUserToken(token);
-    } catch (error) {
-      console.error('Failed to register', error);
-    }
-  };
+export const SessionProvider: React.FC<SessionProviderProps> = (props) => {
+  const [[isLoading, session], setSession] = useStorageState('session');
 
   return (
-    <AuthContext.Provider value={{ userToken, isLoading, signIn, signOut, register }}>
-      {!isLoading ? children : null} // Affichez les enfants lorsque le chargement est terminé
+    <AuthContext.Provider
+      value={{
+        signIn: () => {
+          // Implémentez ici la logique de connexion
+          setSession('xxx');
+        },
+        signOut: () => {
+          setSession(null);
+        },
+        session,
+        isLoading,
+      }}>
+      {props.children}
     </AuthContext.Provider>
   );
 };

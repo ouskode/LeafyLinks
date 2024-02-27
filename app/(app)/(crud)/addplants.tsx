@@ -1,9 +1,9 @@
 import React, { useState } from 'react'; // Correction ici
 import { StyleSheet, Text, View, ScrollView, Alert, TouchableOpacity } from 'react-native';
-import ImageUpload from '../../components/ImageUpload';
-import DropDown from '../../components/DropDown';
-import Location from '../../components/Location';
-import DateTime from '../../components/DateTime';
+import ImageUpload from '../../../components/ImageUpload';
+import DropDown from '../../../components/DropDown';
+import Location from '../../../components/Location';
+import DateTime from '../../../components/DateTime';
 
 export default function AddPlants() {
   const [location, setLocation] = useState<{ latitude: number; longitude: number; } | null>(null);

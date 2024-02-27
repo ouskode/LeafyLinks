@@ -1,5 +1,5 @@
-import { Stack } from 'expo-router';
 import React from 'react';
+import { Stack } from 'expo-router';
 
 export const unstable_settings = {
   initialRouteName: '(tabs)',
@@ -8,7 +8,7 @@ export const unstable_settings = {
 export default function AppLayout() {
   return (
     <Stack>
-      <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="(root)" />
       <Stack.Screen
         name="login"
         options={{

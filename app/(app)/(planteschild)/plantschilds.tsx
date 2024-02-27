@@ -1,16 +1,16 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 
-import SearchBar from '../../components/SearchBar';
-import PlantsList from '../../components/PlantsList';
-import AddButton from '../../components/AddButton';
+import SearchBar from '../../../components/SearchBar';
+import PlantsList from '../../../components/PlantsList';
+
 import React from 'react';
 
 
 
 const plantschild = [
-  { id: 1, name: 'Bonsai Ulmus Parvifolia', price: 15.5, image: require('../../assets/images/bonzai1.png') },
-  { id: 2, name: 'Bonsai Carmona', price: 15.5, image: require('../../assets/images/bonzai2.png') },
-  { id: 3, name: 'Savoy Cabbage', price: 15.5, image: require('../../assets/images/bonzai3.png') },
+  { id: 1, name: 'Bonsai Ulmus Parvifolia', price: 15.5, image: require('../../../assets/images/bonzai1.png') },
+  { id: 2, name: 'Bonsai Carmona', price: 15.5, image: require('../../../assets/images/bonzai2.png') },
+  { id: 3, name: 'Savoy Cabbage', price: 15.5, image: require('../../../assets/images/bonzai3.png') },
   
 ];
 
