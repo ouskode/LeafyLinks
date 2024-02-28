@@ -3,13 +3,17 @@ import React from 'react';
 import { ImageBackground, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 import BackDropModal from '../../components/BackdropModal';
 import ImageModal from '../../components/ImageModal';
+import { useRoute } from "@react-navigation/native";
 
 
 export default function PlantsModalScreen() {
+  
+  const id = useRoute().params
+
   return (
     <ScrollView style={styles.container}>
       <ImageModal></ImageModal>
-      <BackDropModal id={0}></BackDropModal>
+      <BackDropModal id={id}></BackDropModal>
     </ScrollView>
   );
 }

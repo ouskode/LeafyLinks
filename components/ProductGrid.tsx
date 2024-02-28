@@ -14,6 +14,7 @@ import {Image, StyleSheet, ScrollView, Text, View } from 'react-native';
   garden_end: string | null;
   created_at: string;
   updated_at: string;
+  day: number;
   image?: string;
 
 }
@@ -35,8 +36,18 @@ const ProductGrid: React.FC = () => {
           throw new Error(`API request failed with status ${response.status}`);
         }
         const data = await response.json();
-        console.log(data);
-        setProducts(data.data);
+        const productsWithDays = data.data.map((product: { garden_end: string | number | Date; garden_start: string | number | Date; }) => {
+          // Assurez-vous que garden_end et garden_start ne sont pas null
+          if (product.garden_end && product.garden_start) {
+            const end = new Date(product.garden_end);
+            const start = new Date(product.garden_start);
+            const differenceInTime = end.getTime() - start.getTime();
+            const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+            return { ...product, day: differenceInDays };
+          }
+          return product;
+        });
+        setProducts(productsWithDays);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -74,7 +85,7 @@ const ProductGrid: React.FC = () => {
         <View key={index} style={styles.productItem}>
           {product.image && <Image source={{ uri: product.image }} style={styles.productImage} />}
           <Text style={styles.productName}>{product.name}</Text>
-          <Text style={styles.productPrice}> pour </Text>
+          <Text style={styles.productPrice}> pour {product.day} </Text>
           <Text style={styles.productIcon}>🌹</Text>
         </View>
       ))}
@@ -96,7 +107,8 @@ const styles = StyleSheet.create({
   },
   productImage: {
     width: '100%',
-    
+    height: 150,
+    borderRadius: 4,
   },
   productIcon:{
 

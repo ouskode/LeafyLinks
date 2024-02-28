@@ -14,7 +14,7 @@ export default async function getUser() {
         .catch(error => console.log('error', error));
 }
 
-export async function updateUser(username, email, password, phone, first_name, last_name, profile_picture, bio){
+export async function updateUser(username: any, email: any, password: any, phone: any, first_name: any, last_name: any, profile_picture: any, bio: any){
     const requestOptions = {
         method: "PUT",
         headers: {
@@ -59,7 +59,7 @@ export async function getUserById(id: { toString: () => string; }) {
         .catch(error => console.log('error', error));
 }
 
-export async function register(username, email, password){
+export async function register(username: any, email: any, password: any){
     const requestOptions = {
         method: "POST",
         headers: {
@@ -74,7 +74,7 @@ export async function register(username, email, password){
         .catch(error => console.log('error', error));
 }
 
-export async function login(email, password){
+export async function login(email: any, password: any){
     const requestOptions = {
         method: "POST",
         headers: {
