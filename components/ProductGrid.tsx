@@ -23,11 +23,13 @@ import {Image, StyleSheet, ScrollView, Text, View } from 'react-native';
 const ProductGrid: React.FC = () => {
 
   const [products, setProducts] = useState<productstype[]>([]); // Define state for products
+  const [imagesFetched, setImagesFetched] = useState(false);
 
   // Premier useEffect pour charger les données des produits
   useEffect(() => {
     const fetchData = async () => {
       try {
+
         const response = await fetch('https://leafylinks.maxim-le-cookie.fr/api/plants', {
           headers: {
             Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_KEY}`,
@@ -58,18 +60,18 @@ const ProductGrid: React.FC = () => {
   }, []);
 
   // Deuxième useEffect pour charger les images après que les produits ont été chargés
-  /*useEffect(() => {
+  useEffect(() => {
     const fetchProductImage = async (product: productstype) => {
       try {
-        await new Promise(f => setTimeout(f, 500));
-        const imageUrl = `https://trefle.io/api/v1/plants/${product.trefle_id}?token=-MzkPLMWtg_qzBIkk63Prcy5eiAkJ0aGf4otU9g1AKY`;
+        await new Promise(f => setTimeout(f, 1000));
+        const imageUrl = `https://trefle.io/api/v1/plants/${product.trefle_id}?token=MQwolJ6yPyPqf-UbqV0UvBZbwDXpCecofBAC1LPt7Ac`;
         const response = await fetch(imageUrl);
         if (!response.ok) {
           throw new Error(`Image request failed with status ${response.status}`);
         }
-        const imageData = await response.blob();
+        const imageData = await response.json();
         // Cette partie pourrait nécessiter un ajustement selon la manière dont vous souhaitez gérer les blobs d'images en React Native
-        const imageUri = URL.createObjectURL(imageData);
+        const imageUri = imageData.data.image_url;
         setProducts((prevProducts) =>
           prevProducts.map((p) => (p.id === product.id ? { ...p, image_trefle: imageUri } : p))
         );
@@ -78,14 +80,14 @@ const ProductGrid: React.FC = () => {
       }
     };
 
-    products.forEach(fetchProductImage);
-  }, [products]); // Cette dépendance pourrait causer un rechargement en boucle si les produits sont mis à jour à chaque fois. Assurez-vous de contrôler cela.
-*/
+    products.slice(0, 10).forEach(fetchProductImage);
+  }, []); // Cette dépendance pourrait causer un rechargement en boucle si les produits sont mis à jour à chaque fois. Assurez-vous de contrôler cela.
+
   return (
     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.grid}>
       {products.map((product, index) => (
         <View key={index} style={styles.productItem}>
-          {product.image && <Image source={{ uri: product.image }} style={styles.productImage} />}
+          {product.image_trefle && <Image source={{ uri: product.image_trefle }} style={styles.productImage} />}
           <Text style={styles.productName}>{product.name}</Text>
           <Text style={styles.productPrice}> pour {product.day} </Text>
           <Text style={styles.productIcon}>🌹</Text>

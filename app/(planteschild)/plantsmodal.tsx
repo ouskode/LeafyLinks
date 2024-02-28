@@ -12,7 +12,7 @@ export default function PlantsModalScreen() {
 
   return (
     <ScrollView style={styles.container}>
-      <ImageModal></ImageModal>
+      <ImageModal id={id} ></ImageModal>
       <BackDropModal id={id}></BackDropModal>
     </ScrollView>
   );

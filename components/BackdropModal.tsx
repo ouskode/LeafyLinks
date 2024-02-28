@@ -12,10 +12,9 @@ type Props = {
 type ApiData = {
 
 	name: string;
-	description: string;
+	desc: string;
 	assistant_start? : EpochTimeStamp
 	assistant_end? : EpochTimeStamp
-	image: any;
   };
 
 const BackDropModal: React.FC<Props> = ({id}) => {
@@ -48,26 +47,27 @@ const BackDropModal: React.FC<Props> = ({id}) => {
 	}
   
   	return (
-    		<View style={styles.backdrop}>
-      			<View style={styles.backdropBase} />
-      			<Text style={styles.bonsaiUlmusParvifolia}>{data.name}</Text>
+    		<><View style={styles.backdrop}>
+				<View style={styles.backdropBase} />
+				<Text style={styles.bonsaiUlmusParvifolia}>{data.name}</Text>
 				<View style={[styles.price, styles.priceFlexBox]}>
-        				<Text style={[styles.xxx, styles.xxxLayout]}>{}</Text>
-        				<Text style={[styles.jours, styles.xxxLayout]}>€ / Jours</Text>
-      			</View>
-      			<Text style={[styles.title, styles.titleTypo]}>Instruction spéciales</Text>
-      			<Text style={[styles.text, styles.textTypo]}>{data.description}</Text>
-      			<Text style={[styles.text1, styles.textTypo]}>{`~ Durée estimée de X Jours
+					<Text style={[styles.xxx, styles.xxxLayout]}></Text>
+					<Text style={[styles.jours, styles.xxxLayout]}> / Jours</Text>
+				</View>
+				<Text style={[styles.title, styles.titleTypo]}>Instruction spéciales</Text>
+				<Text style={[styles.text, styles.textTypo]}>{data.desc}</Text>
+				<Text style={[styles.text1, styles.textTypo]}>{`~ Durée estimée de X Jours
         				Du  au XX/XX/XXXX`}</Text>
 				<View style={[styles.buttonSecondary, styles.priceFlexBox]}>
-                  <HeartButton onPress={() => console.log('Ajouté aux favoris')} />
-      			</View>
-      			<View style={[styles.buttonprimaryWithIcon, styles.priceFlexBox]}>
-                    <ButtonAddToCart onPress={() => console.log('Ajout au panier')} />
-      			</View>
-      			<Text style={[styles.title, styles.titleTypo]}>Instruction spéciales</Text>
-				<Commentary></Commentary>
-    		</View>
+					<HeartButton onPress={() => console.log('Ajouté aux favoris')} />
+				</View>
+				<View style={[styles.buttonprimaryWithIcon, styles.priceFlexBox]}>
+					<ButtonAddToCart onPress={() => console.log('Ajout au panier')} />
+				</View>
+				<Text style={[styles.title, styles.titleTypo]}>Instruction spéciales</Text>
+			</View><View>
+					<Commentary></Commentary>
+				</View></>
 			
 			);
 };
