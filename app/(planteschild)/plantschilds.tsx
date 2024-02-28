@@ -61,7 +61,7 @@ export default function PlantesChildsScreen() {
 
     fetchData();
   }, []);
-
+/*
   // Deuxième useEffect pour charger les images après que les produits ont été chargés
   useEffect(() => {
     const fetchProductImage = async (product: plants) => {
@@ -84,6 +84,8 @@ export default function PlantesChildsScreen() {
 
     products.forEach(fetchProductImage);
   }, [products]); // Cette dépendance pourrait causer un rechargement en boucle si les produits sont mis à jour à chaque fois. Assurez-vous de contrôler cela.
+  */
+ 
   return (
     <View>
       <Text style={styles.title}>{`Fleurs &

@@ -15,7 +15,8 @@ import {Image, StyleSheet, ScrollView, Text, View } from 'react-native';
   created_at: string;
   updated_at: string;
   day: number;
-  image?: string;
+  image?: any;
+  image_trefle?:  any;
 
 }
 
@@ -57,9 +58,10 @@ const ProductGrid: React.FC = () => {
   }, []);
 
   // Deuxième useEffect pour charger les images après que les produits ont été chargés
-  useEffect(() => {
+  /*useEffect(() => {
     const fetchProductImage = async (product: productstype) => {
       try {
+        await new Promise(f => setTimeout(f, 500));
         const imageUrl = `https://trefle.io/api/v1/plants/${product.trefle_id}?token=-MzkPLMWtg_qzBIkk63Prcy5eiAkJ0aGf4otU9g1AKY`;
         const response = await fetch(imageUrl);
         if (!response.ok) {
@@ -69,7 +71,7 @@ const ProductGrid: React.FC = () => {
         // Cette partie pourrait nécessiter un ajustement selon la manière dont vous souhaitez gérer les blobs d'images en React Native
         const imageUri = URL.createObjectURL(imageData);
         setProducts((prevProducts) =>
-          prevProducts.map((p) => (p.id === product.id ? { ...p, image: imageUri } : p))
+          prevProducts.map((p) => (p.id === product.id ? { ...p, image_trefle: imageUri } : p))
         );
       } catch (error) {
         console.error('Error fetching image:', error);
@@ -78,7 +80,7 @@ const ProductGrid: React.FC = () => {
 
     products.forEach(fetchProductImage);
   }, [products]); // Cette dépendance pourrait causer un rechargement en boucle si les produits sont mis à jour à chaque fois. Assurez-vous de contrôler cela.
-
+*/
   return (
     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.grid}>
       {products.map((product, index) => (

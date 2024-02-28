@@ -13,23 +13,25 @@ type ApiData = {
 
 	name: string;
 	description: string;
-	assistant_start : EpochTimeStamp
-	assistant_end : EpochTimeStamp
-	price: string;
+	assistant_start? : EpochTimeStamp
+	assistant_end? : EpochTimeStamp
+	image: any;
   };
 
 const BackDropModal: React.FC<Props> = ({id}) => {
-	console.log(id);
-	const [data, setData] = useState<ApiData | null>(null);
 
+	const [data, setData] = useState<ApiData | null>(null);
 	useEffect(() => {
 	  const fetchData = async () => {
 		try {
-		  const response = await fetch(`https://leafylinks.maxim-le-cookie.fr/api/plants/${id}`,{
+		  const response = await fetch(`https://leafylinks.maxim-le-cookie.fr/api/plants/${id.id}`,{
 		  headers: {
             Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_KEY}`,
           },
         }); // Remplacez par votre URL d'API réelle
+		if (!response.ok) {
+			throw new Error(`API request failed with status ${response.status}`);
+		}
 		  const jsonData = await response.json();
 		  setData(jsonData.data); // Stockez les données de l'API dans l'état
 		} catch (error) {
@@ -49,7 +51,10 @@ const BackDropModal: React.FC<Props> = ({id}) => {
     		<View style={styles.backdrop}>
       			<View style={styles.backdropBase} />
       			<Text style={styles.bonsaiUlmusParvifolia}>{data.name}</Text>
-    
+				<View style={[styles.price, styles.priceFlexBox]}>
+        				<Text style={[styles.xxx, styles.xxxLayout]}>{}</Text>
+        				<Text style={[styles.jours, styles.xxxLayout]}>€ / Jours</Text>
+      			</View>
       			<Text style={[styles.title, styles.titleTypo]}>Instruction spéciales</Text>
       			<Text style={[styles.text, styles.textTypo]}>{data.description}</Text>
       			<Text style={[styles.text1, styles.textTypo]}>{`~ Durée estimée de X Jours
