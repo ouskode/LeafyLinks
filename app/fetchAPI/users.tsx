@@ -15,10 +15,13 @@ export default async function getUser() {
 }
 
 export async function updateUser(username: any, email: any, password: any, phone: any, first_name: any, last_name: any, profile_picture: any, bio: any){
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer 1|uWKAFpgmX5yOpganFyQyOK7HHjCXVRPzfGybOAtp82701a14");
+
     const requestOptions = {
         method: "PUT",
-        headers: {
-            "Authorization": "Bearer Bearer 1|uWKAFpgmX5yOpganFyQyOK7HHjCXVRPzfGybOAtp82701a14",
+        headers:
+            myHeaders,
             "username": username,
             "email": email,
             "password": password,
@@ -27,7 +30,6 @@ export async function updateUser(username: any, email: any, password: any, phone
             "last_name": last_name,
             "profile_picture": profile_picture,
             "bio": bio
-        }
     };
 
     fetch("https://leafylinks.maxim-le-cookie.fr/api/users/me", requestOptions)
