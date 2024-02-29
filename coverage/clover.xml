@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1708509499877" clover="3.2.0">
+  <project timestamp="1708509499878" name="All files">
+    <metrics statements="17" coveredstatements="10" conditionals="4" coveredconditionals="2" methods="5" coveredmethods="3" elements="26" coveredelements="15" complexity="0" loc="17" ncloc="17" packages="2" files="3" classes="3"/>
+    <package name="components">
+      <metrics statements="15" coveredstatements="8" conditionals="4" coveredconditionals="2" methods="5" coveredmethods="3"/>
+      <file name="StyledText.tsx" path="C:\Users\mxmco\Documents\epsi\LeafyLinks\components\StyledText.tsx">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="4" count="1" type="stmt"/>
+      </file>
+      <file name="Themed.tsx" path="C:\Users\mxmco\Documents\epsi\LeafyLinks\components\Themed.tsx">
+        <metrics statements="14" coveredstatements="7" conditionals="4" coveredconditionals="2" methods="4" coveredmethods="2"/>
+        <line num="25" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="28" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="44" count="0" type="stmt"/>
+        <line num="46" count="0" type="stmt"/>
+        <line num="50" count="0" type="stmt"/>
+        <line num="51" count="0" type="stmt"/>
+        <line num="53" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="constants">
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="Colors.ts" path="C:\Users\mxmco\Documents\epsi\LeafyLinks\constants\Colors.ts">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
