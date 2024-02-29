@@ -28,7 +28,6 @@ type plants = {
   updated_at: string;
   day: number;
   image?: string;
-  image_trefle?: string;
 
 }
 
@@ -67,15 +66,16 @@ export default function PlantesChildsScreen() {
   useEffect(() => {
     const fetchProductImage = async (product: plants) => {
       try {
-        const imageUrl = `https://trefle.io/api/v1/plants/${product.trefle_id}?token=MQwolJ6yPyPqf-UbqV0UvBZbwDXpCecofBAC1LPt7Ac`;
+        const imageUrl = `https://trefle.io/api/v1/plants/${product.trefle_id}?token=-MzkPLMWtg_qzBIkk63Prcy5eiAkJ0aGf4otU9g1AKY`;
         const response = await fetch(imageUrl);
         if (!response.ok) {
           throw new Error(`Image request failed with status ${response.status}`);
         }
-        const imageData = await response.json();
-        const imageUri = imageData.data.image_url;
+        const imageData = await response.blob();
+        // Cette partie pourrait nécessiter un ajustement selon la manière dont vous souhaitez gérer les blobs d'images en React Native
+        const imageUri = URL.createObjectURL(imageData);
         setProducts((prevProducts) =>
-          prevProducts.map((p) => (p.id === product.id ? { ...p, image_trefle: imageUri } : p))
+          prevProducts.map((p) => (p.id === product.id ? { ...p, image: imageUri } : p))
         );
       } catch (error) {
         console.error('Error fetching image:', error);
@@ -83,9 +83,7 @@ export default function PlantesChildsScreen() {
     };
 
     products.forEach(fetchProductImage);
-  }, []); 
-
- 
+  }, [products]); // Cette dépendance pourrait causer un rechargement en boucle si les produits sont mis à jour à chaque fois. Assurez-vous de contrôler cela.
   return (
     <View>
       <Text style={styles.title}>{`Fleurs &
@@ -93,7 +91,7 @@ Plantes ornementales`}</Text>
       <SearchBar onSearch={performSearch}/>
       <ScrollView style={styles.container}>
         {products.map((plantschild, index) => (
-        <PlantsList key={plantschild.id} id={plantschild.id} title={plantschild.name} price={plantschild.price} image={{ uri: plantschild.image_trefle }}></PlantsList>
+        <PlantsList key={plantschild.id} id={plantschild.id} title={plantschild.name} price={plantschild.price} image={{ uri: plantschild.image }}></PlantsList>
         ))}
       </ScrollView>
     </View>
