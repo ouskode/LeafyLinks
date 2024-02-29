@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
   },
   section: {
     marginBottom: 20, // Ajout d'une marge en bas pour espacer les sections
+    flex: 1
   },
   title: {
     fontSize: 20,
