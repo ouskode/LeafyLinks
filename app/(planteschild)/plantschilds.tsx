@@ -83,7 +83,7 @@ export default function PlantesChildsScreen() {
     };
 
     products.forEach(fetchProductImage);
-  }, [products]); // Cette dépendance pourrait causer un rechargement en boucle si les produits sont mis à jour à chaque fois. Assurez-vous de contrôler cela.
+  }, []); // Cette dépendance pourrait causer un rechargement en boucle si les produits sont mis à jour à chaque fois. Assurez-vous de contrôler cela.
   return (
     <View>
       <Text style={styles.title}>{`Fleurs &
@@ -91,7 +91,7 @@ Plantes ornementales`}</Text>
       <SearchBar onSearch={performSearch}/>
       <ScrollView style={styles.container}>
         {products.map((plantschild, index) => (
-        <PlantsList key={plantschild.id} id={plantschild.id} title={plantschild.name} price={plantschild.price} image={{ uri: plantschild.image }}></PlantsList>
+        <PlantsList key={index} id={plantschild.id} title={plantschild.name} price={plantschild.price} image={{ uri: plantschild.image }}></PlantsList>
         ))}
       </ScrollView>
     </View>
