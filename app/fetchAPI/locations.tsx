@@ -1,4 +1,4 @@
-export async function getLocationUser() {
+export default async function getLocationUser() {
     const myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer 1|uWKAFpgmX5yOpganFyQyOK7HHjCXVRPzfGybOAtp82701a14");
 
@@ -7,7 +7,7 @@ export async function getLocationUser() {
         headers: myHeaders
     };
 
-    fetch("https://leafylinks.maxim-le-cookie.fr/api/locations", requestOptions)
+    return await fetch("https://leafylinks.maxim-le-cookie.fr/api/locations", requestOptions)
         .then(response => response.json())
         .catch(error => console.log('error', error));
 }
@@ -17,7 +17,7 @@ export async function getLocationById(id: { toString: () => string; }) {
         method: "GET",
     };
 
-    fetch("https://leafylinks.maxim-le-cookie.fr/api/locations/"+id, requestOptions)
+    return await fetch("https://leafylinks.maxim-le-cookie.fr/api/locations/"+id, requestOptions)
         .then(response => response.json())
         .catch(error => console.log('error', error));
 }
@@ -27,7 +27,7 @@ export async function getLocationByIdLocation(idLocation: { toString: () => stri
         method: "GET",
     };
 
-    fetch("https://leafylinks.maxim-le-cookie.fr/api/locations/"+idLocation, requestOptions)
+    return await fetch("https://leafylinks.maxim-le-cookie.fr/api/locations/"+idLocation, requestOptions)
         .then(response => response.json())
         .catch(error => console.log('error', error));
 }
@@ -37,7 +37,7 @@ export async function getLocationByUserId(idUser: { toString: () => string; }) {
         method: "GET",
     };
 
-    fetch("https://leafylinks.maxim-le-cookie.fr/api/locations/user/"+idUser, requestOptions)
+    return await fetch("https://leafylinks.maxim-le-cookie.fr/api/locations/user/"+idUser, requestOptions)
         .then(response => response.json())
         .catch(error => console.log('error', error));
 }
@@ -56,7 +56,7 @@ export async function createLocation(idLocation: { toString: () => string; }, na
         "public": ispublic,
     };
 
-    fetch("https://leafylinks.maxim-le-cookie.fr/api/locations", requestOptions)
+    return await fetch("https://leafylinks.maxim-le-cookie.fr/api/locations", requestOptions)
         .then(response => response.json())
         .catch(error => console.log('error', error));
 }
@@ -75,7 +75,7 @@ export async function editLocation(idLocation: { toString: () => string; }, name
         "public": ispublic,
     };
 
-    fetch("https://leafylinks.maxim-le-cookie.fr/api/locations/"+idLocation, requestOptions)
+    return await fetch("https://leafylinks.maxim-le-cookie.fr/api/locations/"+idLocation, requestOptions)
         .then(response => response.json())
         .catch(error => console.log('error', error));
 }
@@ -89,7 +89,7 @@ export async function deleteLocation(idLocation: { toString: () => string; }) {
         headers: myHeaders,
     };
 
-    fetch("https://leafylinks.maxim-le-cookie.fr/api/locations/"+idLocation, requestOptions)
+    return await fetch("https://leafylinks.maxim-le-cookie.fr/api/locations/"+idLocation, requestOptions)
         .then(response => response.json())
         .catch(error => console.log('error', error));
 }
