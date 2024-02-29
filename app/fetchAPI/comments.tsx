@@ -19,7 +19,7 @@ export async function createComments(comment:string, plant_id:bigint ) {
         "plant_id":plant_id,
     };
 
-    fetch("https://leafylinks.maxim-le-cookie.fr/api/comments", requestOptions)
+    return await fetch("https://leafylinks.maxim-le-cookie.fr/api/comments", requestOptions)
         .then(response => response.json())
         .catch(error => console.log('error', error));
 }
@@ -34,7 +34,7 @@ export async function editComments(idComment: { toString: () => string; },commen
         "comment":comment,
     };
 
-    fetch("https://leafylinks.maxim-le-cookie.fr/api/comments/"+idComment, requestOptions)
+    return await fetch("https://leafylinks.maxim-le-cookie.fr/api/comments/"+idComment, requestOptions)
         .then(response => response.json())
         .catch(error => console.log('error', error));
 }
@@ -48,7 +48,7 @@ export async function deleteComments(idComment: { toString: () => string; } ) {
         headers: myHeaders,
     };
 
-    fetch("https://leafylinks.maxim-le-cookie.fr/api/comments/"+idComment, requestOptions)
+    return await fetch("https://leafylinks.maxim-le-cookie.fr/api/comments/"+idComment, requestOptions)
         .then(response => response.json())
         .catch(error => console.log('error', error));
 }
