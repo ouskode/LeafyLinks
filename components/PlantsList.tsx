@@ -23,7 +23,7 @@ const PlantsList: React.FC<SelectionProps>  =  ({id, title, price, image}) => {
         <Text style={[styles.bostonLettuce, styles.textTypo]}>{title}</Text>
         <View style={styles.priceContainer}>
           <Text style={[styles.text, styles.textTypo]}>{price}</Text>
-          <Text style={styles.piece}>€ / Jours</Text>
+          <Text style={styles.piece}> / Jours</Text>
         </View>
         <View style={styles.buttonContainer}>
         <HeartButton onPress={() => console.log('Ajouté aux favoris')} />

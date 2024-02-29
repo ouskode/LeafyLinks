@@ -1,13 +1,18 @@
-import React, { useState } from 'react'; // Correction ici
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, ScrollView, Alert, TouchableOpacity } from 'react-native';
-import ImageUpload from '../../components/ImageUpload';
 import DropDown from '../../components/DropDown';
 import Location from '../../components/Location';
 import DateTime from '../../components/DateTime';
+import ButtonAddToCart from '../../components/ButtonAddToCart';
+import { router } from 'expo-router';
+import { useRoute } from '@react-navigation/native';
 
 export default function AddPlants() {
+
+  const { imageUri } = useRoute().params
+  console.log(imageUri);
+  
   const [location, setLocation] = useState<{ latitude: number; longitude: number; } | null>(null);
-  const [selectedImageUri, setSelectedImageUri] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedDate, setSelectedDate] = useState(new Date());
   
@@ -23,6 +28,12 @@ export default function AddPlants() {
 
   };
   const sendDataToAPI = async () => {
+    const formData = new FormData();
+    formData.append('image', {
+      uri: imageUri,
+      type: 'image/jpeg', // ou le type correct de votre image
+      name: 'upload.jpg',
+    });
     try {
       const response = await fetch('URL_DE_VOTRE_API', {
         method: 'POST',
@@ -31,7 +42,6 @@ export default function AddPlants() {
         },
         body: JSON.stringify({
           location,
-          imageUri: selectedImageUri,
           category: selectedCategory,
           date: selectedDate,
         }),
@@ -52,9 +62,8 @@ export default function AddPlants() {
 
   return (
     <ScrollView contentContainerStyle={styles.scrollView}>
-      <Text style={styles.title}>Prendre ou upload Photo</Text>
       <View style={styles.section}>
-      <ImageUpload />
+      <ButtonAddToCart onPress={() => router.navigate('/addimage')} />
       </View>
       <View style={styles.section}>
       <Location onSelect={handleLocationSelect}/>
@@ -78,25 +87,21 @@ export default function AddPlants() {
 const styles = StyleSheet.create({
   scrollView: {
     flexGrow: 1,
-    justifyContent: 'flex-start',
-    padding: 20
   },
   section: {
-    padding: 20,
+    marginBottom: 20, // Ajout d'une marge en bas pour espacer les sections
   },
   title: {
-    alignSelf: "stretch",
-    paddingTop: 15,
     fontSize: 20,
-    lineHeight: 20,
     fontWeight: "700",
-    paddingBottom: 10, // Ajouté pour espacer le titre du contenu suivant
+    marginBottom: 10, // Ajout d'une marge en bas pour espacer le titre du contenu suivant
   },
   submitButton: {
     backgroundColor: 'blue',
     padding: 10,
     borderRadius: 5,
-    marginTop: 20,
+    alignSelf: 'center', // Centrer le bouton dans le ScrollView
+    width: '90%', // Définir une largeur pour le bouton
   },
   submitButtonText: {
     color: 'white',

@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Image, View, TouchableOpacity, Text, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import { router, useNavigation } from 'expo-router';
 
-const ImageUpload = () => {
+
+type NavigationProp = {
+  navigate: (screen: string, params?: Record<string, unknown>) => void;
+};
+
+const ImageUpload: React.FC = () => {
   const [imageUri, setImageUri] = useState<string | null>(null);
+  const navigation = useNavigation<NavigationProp>();
 
   const getPermissionAsync = async () => {
 
@@ -60,6 +67,9 @@ const ImageUpload = () => {
       <TouchableOpacity onPress={takePhoto} style={styles.takePhotoButton}>
         <Text>Prendre une photo</Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('addplants',{imageUri} )} style={styles.takePhotoButton}>
+        <Text>Prêt à envoyer l'image</Text>
+        </TouchableOpacity>
     </View>
   );
 };
