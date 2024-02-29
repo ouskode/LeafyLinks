@@ -63,14 +63,12 @@ const ProductGrid: React.FC = () => {
   useEffect(() => {
     const fetchProductImage = async (product: productstype) => {
       try {
-        await new Promise(f => setTimeout(f, 1000));
         const imageUrl = `https://trefle.io/api/v1/plants/${product.trefle_id}?token=MQwolJ6yPyPqf-UbqV0UvBZbwDXpCecofBAC1LPt7Ac`;
         const response = await fetch(imageUrl);
         if (!response.ok) {
           throw new Error(`Image request failed with status ${response.status}`);
         }
         const imageData = await response.json();
-        // Cette partie pourrait nécessiter un ajustement selon la manière dont vous souhaitez gérer les blobs d'images en React Native
         const imageUri = imageData.data.image_url;
         setProducts((prevProducts) =>
           prevProducts.map((p) => (p.id === product.id ? { ...p, image_trefle: imageUri } : p))
@@ -80,8 +78,8 @@ const ProductGrid: React.FC = () => {
       }
     };
 
-    products.slice(0, 10).forEach(fetchProductImage);
-  }, []); // Cette dépendance pourrait causer un rechargement en boucle si les produits sont mis à jour à chaque fois. Assurez-vous de contrôler cela.
+    products.forEach(fetchProductImage);
+  }, []); 
 
   return (
     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.grid}>

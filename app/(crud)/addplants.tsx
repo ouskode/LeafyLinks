@@ -5,8 +5,13 @@ import Location from '../../components/Location';
 import DateTime from '../../components/DateTime';
 import ButtonAddToCart from '../../components/ButtonAddToCart';
 import { router } from 'expo-router';
+import { useRoute } from '@react-navigation/native';
 
 export default function AddPlants() {
+
+  const { imageUri } = useRoute().params
+  console.log(imageUri);
+  
   const [location, setLocation] = useState<{ latitude: number; longitude: number; } | null>(null);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -23,6 +28,12 @@ export default function AddPlants() {
 
   };
   const sendDataToAPI = async () => {
+    const formData = new FormData();
+    formData.append('image', {
+      uri: imageUri,
+      type: 'image/jpeg', // ou le type correct de votre image
+      name: 'upload.jpg',
+    });
     try {
       const response = await fetch('URL_DE_VOTRE_API', {
         method: 'POST',

@@ -1,6 +1,5 @@
-import * as React from "react";
-import { useEffect, useState } from "react";
-import {Image, StyleSheet} from "react-native";
+import React, { useEffect, useState } from 'react';
+import { Image, StyleSheet } from 'react-native';
 
 type Prop = {
 	id: any;
@@ -9,8 +8,8 @@ type Prop = {
 type ApiData = {
 	id: any;
 	trefle_id: any;
-	image: any;
-  };
+	image?: string;
+}
 
 const ImageModal : React.FC<Prop> = ({id}) => {
 	const [datas, setData] = useState<ApiData | null>(null);
@@ -35,9 +34,30 @@ const ImageModal : React.FC<Prop> = ({id}) => {
 		  fetchData();
 		}, [id]); // Le fetch est redéclenché si l'id change
 
-
+	// Deuxième useEffect pour charger les images après que les produits ont été chargés
+	useEffect(() => {
+		if (datas) { // Vérifie si datas n'est pas null
+		  const fetchProductImage = async () => {
+			try {
+			  const imageUrl = `https://trefle.io/api/v1/plants/${datas.trefle_id}?token=MQwolJ6yPyPqf-UbqV0UvBZbwDXpCecofBAC1LPt7Ac`;
+			  const response = await fetch(imageUrl);
+			  if (!response.ok) {
+				throw new Error(`Image request failed with status ${response.status}`);
+			  }
+			  const imageData = await response.json();
+			  const imageUri = imageData.data.image_url; // Assurez-vous que ce chemin est correct
+			  setData(currentData => ({ ...currentData, image: imageUri }));
+			} catch (error) {
+			  console.error('Error fetching image:', error);
+			}
+		  };
+	
+		  fetchProductImage();
+		}
+	  }, [datas]); // Exécutez ce useEffect lorsque datas est mis à jour
+	
   	return (
-    		<Image style={styles.mediaIcon} resizeMode="cover" source={{ uri: id.image}} />);
+    		<Image style={styles.mediaIcon} resizeMode="cover" source={{ uri: datas?.image}} />);
 };
 
 const styles = StyleSheet.create({

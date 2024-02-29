@@ -82,7 +82,7 @@ export default function PlantesChildsScreen() {
       }
     };
 
-    products.slice(0, 10).forEach(fetchProductImage);
+    products.forEach(fetchProductImage);
   }, []); 
 
  

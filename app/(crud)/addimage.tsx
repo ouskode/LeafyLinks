@@ -5,34 +5,8 @@ import ImageUpload from '../../components/ImageUpload';
 
 
 export default function AddImage() {
-  const [selectedImageUri, setSelectedImageUri] = useState('');
-
 
   
-  const sendDataToAPI = async () => {
-    try {
-      const response = await fetch('URL_DE_VOTRE_API', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          imageUri: selectedImageUri,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Something went wrong!');
-      }
-
-      const data = await response.json();
-      console.log(data);
-      Alert.alert("Succès", "Les données ont été envoyées avec succès.");
-    } catch (error) {
-      console.error(error);
-      Alert.alert("Erreur", "Une erreur s'est produite lors de l'envoi des données.");
-    }
-  };
 
   return (
     <View>
