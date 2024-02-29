@@ -72,7 +72,7 @@ export async function getPlantByLocation(idLocation: { toString: () => string; }
         method: "GET",
     };
 
-    return await fetch("https://leafylinks.maxim-le-cookie.fr/api/plants/"+idLocation, requestOptions)
+    return await fetch("https://leafylinks.maxim-le-cookie.fr/api/locations/"+idLocation+"/plants", requestOptions)
         .then(response => response.json())
         .catch(error => console.log('error', error));
 }
