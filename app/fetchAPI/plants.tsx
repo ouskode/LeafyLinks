@@ -86,3 +86,13 @@ export async function getPlantsComment(id: { toString: () => string; }){
         .then(response => response.json())
         .catch(error => console.log('error', error));
 }
+
+export async function searchPlant(query:any,limit:any) {
+    var requestOptions = {
+        method: 'GET',
+    };
+
+    return await fetch("https://leafylinks.maxim-le-cookie.fr/api/plants/search/query="+query+"&limit="+limit, requestOptions)
+        .then(response => response.json())
+        .catch(error => console.log('error', error));
+}
