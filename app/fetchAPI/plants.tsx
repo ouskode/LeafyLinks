@@ -1,4 +1,4 @@
-export default async function getPlant() {
+export default async function getPlants() {
     var requestOptions = {
         method: 'GET',
     };
