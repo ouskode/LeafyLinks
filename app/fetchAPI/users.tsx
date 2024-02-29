@@ -32,7 +32,7 @@ export async function updateUser(username: string, email: string, password: stri
             "bio": bio
     };
 
-    fetch("https://leafylinks.maxim-le-cookie.fr/api/users/me", requestOptions)
+    return await fetch("https://leafylinks.maxim-le-cookie.fr/api/users/me", requestOptions)
         .then(response => response.json())
         .catch(error => console.log('error', error));
 }
@@ -46,7 +46,7 @@ export async function deleteUser(){
         headers: myHeaders,
     };
 
-    fetch("https://leafylinks.maxim-le-cookie.fr/api/users/me", requestOptions)
+    return await fetch("https://leafylinks.maxim-le-cookie.fr/api/users/me", requestOptions)
         .then(response => response.json())
         .catch(error => console.log('error', error));
 }
