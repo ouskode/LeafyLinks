@@ -14,7 +14,7 @@ export default async function getUser() {
         .catch(error => console.log('error', error));
 }
 
-export async function updateUser(username: any, email: any, password: any, phone: any, first_name: any, last_name: any, profile_picture: any, bio: any){
+export async function updateUser(username: string, email: string, password: string, phone: string, first_name: string, last_name: string, profile_picture: string, bio: string){
     const myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer 1|uWKAFpgmX5yOpganFyQyOK7HHjCXVRPzfGybOAtp82701a14");
 
@@ -61,7 +61,7 @@ export async function getUserById(id: { toString: () => string; }) {
         .catch(error => console.log('error', error));
 }
 
-export async function register(username: any, email: any, password: any){
+export async function register(username: string, email: string, password: string){
     const requestOptions = {
         method: "POST",
         headers: {
@@ -76,7 +76,7 @@ export async function register(username: any, email: any, password: any){
         .catch(error => console.log('error', error));
 }
 
-export async function login(email: any, password: any){
+export async function login(email: string, password: string){
     const requestOptions = {
         method: "POST",
         headers: {
