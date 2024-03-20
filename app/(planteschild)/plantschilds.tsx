@@ -27,19 +27,20 @@ type plants = {
   created_at: string;
   updated_at: string;
   day: number;
-  image?: string;
+  image?: any;
+  image_trefle?: any;
 
 }
 
 export default function PlantesChildsScreen() {
 
   const performSearch = (query: any) => {
-    // Effectuez la recherche avec la requête `query`
+    
     console.log('Recherche pour :', query);
   }
-  const [products, setProducts] = useState<plants[]>([]); // Define state for products
+  const [products, setProducts] = useState<plants[]>([]);
 
-   // Premier useEffect pour charger les données des produits
+  
    useEffect(() => {
     const fetchData = async () => {
       try {
@@ -62,7 +63,7 @@ export default function PlantesChildsScreen() {
     fetchData();
   }, []);
 
-  // Deuxième useEffect pour charger les images après que les produits ont été chargés
+  
   useEffect(() => {
     const fetchProductImage = async (product: plants) => {
       try {
@@ -71,9 +72,8 @@ export default function PlantesChildsScreen() {
         if (!response.ok) {
           throw new Error(`Image request failed with status ${response.status}`);
         }
-        const imageData = await response.blob();
-        // Cette partie pourrait nécessiter un ajustement selon la manière dont vous souhaitez gérer les blobs d'images en React Native
-        const imageUri = URL.createObjectURL(imageData);
+        const imageData = await response.json();
+        const imageUri = imageData.data.image_url;
         setProducts((prevProducts) =>
           prevProducts.map((p) => (p.id === product.id ? { ...p, image: imageUri } : p))
         );
@@ -82,8 +82,8 @@ export default function PlantesChildsScreen() {
       }
     };
 
-    products.forEach(fetchProductImage);
-  }, []); // Cette dépendance pourrait causer un rechargement en boucle si les produits sont mis à jour à chaque fois. Assurez-vous de contrôler cela.
+    products.slice(0, 5).forEach(fetchProductImage);
+  }, []);
   return (
     <View>
       <Text style={styles.title}>{`Fleurs &

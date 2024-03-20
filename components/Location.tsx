@@ -9,13 +9,13 @@ type Props = {
 const Location: React.FC<Props> = ({ onSelect }) => {
   const [markerPosition, setMarkerPosition] = useState<{ latitude: number; longitude: number; } | null>(null);
 
-  // La fonction de rappel pour gérer la pression sur la carte. Type d'événement inféré.
+  
   const handleMapPress = (e: any) => {
     const newLocation = {
       latitude: e.nativeEvent.coordinate.latitude,
       longitude: e.nativeEvent.coordinate.longitude,
     };
-    onSelect(newLocation); // Appelle la fonction de rappel avec les nouvelles coordonnées
+    onSelect(newLocation);
   };
 
   return (
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     width: 400, // Largeur fixe en pixels
     height: 300, // Hauteur fixe en pixels
     borderRadius: 10, // Optionnel: arrondit les coins de la carte
-    ...StyleSheet.absoluteFillObject,
+    // ...StyleSheet.absoluteFillObject,
   },
   coordinates: {
     position: 'absolute',

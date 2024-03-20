@@ -20,19 +20,19 @@ const ImageModal : React.FC<Prop> = ({id}) => {
 			  headers: {
 				Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_KEY}`,
 			  },
-			}); // Remplacez par votre URL d'API réelle
+			}); 
 			if (!response.ok) {
 				throw new Error(`API request failed with status ${response.status}`);
 			}
 			  const jsonData = await response.json();
-			  setData(jsonData.data); // Stockez les données de l'API dans l'état
+			  setData(jsonData.data); 
 			} catch (error) {
 			  console.error("Erreur lors du fetch des données de l'API :", error);
 			}
 		  };
 	  
 		  fetchData();
-		}, [id]); // Le fetch est redéclenché si l'id change
+		}, [id]); 
 
 	// Deuxième useEffect pour charger les images après que les produits ont été chargés
 	useEffect(() => {
@@ -54,7 +54,7 @@ const ImageModal : React.FC<Prop> = ({id}) => {
 	
 		  fetchProductImage();
 		}
-	  }, [datas]); // Exécutez ce useEffect lorsque datas est mis à jour
+	  }, [datas]); 
 	
   	return (
     		<Image style={styles.mediaIcon} resizeMode="cover" source={{ uri: datas?.image}} />);
