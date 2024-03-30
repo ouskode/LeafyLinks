@@ -1,44 +1,37 @@
-import React from 'react';
+import React, { createContext, ReactNode } from 'react';
 import { useStorageState } from './useStorageState';
 
-// Définition du type pour le contexte d'authentification
-interface AuthContextType {
+interface AuthContextProps {
   signIn: () => void;
   signOut: () => void;
   session?: string | null;
   isLoading: boolean;
 }
 
-const AuthContext = React.createContext<AuthContextType>({
-  signIn: () => null, // Vous pouvez choisir de ne rien retourner dans ces fonctions ou d'ajuster selon la logique désirée.
+export const AuthContext = createContext<AuthContextProps>({
+  signIn: () => null,
   signOut: () => null,
   session: null,
   isLoading: false,
 });
 
-// Utilisation de l'interface pour les props du SessionProvider pour une meilleure typage des enfants (children)
-interface SessionProviderProps extends React.PropsWithChildren<{}> {}
-
-// Ce hook peut être utilisé pour accéder aux informations de l'utilisateur.
-export function useSession(): AuthContextType {
+export function useSession(): AuthContextProps {
   const value = React.useContext(AuthContext);
-  if (process.env.NODE_ENV !== 'production') {
-    if (!value) {
-      throw new Error('useSession must be wrapped in a <SessionProvider />');
-    }
+  if (process.env.NODE_ENV !== 'production' && !value) {
+    throw new Error('useSession must be wrapped in a <SessionProvider />');
   }
 
   return value;
 }
 
-export const SessionProvider: React.FC<SessionProviderProps> = (props) => {
+export function SessionProvider({ children }: { children: ReactNode }) {
   const [[isLoading, session], setSession] = useStorageState('session');
 
   return (
     <AuthContext.Provider
       value={{
         signIn: () => {
-          // Implémentez ici la logique de connexion
+          // Perform sign-in logic here
           setSession('xxx');
         },
         signOut: () => {
@@ -46,8 +39,9 @@ export const SessionProvider: React.FC<SessionProviderProps> = (props) => {
         },
         session,
         isLoading,
-      }}>
-      {props.children}
+      }}
+    >
+      {children}
     </AuthContext.Provider>
   );
-};
+}

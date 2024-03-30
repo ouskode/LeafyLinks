@@ -1,14 +1,17 @@
 import React from 'react';
-import { Stack } from 'expo-router';
+import { Redirect, Stack } from 'expo-router';
+import { Text } from 'react-native';
+import { useSession } from '../../context/AuthContext';
 
 export const unstable_settings = {
   initialRouteName: '(tabs)',
 };
 
 export default function AppLayout() {
+
   return (
     <Stack>
-      <Stack.Screen name="(root)" />
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen
         name="login"
         options={{
