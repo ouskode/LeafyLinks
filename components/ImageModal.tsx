@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
+
 
 type Prop = {
 	id: any;
@@ -18,7 +20,7 @@ const ImageModal : React.FC<Prop> = ({id}) => {
 			try {
 			  const response = await fetch(`https://leafylinks.maxim-le-cookie.fr/api/plants/${id.id}`,{
 			  headers: {
-				Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_KEY}`,
+				Authorization: `Bearer ${SecureStore.getItem('authToken')}`,
 			  },
 			}); 
 			if (!response.ok) {
@@ -39,7 +41,7 @@ const ImageModal : React.FC<Prop> = ({id}) => {
 		if (datas) { // Vérifie si datas n'est pas null
 		  const fetchProductImage = async () => {
 			try {
-			  const imageUrl = `https://trefle.io/api/v1/plants/${datas.trefle_id}?token=MQwolJ6yPyPqf-UbqV0UvBZbwDXpCecofBAC1LPt7Ac`;
+			  const imageUrl = `https://trefle.io/api/v1/plants/${datas.trefle_id}?token=-MzkPLMWtg_qzBIkk63Prcy5eiAkJ0aGf4otU9g1AKY`;
 			  const response = await fetch(imageUrl);
 			  if (!response.ok) {
 				throw new Error(`Image request failed with status ${response.status}`);

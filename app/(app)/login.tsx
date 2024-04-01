@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Text, View, Button, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, Image, TouchableOpacity } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 
 import { useSession } from '../../context/AuthContext';
@@ -47,27 +47,197 @@ const AuthModal = () => {
 
 
   return (
+    <View style={styles.container}>
+    <View style={styles.frameSpaceBlock}>
+      <View style={styles.frameWrapper}>
+        <View style={styles.frameGroup}>
+          <View style={styles.frameContainer}>
+            <View style={styles.frameView}>
+              <Image
+                style={styles.frameIcon}
+                resizeMode="cover"
+                source={require("../../assets/images/Frame.png")}
+              />
+              <Text style={styles.whatsYourPhone}>Authentification avec l'email</Text>
+            </View>
+            <Text style={styles.enterPhoneNumber}>Veuillez entrer votre email.</Text>
+          </View>
+            <View style={styles.frameGroup}>
+                <TextInput style={styles.mobileNumber}
+                placeholder='Email'
+                value={email}
+                onChangeText={setEmail}
+                />
 
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <View style={{ paddingBottom: 15 }}>
-          <Text>Login</Text>
-          <TextInput
-            placeholder="Email"
-            onChangeText={setEmail}
-          />
-          <TextInput
-            placeholder="Username"
-            onChangeText={setUsername}
-          />
-          <TextInput
-            placeholder="Password"
+
+            <TextInput style={styles.passwordTypo}
+            placeholder='Password'
+            value={password}
             onChangeText={setPassword}
             secureTextEntry
-          />
-          <Button title="Login" onPress={handleLogin} />
+            />
+
+            </View>
+  
         </View>
       </View>
-  );
+      <View style={[styles.frameParent1, styles.frameSpaceBlock]}>
+        <View style={styles.rectangleWrapper}>
+          <View style={styles.frameItem} />
+        </View>
+        <Text style={styles.resterConnect}>
+          <Text style={styles.seSouvenirDe}>Se souvenir de moi. {'\n'}</Text>
+          <Text style={styles.motDePasse}>Mot de passe oublié</Text>
+        </Text>
+      </View>
+    </View>
+    <TouchableOpacity style={styles.button2} onPress={handleLogin}>
+      <Text style={styles.buttonText2}>Continuer</Text>
+    </TouchableOpacity>
+  </View>
+);
 };
 
+const styles = StyleSheet.create({
+container: {
+  flex: 1,
+  width: "100%",
+},
+frameSpaceBlock: {
+  paddingVertical: 0,
+  paddingHorizontal: 16,
+},
+resterConnectTypo: {
+  lineHeight: 20,
+  fontSize: 15,
+  textAlign: "left",
+},
+passwordTypo: {
+  fontSize: 16,
+  color: "#797979",
+  textAlign: "left",
+  alignItems: "center",
+  height: 54,
+  borderColor: "#A9A9A9",
+  backgroundColor: "#f3f3f3",
+  borderRadius: 14,
+  flexDirection: "row",
+  borderWidth: 2,
+  borderStyle: "solid",
+  paddingVertical: 0,
+  paddingHorizontal: 16,
+  alignSelf: "stretch",
+},
+passwordWrapperBorder: {
+  alignItems: "center",
+  height: 54,
+  borderColor: "#A9A9A9",
+  backgroundColor: "#f3f3f3",
+  borderRadius: 14,
+  flexDirection: "row",
+  borderWidth: 2,
+  borderStyle: "solid",
+  paddingVertical: 0,
+  paddingHorizontal: 16,
+  alignSelf: "stretch",
+},
+frameIcon: {
+  width: 40,
+  height: 40,
+},
+whatsYourPhone: {
+  fontSize: 20,
+  fontWeight: "700",
+  color: "#1a1c29",
+  marginTop: 10,
+  textAlign: "left",
+},
+frameView: {
+  justifyContent: "center",
+},
+enterPhoneNumber: {
+  marginTop: 8,
+  color: "#797979",
+  alignSelf: "stretch",
+},
+frameContainer: {
+  justifyContent: "center",
+  alignSelf: "stretch",
+},
+mobileNumber: {
+  zIndex: 0,
+  alignItems: "center",
+  height: 54,
+  borderColor: "#A9A9A9",
+  backgroundColor: "#f3f3f3",
+  borderRadius: 14,
+  flexDirection: "row",
+  borderWidth: 2,
+  borderStyle: "solid",
+  paddingVertical: 0,
+  paddingHorizontal: 16,
+  alignSelf: "stretch",
+},
+frameGroup: {
+  alignSelf: "stretch",
+},
+frameWrapper1: {
+  marginTop: 24,
+  alignSelf: "stretch",
+},
+passwordWrapper: {
+  marginTop: 24,
+},
+frameWrapper: {
+  width: 360,
+},
+frameItem: {
+  borderRadius: 6,
+  borderColor: "#d7d7d7",
+  width: 20,
+  height: 20,
+  borderWidth: 2,
+  borderStyle: "solid",
+},
+rectangleWrapper: {
+  flexDirection: "row",
+},
+seSouvenirDe: {
+  color: "#797979",
+},
+motDePasse: {
+  textDecorationLine: "underline",
+  color: "#007aff",
+},
+resterConnect: {
+  height: 39,
+  marginLeft: 9,
+  flex: 1,
+},
+frameParent1: {
+  flexDirection: "row",
+  marginTop: 24,
+  alignSelf: "stretch",
+},
+frameParent: {
+  width: "100%",
+  flex: 1,
+  alignSelf: "stretch",
+},
+button2: {
+  backgroundColor: "#ffffff",
+  height: 54,
+  borderRadius: 14,
+  borderWidth:1,
+  justifyContent: "center",
+  alignItems: "center",
+  marginTop: 16,
+},
+buttonText2: {
+  color: "#1a1c29",
+  fontSize: 16,
+  fontWeight: "600",
+},
+
+  });
 export default AuthModal;
