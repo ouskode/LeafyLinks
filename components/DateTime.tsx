@@ -10,10 +10,11 @@ const DateTime: React.FC<Props> = ({title}) => {
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
 
-  const onChange = (event: any, selectedDate: Date) => {
+  const onChange = (event: any, selectedDate?: Date) => {
     const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
+    setShow(Platform.OS === 'ios'); // Pour iOS, vous pouvez vouloir garder le picker visible après la sélection
     setDate(currentDate);
+    onSelectDate(currentDate); // Passer la date au parent via le callback
   };
 
   const showDatePicker = () => {
@@ -35,6 +36,7 @@ const DateTime: React.FC<Props> = ({title}) => {
           mode="date"
           is24Hour={true}
           display="default"
+          onChange={onChange} // Assurez-vous d'ajouter l'écouteur d'événement onChange ici
         />
       )}
       <Text style={[styles.info, styles.textTypo]}>Requis</Text>

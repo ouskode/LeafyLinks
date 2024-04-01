@@ -5,66 +5,30 @@ import ButtonAddToCart from "./ButtonAddToCart";
 import { useEffect, useState } from "react";
 import Commentary from "./Commentary";
 
-type Props = {
-	id: any
-}
+const article = [
+    { id: 1, author: 'Botaniste', title: "Advide for grow up yout tree", contains: "Quo cognito Constantius ultra mortalem modum exarsit ac nequo casu idem Gallus de futuris incertus agitare quaedam conducentia saluti suae per itinera conaretur, remoti sunt omnes de industria milites agentes in civitatibus perviis." },
+];
 
-type ApiData = {
+const ReviewModal= () => {
 
-	name: string;
-	desc: string;
-	assistant_start? : EpochTimeStamp
-	assistant_end? : EpochTimeStamp
-  };
-
-const BackDropModal: React.FC<Props> = ({id}) => {
-
-	const [data, setData] = useState<ApiData | null>(null);
-	useEffect(() => {
-	  const fetchData = async () => {
-		try {
-		  const response = await fetch(`https://leafylinks.maxim-le-cookie.fr/api/plants/${id.id}`,{
-		  headers: {
-            Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_KEY}`,
-          },
-        }); // Remplacez par votre URL d'API réelle
-		if (!response.ok) {
-			throw new Error(`API request failed with status ${response.status}`);
-		}
-		  const jsonData = await response.json();
-		  setData(jsonData.data); // Stockez les données de l'API dans l'état
-		} catch (error) {
-		  console.error("Erreur lors du fetch des données de l'API :", error);
-		}
-	  };
-  
-	  fetchData();
-	}, [id]); // Le fetch est redéclenché si l'id change
-  
-	// Affichage conditionnel selon que les données sont chargées ou non
-	if (!data) {
-	  return <Text>Chargement...</Text>;
-	}
+	
   
   	return (
     		<><View style={styles.backdrop}>
 				<View style={styles.backdropBase} />
-				<Text style={styles.bonsaiUlmusParvifolia}>{data.name}</Text>
-				<View style={[styles.price, styles.priceFlexBox]}>
+                {article.map((article,index) => (
+				<><Text key={index} style={styles.bonsaiUlmusParvifolia}>{article.author}</Text>
+                <View style={[styles.price, styles.priceFlexBox]}>
 					<Text style={[styles.xxx, styles.xxxLayout]}></Text>
 					<Text style={[styles.jours, styles.xxxLayout]}> / Jours</Text>
 				</View>
-				<Text style={[styles.title, styles.titleTypo]}>Instruction spéciales</Text>
-				<Text style={[styles.text, styles.textTypo]}>{data.desc}</Text>
-				<Text style={[styles.text1, styles.textTypo]}>{`~ Durée estimée de X Jours
-        				Du  au XX/XX/XXXX`}</Text>
-				<View style={[styles.buttonSecondary, styles.priceFlexBox]}>
-					<HeartButton onPress={() => console.log('Ajouté aux favoris')} />
-				</View>
-				<View style={[styles.buttonprimaryWithIcon, styles.priceFlexBox]}>
-					<ButtonAddToCart onPress={() => console.log('Ajout au panier')} />
-				</View>
-				<Text style={[styles.title, styles.titleTypo]}>Instruction spéciales</Text>
+                <Text style={[styles.title, styles.titleTypo]}>Contenu de l'article</Text>
+                <Text style={[styles.text, styles.textTypo]}>{article.title}</Text>
+                <View style={[styles.buttonSecondary, styles.priceFlexBox]}>
+                    <HeartButton onPress={() => console.log('Ajouté aux favoris')} />
+                </View>
+                <Text style={[styles.title, styles.titleTypo]}>{article.contains}</Text></>
+                ))}
 			</View><View>
 					<Commentary></Commentary>
 				</View></>
@@ -206,4 +170,4 @@ const styles = StyleSheet.create({
   	}
 });
 
-export default BackDropModal;
+export default ReviewModal;

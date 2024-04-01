@@ -2,17 +2,18 @@ import React from "react";
 import { StyleSheet, View, Image, Text, ImageSourcePropType } from "react-native";
 import ButtonAddToCart from "./ButtonAddToCart";
 import HeartButton from "./HeartButton";
-import { router } from "expo-router";
+import { router } from 'expo-router';
 
 
 type SelectionProps = {
+  id: number;
   title: string;
   price: number;
-  image: ImageSourcePropType;
+  image: any;
 
 };
 
-const PlantsList: React.FC<SelectionProps>  =  ({title, price, image}) => {
+const PlantsList: React.FC<SelectionProps>  =  ({id, title, price, image}) => {
 
 
   return (
@@ -22,11 +23,11 @@ const PlantsList: React.FC<SelectionProps>  =  ({title, price, image}) => {
         <Text style={[styles.bostonLettuce, styles.textTypo]}>{title}</Text>
         <View style={styles.priceContainer}>
           <Text style={[styles.text, styles.textTypo]}>{price}</Text>
-          <Text style={styles.piece}>€ / Jours</Text>
+          <Text style={styles.piece}> / Jours</Text>
         </View>
         <View style={styles.buttonContainer}>
         <HeartButton onPress={() => console.log('Ajouté aux favoris')} />
-        <ButtonAddToCart onPress={() => router.push('/(planteschild)/plantsmodal')} />
+        <ButtonAddToCart onPress={() => router.navigate({ pathname: '/(planteschild)/plantsmodal', params: {id}})} />
         </View>
       </View>
     </View>

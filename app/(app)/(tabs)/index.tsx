@@ -14,7 +14,6 @@ import React from 'react';
 export default function TabOneScreen() {
 
   const performSearch = (query: any) => {
-    // Effectuez la recherche avec la requête `query`
     console.log('Recherche pour :', query);
   }
 
