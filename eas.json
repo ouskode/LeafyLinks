@@ -11,6 +11,9 @@
             "credentialsSource": "remote"
         },
         "production": {
+            "env":{
+                "EXPO_PUBLIC_API_URL": "https://leafylinks.maxim-le-cookie.fr/api/"
+            }
             "android": {
                 "image": "latest"
             },
