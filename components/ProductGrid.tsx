@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, ScrollView, Text, View } from "react-native";
+import * as SecureStore from 'expo-secure-store';
 
 type productstype = {
     id: number;
@@ -65,7 +66,7 @@ const ProductGrid: React.FC = () => {
                 "https://leafylinks.maxim-le-cookie.fr/api/plants",
                 {
                     headers: {
-                        Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_KEY}`,
+                        Authorization: `Bearer ${SecureStore.getItem}`,
                     },
                 }
             );
