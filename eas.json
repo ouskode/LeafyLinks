@@ -7,12 +7,38 @@
       "developmentClient": true,
       "distribution": "internal"
     },
-    "preview": {
-      "distribution": "internal"
+    "build": {
+        "preview": {
+            "distribution": "internal",
+            "android": {
+                "buildType": "apk"
+            },
+            "credentialsSource": "remote"
+        },
+        "production": {
+            "env":{
+                "EXPO_PUBLIC_API_URL": "https://leafylinks.maxim-le-cookie.fr/api/"
+            }
+            "android": {
+                "image": "latest"
+            },
+            "ios": {
+                "image": "latest"
+            }
+        }
+        "test": {
+            "env":{
+                "EXPO_PUBLIC_API_URL": "https://leafylinks.maxim-le-cookie.fr/api/"
+            }
+            "android": {
+                "image": "latest"
+            },
+            "ios": {
+                "image": "latest"
+            }
+        }
     },
-    "production": {}
-  },
-  "submit": {
-    "production": {}
-  }
+    "submit": {
+        "production": {}
+    }
 }
