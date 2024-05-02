@@ -38,6 +38,7 @@ const AuthModal = () => {
         
       } else {
         // Gérer les erreurs d'authentification
+        console.log("Erreur d'envoie a l'api.")
       }
     } catch (error) {
       console.error('Erreur de connexion :', error);
@@ -67,15 +68,16 @@ const AuthModal = () => {
                 placeholder='Email'
                 value={email}
                 onChangeText={setEmail}
+                autoComplete='email'
+                inputMode='email'
                 />
-
-
-            <TextInput style={styles.passwordTypo}
-            placeholder='Password'
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-            />
+                
+                <TextInput style={styles.passwordTypo}
+                placeholder='Password'
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
+                />
 
             </View>
   
@@ -153,6 +155,7 @@ whatsYourPhone: {
   textAlign: "left",
 },
 frameView: {
+  marginTop:155,
   justifyContent: "center",
 },
 enterPhoneNumber: {
@@ -179,6 +182,7 @@ mobileNumber: {
   alignSelf: "stretch",
 },
 frameGroup: {
+  gap:30,
   alignSelf: "stretch",
 },
 frameWrapper1: {
@@ -225,16 +229,17 @@ frameParent: {
   alignSelf: "stretch",
 },
 button2: {
-  backgroundColor: "#ffffff",
+  backgroundColor: "#007AFF",
   height: 54,
   borderRadius: 14,
   borderWidth:1,
   justifyContent: "center",
   alignItems: "center",
-  marginTop: 16,
+  maxWidth: 325,
+  marginLeft: 50
 },
 buttonText2: {
-  color: "#1a1c29",
+  color: "#ffffff",
   fontSize: 16,
   fontWeight: "600",
 },

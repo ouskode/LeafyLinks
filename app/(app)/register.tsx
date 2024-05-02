@@ -1,9 +1,10 @@
 // SignUpScreen.tsx
 import React, { useState, useContext } from 'react';
-import { View, TextInput, Button, StyleSheet, Text } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Text, Image, Pressable, TouchableOpacity } from 'react-native';
 import { AuthContext, useSession } from '../../context/AuthContext';
 import * as SecureStore from 'expo-secure-store';
 import { router } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 
 const SignUpScreen = () => {
   const [email, setEmail] = useState('');
@@ -38,6 +39,7 @@ const SignUpScreen = () => {
         
       } else {
         // Gérer les erreurs d'authentification
+        console.log("Erreur d'envoie a l'api.")
       }
     } catch (error) {
       console.error('Erreur de connexion :', error);
@@ -46,47 +48,205 @@ const SignUpScreen = () => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-        keyboardType="email-address"
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Username"
-        value={username}
-        onChangeText={setUsername}
-        autoCapitalize="none"
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Mot de passe"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        style={styles.input}
-      />
-      <Button title="S'inscrire" onPress={handleSignUp} />
+    <View style={styles.frameSpaceBlock}>
+      <View style={styles.frameWrapper}>
+        <View style={styles.frameGroup}>
+          <View style={styles.frameContainer}>
+            <View style={styles.frameView}>
+              <Image
+                style={styles.frameIcon}
+                resizeMode="cover"
+                source={require("../../assets/images/Frame.png")}
+              />
+              <Text style={styles.whatsYourPhone}>Inscrivez-vous.</Text>
+            </View>
+          </View>
+            <View style={styles.frameGroup}>
+                <TextInput style={styles.mobileNumber}
+                placeholder='Email'
+                value={email}
+                onChangeText={setEmail}
+                autoComplete='email'
+                inputMode='email'
+                autoCapitalize="none"
+                />
+                <TextInput style={styles.mobileNumber}
+                placeholder="Username"
+                value={username}
+                onChangeText={setUsername}
+                autoCapitalize="none"
+                />
+                <TextInput style={styles.passwordTypo}
+                placeholder='Password'
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
+                />
+
+            </View>
+  
+        </View>
+      </View>
+      <View style={[styles.frameParent1, styles.frameSpaceBlock]}>
+        <View style={styles.rectangleWrapper}>
+          <View style={styles.frameItem} />
+        </View>
+        <Text style={styles.resterConnect}>
+          <Text style={styles.seSouvenirDe}>Se souvenir de moi. {'\n'}</Text>
+          <Text style={styles.motDePasse}>Mot de passe oublié</Text>
+        </Text>
+      </View>
     </View>
-  );
+    <TouchableOpacity style={styles.button2} onPress={handleSignUp}>
+      <Text style={styles.buttonText2}>Continuer</Text>
+    </TouchableOpacity>
+  </View>
+);
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 16,
-  },
-  input: {
-    width: '100%',
-    marginVertical: 10,
-    borderWidth: 1,
-    padding: 10,
-    borderRadius: 5,
-  },
+container: {
+  flex: 1,
+  width: "100%",
+},
+frameSpaceBlock: {
+  paddingVertical: 0,
+  paddingHorizontal: 16,
+},
+resterConnectTypo: {
+  lineHeight: 20,
+  fontSize: 15,
+  textAlign: "left",
+},
+passwordTypo: {
+  fontSize: 16,
+  color: "#797979",
+  textAlign: "left",
+  alignItems: "center",
+  height: 54,
+  borderColor: "#A9A9A9",
+  backgroundColor: "#f3f3f3",
+  borderRadius: 14,
+  flexDirection: "row",
+  borderWidth: 2,
+  borderStyle: "solid",
+  paddingVertical: 0,
+  paddingHorizontal: 16,
+  alignSelf: "stretch",
+},
+passwordWrapperBorder: {
+  alignItems: "center",
+  height: 54,
+  borderColor: "#A9A9A9",
+  backgroundColor: "#f3f3f3",
+  borderRadius: 14,
+  flexDirection: "row",
+  borderWidth: 2,
+  borderStyle: "solid",
+  paddingVertical: 0,
+  paddingHorizontal: 16,
+  alignSelf: "stretch",
+},
+frameIcon: {
+  width: 40,
+  height: 40,
+},
+whatsYourPhone: {
+  fontSize: 20,
+  fontWeight: "700",
+  color: "#1a1c29",
+  marginTop: 10,
+  textAlign: "left",
+},
+frameView: {
+  marginTop:155,
+  justifyContent: "center",
+},
+enterPhoneNumber: {
+  marginTop: 8,
+  color: "#797979",
+  alignSelf: "stretch",
+},
+frameContainer: {
+  justifyContent: "center",
+  alignSelf: "stretch",
+},
+mobileNumber: {
+  zIndex: 0,
+  alignItems: "center",
+  height: 54,
+  borderColor: "#A9A9A9",
+  backgroundColor: "#f3f3f3",
+  borderRadius: 14,
+  flexDirection: "row",
+  borderWidth: 2,
+  borderStyle: "solid",
+  paddingVertical: 0,
+  paddingHorizontal: 16,
+  alignSelf: "stretch",
+},
+frameGroup: {
+  gap:30,
+  alignSelf: "stretch",
+},
+frameWrapper1: {
+  marginTop: 24,
+  alignSelf: "stretch",
+},
+passwordWrapper: {
+  marginTop: 24,
+},
+frameWrapper: {
+  width: 360,
+},
+frameItem: {
+  borderRadius: 6,
+  borderColor: "#d7d7d7",
+  width: 20,
+  height: 20,
+  borderWidth: 2,
+  borderStyle: "solid",
+},
+rectangleWrapper: {
+  flexDirection: "row",
+},
+seSouvenirDe: {
+  color: "#797979",
+},
+motDePasse: {
+  textDecorationLine: "underline",
+  color: "#007aff",
+},
+resterConnect: {
+  height: 39,
+  marginLeft: 9,
+  flex: 1,
+},
+frameParent1: {
+  flexDirection: "row",
+  marginTop: 24,
+  alignSelf: "stretch",
+},
+frameParent: {
+  width: "100%",
+  flex: 1,
+  alignSelf: "stretch",
+},
+button2: {
+  backgroundColor: "#007AFF",
+  height: 54,
+  borderRadius: 14,
+  borderWidth:1,
+  justifyContent: "center",
+  alignItems: "center",
+  maxWidth: 325,
+  marginLeft: 50
+},
+buttonText2: {
+  color: "#ffffff",
+  fontSize: 16,
+  fontWeight: "600",
+},
 });
 
 export default SignUpScreen;
