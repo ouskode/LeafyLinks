@@ -70,6 +70,7 @@ const AuthModal = () => {
                 onChangeText={setEmail}
                 autoComplete='email'
                 inputMode='email'
+                autoCapitalize="none"
                 />
                 
                 <TextInput style={styles.passwordTypo}
