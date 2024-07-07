@@ -18,7 +18,7 @@ const ImageModal : React.FC<Prop> = ({id}) => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-			  const response = await fetch(`https://leafylinks.maxim-le-cookie.fr/api/plants/${id.id}`,{
+			  const response = await fetch(new URL (`plants/${id.id}`,process.env.EXPO_PUBLIC_API_URL).href,{
 			  headers: {
 				Authorization: `Bearer ${SecureStore.getItem('authToken')}`,
 			  },
@@ -36,9 +36,8 @@ const ImageModal : React.FC<Prop> = ({id}) => {
 		  fetchData();
 		}, [id]); 
 
-	// Deuxième useEffect pour charger les images après que les produits ont été chargés
 	useEffect(() => {
-		if (datas) { // Vérifie si datas n'est pas null
+		if (datas) {
 		  const fetchProductImage = async () => {
 			try {
 			  const imageUrl = `https://trefle.io/api/v1/plants/${datas.trefle_id}?token=-MzkPLMWtg_qzBIkk63Prcy5eiAkJ0aGf4otU9g1AKY`;
@@ -47,7 +46,7 @@ const ImageModal : React.FC<Prop> = ({id}) => {
 				throw new Error(`Image request failed with status ${response.status}`);
 			  }
 			  const imageData = await response.json();
-			  const imageUri = imageData.data.image_url; // Assurez-vous que ce chemin est correct
+			  const imageUri = imageData.data.image_url;
 			  setData(currentData => ({ ...currentData, image: imageUri }));
 			} catch (error) {
 			  console.error('Error fetching image:', error);

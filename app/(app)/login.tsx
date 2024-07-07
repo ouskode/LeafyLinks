@@ -1,44 +1,61 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput, Image, TouchableOpacity } from 'react-native';
+import { useState } from 'react';
+import { StyleSheet, Text, View, Button, TextInput, Image, TouchableOpacity, Dimensions } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
+import Checkbox from 'expo-checkbox';
 
 import { useSession } from '../../context/AuthContext';
 import { router } from 'expo-router';
+import React from 'react';
 
 const AuthModal = () => {
+  const [isChecked, setChecked] = useState(false);
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isSelected, setSelection] = useState(false);
+  const [focused, setFocused] = useState(false);
+
+  const handleFocus = () => {
+    setFocused(true);
+  };
+
+  const handleBlur = () => {
+    setFocused(false);
+  };
+
+
   const { signIn } = useSession();
 
   const handleLogin = async () => {
 
     try {
-      // Envoyer les informations d'identification à votre API pour vérification
-      const response = await fetch('https://leafylinks.maxim-le-cookie.fr/api/users/login', {
+      const response = await fetch(new URL ('users/login',process.env.EXPO_PUBLIC_API_URL).href, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          email : email,
-          username : username,
-          password : password
+          email: email,
+          password: password,
         }),
       });
-
+    
+      const responseText = await response.text();
+    
       if (response.ok) {
-        const data = await response.json();
-        console.log(data.data)
-        // Stocker le jeton d'authentification en toute sécurité
-        await SecureStore.setItemAsync('authToken', JSON.stringify(data.data.token));
-        // Fermer le modal ou rediriger vers une autre page
+        const data = JSON.parse(responseText);
+        console.log('Data received:', data);
+        await SecureStore.setItemAsync('authToken', data.data.token);
         signIn();
         router.replace('/(app)/(tabs)/');
-        
       } else {
-        // Gérer les erreurs d'authentification
-        console.log("Erreur d'envoie a l'api.")
+        console.log('Erreur d\'authentification (raw response):', responseText);
+        try {
+          const errorData = JSON.parse(responseText);
+          console.log('Erreur d\'authentification (parsed):', errorData);
+        } catch (jsonError) {
+          console.error('Erreur d\'authentification (JSON parse error):', jsonError);
+        }
       }
     } catch (error) {
       console.error('Erreur de connexion :', error);
@@ -64,18 +81,22 @@ const AuthModal = () => {
             <Text style={styles.enterPhoneNumber}>Veuillez entrer votre email.</Text>
           </View>
             <View style={styles.frameGroup}>
-                <TextInput style={styles.mobileNumber}
+                <TextInput
                 placeholder='Email'
                 value={email}
                 onChangeText={setEmail}
-                autoComplete='email'
-                inputMode='email'
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                style={[styles.mail, focused ? { borderColor: '#007AFF' }: {borderColor: '#A9A9A9'}]}
                 />
                 
-                <TextInput style={styles.passwordTypo}
+                <TextInput
                 placeholder='Password'
                 value={password}
                 onChangeText={setPassword}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                style={[styles.passwordTypo, focused ? { borderColor: '#007AFF' }: {borderColor: '#A9A9A9'}]}
                 secureTextEntry
                 />
 
@@ -85,7 +106,12 @@ const AuthModal = () => {
       </View>
       <View style={[styles.frameParent1, styles.frameSpaceBlock]}>
         <View style={styles.rectangleWrapper}>
-          <View style={styles.frameItem} />
+        <Checkbox
+          style={styles.checkbox}
+          value={isChecked}
+          onValueChange={setChecked}
+          color={isChecked ? '#4630EB' : undefined}
+        />
         </View>
         <Text style={styles.resterConnect}>
           <Text style={styles.seSouvenirDe}>Se souvenir de moi. {'\n'}</Text>
@@ -167,11 +193,10 @@ frameContainer: {
   justifyContent: "center",
   alignSelf: "stretch",
 },
-mobileNumber: {
+mail: {
   zIndex: 0,
   alignItems: "center",
   height: 54,
-  borderColor: "#A9A9A9",
   backgroundColor: "#f3f3f3",
   borderRadius: 14,
   flexDirection: "row",
@@ -195,13 +220,8 @@ passwordWrapper: {
 frameWrapper: {
   width: 360,
 },
-frameItem: {
-  borderRadius: 6,
-  borderColor: "#d7d7d7",
-  width: 20,
-  height: 20,
-  borderWidth: 2,
-  borderStyle: "solid",
+checkbox: {
+  alignSelf: 'center',
 },
 rectangleWrapper: {
   flexDirection: "row",
@@ -235,8 +255,8 @@ button2: {
   borderWidth:1,
   justifyContent: "center",
   alignItems: "center",
-  maxWidth: 325,
-  marginLeft: 50
+  maxWidth: Dimensions.get('window').width*0.95,
+  marginLeft: Dimensions.get('window').width*0.025,
 },
 buttonText2: {
   color: "#ffffff",

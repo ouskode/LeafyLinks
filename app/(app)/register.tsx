@@ -1,22 +1,33 @@
 // SignUpScreen.tsx
-import React, { useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { View, TextInput, Button, StyleSheet, Text, Image, Pressable, TouchableOpacity } from 'react-native';
 import { AuthContext, useSession } from '../../context/AuthContext';
 import * as SecureStore from 'expo-secure-store';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import React from 'react';
+
 
 const SignUpScreen = () => {
   const [email, setEmail] = useState('');
   const [username, setUsername ] = useState('');
   const [password, setPassword] = useState('');
   const { signIn } = useSession();
+  const [focused, setFocused] = useState(false);
+
+  const handleFocus = () => {
+    setFocused(true);
+  };
+
+  const handleBlur = () => {
+    setFocused(false);
+  };
 
   const handleSignUp = async () => {
     
     try {
       // Envoyer les informations d'identification à votre API pour vérification
-      const response = await fetch('https://leafylinks.maxim-le-cookie.fr/api/users/register', {
+      const response = await fetch(new URL ('users/register',process.env.EXPO_PUBLIC_API_URL).href, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -31,14 +42,13 @@ const SignUpScreen = () => {
       if (response.ok) {
         const data = await response.json();
         console.log(data.data)
-        // Stocker le jeton d'authentification en toute sécurité
+        
         await SecureStore.setItemAsync('authToken', JSON.stringify(data.data.token));
-        // Fermer le modal ou rediriger vers une autre page
+
         signIn();
         router.replace('/(app)/(tabs)/');
         
       } else {
-        // Gérer les erreurs d'authentification
         console.log("Erreur d'envoie a l'api.")
       }
     } catch (error) {
@@ -62,25 +72,34 @@ const SignUpScreen = () => {
             </View>
           </View>
             <View style={styles.frameGroup}>
-                <TextInput style={styles.mobileNumber}
+                <TextInput
                 placeholder='Email'
                 value={email}
                 onChangeText={setEmail}
                 autoComplete='email'
                 inputMode='email'
                 autoCapitalize="none"
+                onBlur={handleBlur}
+                onFocus={handleFocus}
+                style={[styles.mobileNumber, focused ? { borderColor: '#007AFF' }: {borderColor: '#A9A9A9'}]}
                 />
-                <TextInput style={styles.mobileNumber}
+                <TextInput
                 placeholder="Username"
                 value={username}
                 onChangeText={setUsername}
                 autoCapitalize="none"
+                onBlur={handleBlur}
+                onFocus={handleFocus}
+                style={[styles.mobileNumber, focused ? { borderColor: '#007AFF' }: {borderColor: '#A9A9A9'}]}
                 />
-                <TextInput style={styles.passwordTypo}
+                <TextInput
                 placeholder='Password'
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
+                onBlur={handleBlur}
+                onFocus={handleFocus}
+                style={[styles.passwordTypo, focused ? { borderColor: '#007AFF' }: {borderColor: '#A9A9A9'}]}
                 />
 
             </View>

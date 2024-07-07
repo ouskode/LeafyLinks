@@ -15,7 +15,7 @@ export default function AddComments() {
 
   const sendDataToAPI = async () => {
     try {
-      const response = await fetch('https://leafylinks.maxim-le-cookie.fr/api/comments', {
+      const response = await fetch(new URL ('users/comments',process.env.EXPO_PUBLIC_API_URL).href, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${SecureStore.getItem}`,

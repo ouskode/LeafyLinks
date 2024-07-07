@@ -44,7 +44,7 @@ export default function PlantesChildsScreen() {
    useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://leafylinks.maxim-le-cookie.fr/api/plants', {
+        const response = await fetch(new URL ('plants',process.env.EXPO_PUBLIC_API_URL).href, {
           headers: {
             Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_KEY}`,
           },

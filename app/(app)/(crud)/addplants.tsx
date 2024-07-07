@@ -63,7 +63,7 @@ export default function AddPlants() {
         if (location) {
             try {
                 const locationResponse = await fetch(
-                    "https://leafylinks.maxim-le-cookie.fr/api/location",
+                    new URL ('plants/add',process.env.EXPO_PUBLIC_API_URL).href,
                     {
                         method: "POST",
                         headers: {
@@ -94,7 +94,7 @@ export default function AddPlants() {
                 });
 
                 const plantResponse = await fetch(
-                    "https://leafylinks.maxim-le-cookie.fr/api/plants",
+                    new URL ('plants',process.env.EXPO_PUBLIC_API_URL).href,
                     {
                         method: "POST",
                         headers: {
