@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 
-import SearchBar from '../../components/SearchBar';
-import ProductGrid from '../../components/ProductGrid'
-import BillBoard from '../../components/BillBoard';
-import CommentaryList from '../../components/CommentaryList';
-import TopProduct from '../../components/TopProduct';
+import SearchBar from '../../../components/SearchBar';
+import ProductGrid from '../../../components/ProductGrid'
+import BillBoard from '../../../components/BillBoard';
+import CommentaryList from '../../../components/CommentaryList';
+import TopProduct from '../../../components/TopProduct';
+import React from 'react';
 
 
 
@@ -13,14 +14,12 @@ import TopProduct from '../../components/TopProduct';
 export default function TabOneScreen() {
 
   const performSearch = (query: any) => {
-    // Effectuez la recherche avec la requête `query`
     console.log('Recherche pour :', query);
   }
 
   return (
     <ScrollView style={styles.container} scrollEventThrottle={16}>
       <BillBoard/>
-      <SearchBar onSearch={performSearch}/>
       <View style={styles.separator} />
       <ProductGrid></ProductGrid>
       <CommentaryList></CommentaryList>

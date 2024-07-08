@@ -1,6 +1,6 @@
 {
     "cli": {
-        "version": ">= 0.52.0"
+        "version": ">= 7.3.0"
     },
     "build": {
         "preview": {
@@ -9,28 +9,6 @@
                 "buildType": "apk"
             },
             "credentialsSource": "remote"
-        },
-        "production": {
-            "env":{
-                "EXPO_PUBLIC_API_URL": "https://leafylinks.maxim-le-cookie.fr/api/"
-            }
-            "android": {
-                "image": "latest"
-            },
-            "ios": {
-                "image": "latest"
-            }
-        }
-        "test": {
-            "env":{
-                "EXPO_PUBLIC_API_URL": "https://leafylinks.maxim-le-cookie.fr/api/"
-            }
-            "android": {
-                "image": "latest"
-            },
-            "ios": {
-                "image": "latest"
-            }
         }
     },
     "submit": {

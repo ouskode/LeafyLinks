@@ -23,7 +23,7 @@ const DropDown: React.FC<SelectionProps> = ({ options, onSelect }) => {
       </TouchableOpacity>
       {isOpen && (
         <ScrollView style={styles.optionsContainer}>
-          {options.map((option:React.SetStateAction<null>, index: React.Key | null | undefined) => (
+          {options.map((option:any, index: React.Key | null | undefined) => (
             <TouchableOpacity
               key={index}
               style={styles.option}

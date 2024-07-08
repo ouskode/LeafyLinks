@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Image, View, TouchableOpacity, Text, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import { router, useNavigation } from 'expo-router';
 
-const ImageUpload = () => {
+
+type NavigationProp = {
+  navigate: (screen: string, params?: Record<string, unknown>) => void;
+};
+
+const ImageUpload: React.FC = () => {
   const [imageUri, setImageUri] = useState<string | null>(null);
+  const navigation = useNavigation<NavigationProp>();
 
   const getPermissionAsync = async () => {
-    // Demande de permission pour accéder à la caméra et à la bibliothèque d'images
+
     const cameraStatus = await ImagePicker.requestCameraPermissionsAsync();
     const cameraRollStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
@@ -24,7 +31,7 @@ const ImageUpload = () => {
       });
 
       if (!result.canceled) {
-        setImageUri(result.assets[0].uri); // Utilisation correcte de 'uri'
+        setImageUri(result.assets[0].uri);
       }
     } catch (E) {
       console.log(E);
@@ -39,7 +46,7 @@ const ImageUpload = () => {
       });
 
       if (!result.canceled) {
-        setImageUri(result.assets[0].uri); // Utilisation correcte de 'uri'
+        setImageUri(result.assets[0].uri); 
       }
     } catch (E) {
       console.log(E);
@@ -60,6 +67,9 @@ const ImageUpload = () => {
       <TouchableOpacity onPress={takePhoto} style={styles.takePhotoButton}>
         <Text>Prendre une photo</Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('addplants',{imageUri} )} style={styles.takePhotoButton}>
+        <Text>Prêt à envoyer l'image</Text>
+        </TouchableOpacity>
     </View>
   );
 };
@@ -68,7 +78,6 @@ const styles = StyleSheet.create({
   imageContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 20,
   },
   image: {
     borderRadius: 6,

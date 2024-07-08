@@ -2,6 +2,20 @@ import * as React from "react";
 import {StyleSheet, Text, View} from "react-native";
 import { Image } from 'expo-image';
 
+
+type CommentaryList = {
+	id: number;
+	user_id: number;
+	plant_id: number;
+	up_vote: number;
+	down_vote: number;
+	text: string;
+	image?: string;
+	created_at: string;
+	updated_at: string;	
+  
+  }
+
 const CommentaryList: React.FC = () => {
 	const commentary = [
 		{ id: 1, name: 'Rosa pendulina', author: 'John Doe' ,  contains: '10 Tips for a Cozy Home', image: require('../assets/images/imageRose.png') },

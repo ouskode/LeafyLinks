@@ -1,4 +1,4 @@
-import { useRouter } from "expo-router";
+import { router} from "expo-router";
 import * as React from "react";
 import {Image, StyleSheet, Text, TouchableOpacity} from "react-native";
 
@@ -8,7 +8,6 @@ type SelectionProps = {
 
 const AddButton:React.FC<SelectionProps> = ({path}) => {
 	
-	const router = useRouter();
 	const handlePress = () => {
 	  router.push(path)
 	};

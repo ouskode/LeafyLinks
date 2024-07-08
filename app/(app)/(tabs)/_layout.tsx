@@ -1,10 +1,13 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-import { Link, Tabs } from 'expo-router';
-import { Pressable, useColorScheme, Animated } from 'react-native';
+import { Link, Redirect, Tabs } from 'expo-router';
+import { Text, Pressable, useColorScheme, Animated } from 'react-native';
 
-import Colors from '../../constants/Colors';
+import Colors from '../../../constants/Colors';
+import React from 'react';
+import { useSession } from '../../../context/AuthContext';
+
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -18,7 +21,20 @@ function TabBarIcon(props: {
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const { session, isLoading, signOut } = useSession();
 
+  // You can keep the splash screen open, or render a loading screen like we do here.
+  if (isLoading) {
+    return <Text>Loading...</Text>;
+  }
+
+  // Only require authentication within the (app) group's layout as users
+  // need to be able to access the (auth) group and sign in again.
+  if (!session) {
+    // On web, static rendering will stop here as the user is not authenticated
+    // in the headless Node process that the pages are rendered in.
+    return <Redirect href="/welcome" />;
+  }
   return (
     <Tabs
       screenOptions={{
@@ -45,6 +61,21 @@ export default function TabLayout() {
               </Pressable>
             </Link>
           ),
+          headerLeft: () => (
+            <Pressable>
+              {({ pressed }) => (
+                <Ionicons
+                  name="exit"
+                  size={25}
+                  color={Colors[colorScheme ?? 'light'].text}
+                  style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                  onPress={() => {
+                    // The `app/(app)/_layout.tsx` will redirect to the sign-in screen.
+                    signOut();}}
+                />
+              )}
+            </Pressable>
+          )
         }}
       />
       <Tabs.Screen
