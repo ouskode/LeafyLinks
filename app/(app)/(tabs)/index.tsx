@@ -20,7 +20,6 @@ export default function TabOneScreen() {
   return (
     <ScrollView style={styles.container} scrollEventThrottle={16}>
       <BillBoard/>
-      <SearchBar onSearch={performSearch}/>
       <View style={styles.separator} />
       <ProductGrid></ProductGrid>
       <CommentaryList></CommentaryList>

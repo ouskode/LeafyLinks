@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Image, StyleSheet, ScrollView, Text, View } from "react-native";
 import * as SecureStore from 'expo-secure-store';
+import React from "react";
+
 
 type productstype = {
     id: number;
@@ -23,19 +25,20 @@ const Product = ({ data }: { data: productstype }) => {
 
     const fetchProductImage = async (product: productstype) => {
         try {
-            if (product.image_trefle) return;
+            if (product.image_trefle | product.image) return;
             const imageUrl = `https://trefle.io/api/v1/plants/${product.trefle_id}?token=MQwolJ6yPyPqf-UbqV0UvBZbwDXpCecofBAC1LPt7Ac`;
             const response = await fetch(imageUrl);
             if (!response.ok) {
                 throw new Error(
-                    `Image request failed with status ${response.status}`
+                    `Image request failed of trefle with status ${response.status}`
                 );
             }
             const imageData = await response.json();
             const imageUri = imageData.data.image_url;
             setProduct({ ...product, image_trefle: imageUri });
         } catch (error) {
-            console.error("Error fetching image:", error);
+            const image = require("../assets/images/media23x.png");
+            setProduct({ ...product, image_trefle: image });
         }
     };
     useEffect(() => {
@@ -46,7 +49,13 @@ const Product = ({ data }: { data: productstype }) => {
         <View style={styles.productItem}>
             {product.image_trefle && (
                 <Image
-                    source={{ uri: product.image_trefle }}
+                    source={product.image_trefle}
+                    style={styles.productImage}
+                />
+            )}
+            {product.image && (
+                <Image
+                    source={product.image}
                     style={styles.productImage}
                 />
             )}
@@ -58,12 +67,12 @@ const Product = ({ data }: { data: productstype }) => {
 };
 
 const ProductGrid: React.FC = () => {
-    const [products, setProducts] = useState<productstype[]>([]); // Define state for products
+    const [products, setProducts] = useState<productstype[]>([]);
 
     const fetchData = async () => {
         try {
             const response = await fetch(
-                "https://leafylinks.maxim-le-cookie.fr/api/plants",
+                new URL ('plants',process.env.EXPO_PUBLIC_API_URL).href,
                 {
                     headers: {
                         Authorization: `Bearer ${SecureStore.getItem}`,
@@ -72,7 +81,7 @@ const ProductGrid: React.FC = () => {
             );
             if (!response.ok) {
                 throw new Error(
-                    `API request failed with status ${response.status}`
+                    `API request failed of LL API with status ${response.status}`
                 );
             }
             const data = await response.json();
@@ -81,7 +90,6 @@ const ProductGrid: React.FC = () => {
                     garden_end: string | number | Date;
                     garden_start: string | number | Date;
                 }) => {
-                    // Assurez-vous que garden_end et garden_start ne sont pas null
                     if (product.garden_end && product.garden_start) {
                         const end = new Date(product.garden_end);
                         const start = new Date(product.garden_start);
@@ -99,7 +107,6 @@ const ProductGrid: React.FC = () => {
             console.error("Error fetching data:", error);
         }
     };
-    // Premier useEffect pour charger les données des produits
     useEffect(() => {
         fetchData();
     }, []);

@@ -14,7 +14,7 @@ export default function PlantsModalScreen() {
   return (
     <ScrollView style={styles.container}>
       <ImageModal id={id} ></ImageModal>
-      <ReviewModal></ReviewModal>
+      <ReviewModal id={id}></ReviewModal>
     </ScrollView>
   );
 }

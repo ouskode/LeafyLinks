@@ -23,7 +23,7 @@ const BackDropModal: React.FC<Props> = ({id}) => {
 	useEffect(() => {
 	  const fetchData = async () => {
 		try {
-		  const response = await fetch(`https://leafylinks.maxim-le-cookie.fr/api/plants/${id.id}`,{
+		  const response = await fetch(new URL (`plants/${id.id}`,process.env.EXPO_PUBLIC_API_URL).href,{
 		  headers: {
             Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_KEY}`,
           },

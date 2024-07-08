@@ -1,20 +1,71 @@
 // ProfileHeader.tsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import * as SecureStore from 'expo-secure-store';
+
+
+type User = {
+  id: number;
+  username: string;
+  email: string;
+  phone: string | null;
+  first_name: string | null;
+  last_name: string | null;
+  bio: string | null;
+  is_botanic: boolean;
+  is_garden: boolean;
+  is_admin: boolean;
+};
 
 const ProfileHeader: React.FC = () => {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const token = await SecureStore.getItemAsync('authToken');
+        if (!token) {
+          throw new Error('No token found');
+        }
+
+        const response = await fetch(new URL('users/me', process.env.EXPO_PUBLIC_API_URL).href, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setUser(data.data);
+        } else {
+          console.log('Erreur d\'authentification');
+        }
+      } catch (error) {
+        console.error('Erreur de connexion :', error);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  if (!user) {
+    return <Text>Chargement...</Text>;
+  }
+
   return (
     <View style={styles.container}>
-    <View style={[styles.avatar1, styles.avatarFlexBox]}></View>
+      <View style={[styles.avatar1, styles.avatarFlexBox]}></View>
       <View style={styles.userInfoSection}>
-        <Text style={styles.userName}>Doe John</Text>
+        <Text style={styles.userName}>{user.first_name}</Text>
+        <Text style={styles.userName}>{user.last_name}</Text>
         <TouchableOpacity style={styles.editButton}>
           <Text style={styles.editButtonText}>Modifier le profil</Text>
           <MaterialIcons name="edit" size={20} color="black" />
         </TouchableOpacity>
-      
-    </View>
+      </View>
     </View>
   );
 };

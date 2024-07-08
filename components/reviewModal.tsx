@@ -5,37 +5,106 @@ import ButtonAddToCart from "./ButtonAddToCart";
 import { useEffect, useState } from "react";
 import Commentary from "./Commentary";
 
-const article = [
-    { id: 1, author: 'Botaniste', title: "Advide for grow up yout tree", contains: "Quo cognito Constantius ultra mortalem modum exarsit ac nequo casu idem Gallus de futuris incertus agitare quaedam conducentia saluti suae per itinera conaretur, remoti sunt omnes de industria milites agentes in civitatibus perviis." },
-];
-
-const ReviewModal= () => {
-
-	
-  
-  	return (
-    		<><View style={styles.backdrop}>
-				<View style={styles.backdropBase} />
-                {article.map((article,index) => (
-				<><Text key={index} style={styles.bonsaiUlmusParvifolia}>{article.author}</Text>
-                <View style={[styles.price, styles.priceFlexBox]}>
-					<Text style={[styles.xxx, styles.xxxLayout]}></Text>
-					<Text style={[styles.jours, styles.xxxLayout]}> / Jours</Text>
-				</View>
-                <Text style={[styles.title, styles.titleTypo]}>Contenu de l'article</Text>
-                <Text style={[styles.text, styles.textTypo]}>{article.title}</Text>
-                <View style={[styles.buttonSecondary, styles.priceFlexBox]}>
-                    <HeartButton onPress={() => console.log('Ajouté aux favoris')} />
-                </View>
-                <Text style={[styles.title, styles.titleTypo]}>{article.contains}</Text></>
-                ))}
-			</View><View>
-					<Commentary></Commentary>
-				</View></>
-			
-			);
+type prop = {
+	id: object;
 };
 
+type reviews = {
+	id: number;
+	user_id: number;
+	plant_id: number;
+	comment: string;
+	up_votes: number;
+	down_votes: number;
+  };
+
+type user = {
+	id: number;
+	username: string;
+  };
+
+  const ReviewModal: React.FC<prop> = ({ id }) => {
+	const [reviews, setReviews] = useState<reviews[]>([]);
+	const [user, setUser] = useState<user | null>(null);
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		const fetchComment = async () => {
+			try {
+				const response = await fetch(new URL(`comments/${id}`, process.env.EXPO_PUBLIC_API_URL).href, {
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_KEY}`,
+					},
+				});
+
+				if (response.ok) {
+					const data = await response.json();
+					setReviews(data.data.comments); // Assurez-vous que la structure de la réponse correspond à cette ligne
+				} else {
+					console.log('Erreur d\'authentification');
+				}
+			} catch (error) {
+				console.error('Erreur de connexion :', error);
+			}
+		};
+
+		const fetchUser = async () => {
+			try {
+				const response = await fetch(new URL(`users/${id}`, process.env.EXPO_PUBLIC_API_URL).href, {
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_KEY}`,
+					},
+				});
+
+				if (response.ok) {
+					const data = await response.json();
+					setUser(data.data.user); // Assurez-vous que la structure de la réponse correspond à cette ligne
+				} else {
+					console.log('Erreur d\'authentification');
+				}
+			} catch (error) {
+				console.error('Erreur de connexion :', error);
+			}
+		};
+
+		fetchUser();
+		fetchComment();
+		setLoading(false);
+	}, [id]);
+
+	if (loading) {
+		return <Text>Chargement...</Text>;
+	}
+	
+  
+	return (
+		<>
+			<View style={styles.backdrop}>
+				<View style={styles.backdropBase} />
+				{reviews.map((review, index) => (
+					<View key={index}>
+						<Text style={styles.bonsaiUlmusParvifolia}>{user?.username}</Text>
+						<View style={[styles.price, styles.priceFlexBox]}>
+							<Text style={[styles.xxx, styles.xxxLayout]}></Text>
+							<Text style={[styles.jours, styles.xxxLayout]}> / Jours</Text>
+						</View>
+						<Text style={[styles.title, styles.titleTypo]}>Contenu de l'article</Text>
+						<Text style={[styles.text, styles.textTypo]}>{review.comment}</Text>
+						<View style={[styles.buttonSecondary, styles.priceFlexBox]}>
+							<HeartButton onPress={() => console.log('Ajouté aux favoris')} />
+						</View>
+						<Text style={[styles.title, styles.titleTypo]}>{review.comment}</Text>
+					</View>
+				))}
+			</View>
+			<View>
+				<Commentary />
+			</View>
+		</>
+	);
+};
 const styles = StyleSheet.create({
   	priceFlexBox: {
     		flexDirection: "row",

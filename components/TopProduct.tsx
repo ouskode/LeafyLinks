@@ -21,7 +21,7 @@ const TopProduct =  () => {
       showsHorizontalScrollIndicator={false}
     >
 {article.map((article, index) => (
-  <Pressable key={article.id} style={styles.productItem} onPress={() => router.navigate({ pathname: '/(reviews)/reviewsmodal', params: {id:1}})}>
+  <Pressable key={article.id} style={styles.productItem} onPress={() => router.navigate({ pathname: '/(reviews)/reviewsmodal', params: {id:article.id}})}>
     <Image key={index} source={article.image} style={styles.productImage} />
     <View style={styles.textContent}>
           <Text style={styles.title}>{article.contains}</Text>
