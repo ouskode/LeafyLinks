@@ -91,7 +91,11 @@ const UserInfo: React.FC = () => {
         <Text style={styles.itemChild} />
       </View>
       <View style={styles.separator} />
+      <Text style={styles.title}>Bio</Text>
+      <Text style={styles.subtitle}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer condimentum pharetra libero at dapibus.</Text>
+      <View style={styles.separator}/>
     </View>
+    
   );
 };
 

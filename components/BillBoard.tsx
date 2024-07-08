@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '500',
         textAlign: 'left',
-        width: , // Prendre toute la largeur de la vue
+        width: Dimensions.get('window').width, // Prendre toute la largeur de la vue
         backgroundColor: 'rgba(0, 0, 0, 0)',
         padding: 16,
         borderRadius: 6,

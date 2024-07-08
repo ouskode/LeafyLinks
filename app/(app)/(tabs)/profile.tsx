@@ -14,9 +14,6 @@ export default function TabProfileScreen() {
     <View style={styles.container}>
       <ProfileHeader></ProfileHeader>
       <UserInfo></UserInfo>
-      <Text style={styles.title}>Bio</Text>
-      <Text style={styles.subtitle}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer condimentum pharetra libero at dapibus.</Text>
-      <View style={styles.separator}/>
       <UserProfileCommentary></UserProfileCommentary>
       <Text style={styles.title}>Plantes à garder</Text>
     </View>

@@ -48,7 +48,9 @@
     "react-native-screens": "3.31.1",
     "react-native-vector-icons": "^10.0.3",
     "react-native-web": "~0.19.6",
-    "expo-checkbox": "~3.0.0"
+    "expo-checkbox": "~3.0.0",
+    "expo-updates": "~0.25.18",
+    "stream-chat-expo": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",
