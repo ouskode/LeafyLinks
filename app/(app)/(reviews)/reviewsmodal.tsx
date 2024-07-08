@@ -2,9 +2,9 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { ImageBackground, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import ImageModal from '../../components/ImageModal';
+import ImageModal from '../../../components/ImageModal';
 import { useRoute } from "@react-navigation/native";
-import ReviewModal from '../../components/reviewModal';
+import ReviewModal from '../../../components/reviewModal';
 
 
 export default function PlantsModalScreen() {
@@ -14,7 +14,7 @@ export default function PlantsModalScreen() {
   return (
     <ScrollView style={styles.container}>
       <ImageModal id={id} ></ImageModal>
-      <ReviewModal></ReviewModal>
+      <ReviewModal id={id}></ReviewModal>
     </ScrollView>
   );
 }

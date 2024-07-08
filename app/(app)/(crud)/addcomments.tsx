@@ -1,5 +1,6 @@
 import React, { useState } from 'react'; // Correction ici
 import { StyleSheet, Text, View, ScrollView, Alert, TouchableOpacity } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
 
 export default function AddComments() {
   const [location, setLocation] = useState<{ latitude: number; longitude: number; } | null>(null);
@@ -14,9 +15,10 @@ export default function AddComments() {
 
   const sendDataToAPI = async () => {
     try {
-      const response = await fetch('URL_DE_VOTRE_API', {
+      const response = await fetch(new URL ('users/comments',process.env.EXPO_PUBLIC_API_URL).href, {
         method: 'POST',
         headers: {
+          Authorization: `Bearer ${SecureStore.getItem}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({

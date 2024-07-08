@@ -2,34 +2,35 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-type Props ={
-  title : String
-}
+type Props = {
+  title: string;
+  onSelectDate: (date: Date) => void; // Fonction de rappel pour gérer la date sélectionnée
+};
 
-const DateTime: React.FC<Props> = ({title}) => {
+const DateTime: React.FC<Props> = ({ title, onSelectDate }) => {
   const [date, setDate] = useState(new Date());
-  const [show, setShow] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const onChange = (event: any, selectedDate?: Date) => {
     const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios'); // Pour iOS, vous pouvez vouloir garder le picker visible après la sélection
+    setShowDatePicker(Platform.OS === 'ios'); // Pour iOS, vous pouvez vouloir garder le picker visible après la sélection
     setDate(currentDate);
     onSelectDate(currentDate); // Passer la date au parent via le callback
   };
 
-  const showDatePicker = () => {
-    setShow(true);
+  const showDatePickerModal = () => {
+    setShowDatePicker(true);
   };
 
   return (
     <View style={styles.input}>
       <Text style={styles.title}>{title}</Text>
-      <TouchableOpacity onPress={showDatePicker} style={[styles.textfield, styles.infoSpaceBlock]}>
+      <TouchableOpacity onPress={showDatePickerModal} style={[styles.textfield, styles.infoSpaceBlock]}>
         <Text style={[styles.text, styles.textTypo]} numberOfLines={1}>
           {date.toLocaleDateString()}
         </Text>
       </TouchableOpacity>
-      {show && (
+      {showDatePicker && (
         <DateTimePicker
           testID="dateTimePicker"
           value={date}

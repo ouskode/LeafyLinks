@@ -1,12 +1,10 @@
 import React, { useState } from 'react'; // Correction ici
 import { StyleSheet, Text, View, ScrollView, Alert, TouchableOpacity } from 'react-native';
 
-import ImageUpload from '../../components/ImageUpload';
+import ImageUpload from '../../../components/ImageUpload';
 
 
 export default function AddImage() {
-
-  
 
   return (
     <View>

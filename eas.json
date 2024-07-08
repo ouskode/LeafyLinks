@@ -1,6 +1,6 @@
 {
     "cli": {
-        "version": ">= 0.52.0"
+        "version": ">= 7.3.0"
     },
     "build": {
         "preview": {
@@ -9,8 +9,7 @@
                 "buildType": "apk"
             },
             "credentialsSource": "remote"
-        },
-        "production": {}
+        }
     },
     "submit": {
         "production": {}

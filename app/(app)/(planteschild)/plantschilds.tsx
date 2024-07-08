@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 
-import SearchBar from '../../components/SearchBar';
-import PlantsList from '../../components/PlantsList';
-import AddButton from '../../components/AddButton';
+import SearchBar from '../../../components/SearchBar';
+import PlantsList from '../../../components/PlantsList';
+import AddButton from '../../../components/AddButton';
 import React, { useEffect, useState } from 'react';
 
 
@@ -44,7 +44,7 @@ export default function PlantesChildsScreen() {
    useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://leafylinks.maxim-le-cookie.fr/api/plants', {
+        const response = await fetch(new URL ('plants',process.env.EXPO_PUBLIC_API_URL).href, {
           headers: {
             Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_KEY}`,
           },
@@ -74,7 +74,7 @@ export default function PlantesChildsScreen() {
         }
         const imageData = await response.json();
         const imageUri = imageData.data.image_url;
-        setProducts((prevProducts) =>
+        setProducts((prevProducts: any[]) =>
           prevProducts.map((p) => (p.id === product.id ? { ...p, image: imageUri } : p))
         );
       } catch (error) {

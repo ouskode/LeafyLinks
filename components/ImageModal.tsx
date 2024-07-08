@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
+
 
 type Prop = {
 	id: any;
@@ -16,9 +18,9 @@ const ImageModal : React.FC<Prop> = ({id}) => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-			  const response = await fetch(`https://leafylinks.maxim-le-cookie.fr/api/plants/${id.id}`,{
+			  const response = await fetch(new URL (`plants/${id.id}`,process.env.EXPO_PUBLIC_API_URL).href,{
 			  headers: {
-				Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_KEY}`,
+				Authorization: `Bearer ${SecureStore.getItem('authToken')}`,
 			  },
 			}); 
 			if (!response.ok) {
@@ -34,18 +36,17 @@ const ImageModal : React.FC<Prop> = ({id}) => {
 		  fetchData();
 		}, [id]); 
 
-	// Deuxième useEffect pour charger les images après que les produits ont été chargés
 	useEffect(() => {
-		if (datas) { // Vérifie si datas n'est pas null
+		if (datas) {
 		  const fetchProductImage = async () => {
 			try {
-			  const imageUrl = `https://trefle.io/api/v1/plants/${datas.trefle_id}?token=MQwolJ6yPyPqf-UbqV0UvBZbwDXpCecofBAC1LPt7Ac`;
+			  const imageUrl = `https://trefle.io/api/v1/plants/${datas.trefle_id}?token=-MzkPLMWtg_qzBIkk63Prcy5eiAkJ0aGf4otU9g1AKY`;
 			  const response = await fetch(imageUrl);
 			  if (!response.ok) {
 				throw new Error(`Image request failed with status ${response.status}`);
 			  }
 			  const imageData = await response.json();
-			  const imageUri = imageData.data.image_url; // Assurez-vous que ce chemin est correct
+			  const imageUri = imageData.data.image_url;
 			  setData(currentData => ({ ...currentData, image: imageUri }));
 			} catch (error) {
 			  console.error('Error fetching image:', error);

@@ -7,13 +7,12 @@ import {
     Alert,
     TouchableOpacity,
 } from "react-native";
-import DropDown from "../../components/DropDown";
-import Location from "../../components/Location";
-import DateTime from "../../components/DateTime";
-import ButtonAddToCart from "../../components/ButtonAddToCart";
+import DropDown from "../../../components/DropDown";
+import Location from "../../../components/Location";
+import DateTime from "../../../components/DateTime";
 import { router } from "expo-router";
 import { useRoute } from "@react-navigation/native";
-import ButtonAddImage from "../../components/ButtonAddImage";
+import ButtonAddImage from "../../../components/ButtonAddImage";
 
 type LocationType = {
     latitude: number;
@@ -46,15 +45,25 @@ export default function AddPlants() {
     }) => {
         setLocation(selectedLocation);
     };
+
+
+    const handleStartDateSelect = (selectedDate: Date) => {
+        setStartDate(selectedDate);
+    };
+   
+    const handleEndDateSelect = (selectedDate: Date) => {
+        setEndDate(selectedDate);
+    };
     const [location, setLocation] = useState<LocationType | null>(null);
     const [selectedCategory, setSelectedCategory] = useState<string>("");
-    const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+   
     const sendDataToAPI = async () => {
         if (location) {
             try {
                 const locationResponse = await fetch(
-                    "https://leafylinks.maxim-le-cookie.fr/api/location",
+                    new URL ('plants/add',process.env.EXPO_PUBLIC_API_URL).href,
                     {
                         method: "POST",
                         headers: {
@@ -85,7 +94,7 @@ export default function AddPlants() {
                 });
 
                 const plantResponse = await fetch(
-                    "https://leafylinks.maxim-le-cookie.fr/api/plants",
+                    new URL ('plants',process.env.EXPO_PUBLIC_API_URL).href,
                     {
                         method: "POST",
                         headers: {
@@ -129,8 +138,9 @@ export default function AddPlants() {
             </View>
             <View style={styles.section}>
                 <Text style={styles.title}>Durée de la garde</Text>
-                <DateTime title="Date de début" />
-                <DateTime title="Date de Fin" />
+                <DateTime title="Date de début" onSelectDate={handleStartDateSelect} />
+                <DateTime title="Date de fin" onSelectDate={handleEndDateSelect} />
+            
             </View>
             <TouchableOpacity
                 onPress={sendDataToAPI}
@@ -149,7 +159,7 @@ const styles = StyleSheet.create({
     },
     section: {
         // flex: 1, // Espacement entre chaque section
-        padding: 20,
+        padding: 15,
     },
     location: {
         zIndex: 99,

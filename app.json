@@ -50,7 +50,9 @@
           "photosPermission": "Allow $LeafyLinks to access your photos.",
           "savePhotosPermission": "Allow $LeafyLinks to save photos."
         }
-      ]
+      ],
+      "expo-secure-store",
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
