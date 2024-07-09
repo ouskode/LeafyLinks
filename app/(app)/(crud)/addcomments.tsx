@@ -15,10 +15,14 @@ export default function AddComments() {
 
   const sendDataToAPI = async () => {
     try {
+      const token = await SecureStore.getItemAsync(`authToken`);
+      if (!token) {
+        throw new Error('No token found');
+      }    
       const response = await fetch(new URL ('users/comments',process.env.EXPO_PUBLIC_API_URL).href, {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${SecureStore.getItem}`,
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({

@@ -59,8 +59,8 @@ const ProfileHeader: React.FC = () => {
     <View style={styles.container}>
       <View style={[styles.avatar1, styles.avatarFlexBox]}></View>
       <View style={styles.userInfoSection}>
-        <Text style={styles.userName}>{user.first_name}</Text>
-        <Text style={styles.userName}>{user.last_name}</Text>
+        { user.first_name ? <Text style={styles.userName}>{user.first_name}</Text> : <Text style={styles.userName}>{user.username}</Text> }
+        { user.last_name ? <Text style={styles.userName}>{user.last_name}</Text> : null }
         <TouchableOpacity style={styles.editButton}>
           <Text style={styles.editButtonText}>Modifier le profil</Text>
           <MaterialIcons name="edit" size={20} color="black" />

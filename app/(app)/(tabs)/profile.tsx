@@ -15,7 +15,8 @@ export default function TabProfileScreen() {
       <ProfileHeader></ProfileHeader>
       <UserInfo></UserInfo>
       <UserProfileCommentary></UserProfileCommentary>
-      <Text style={styles.title}>Plantes à garder</Text>
+      <View style={styles.blank}/>
+
     </View>
   );
 }
@@ -46,4 +47,8 @@ const styles = StyleSheet.create({
 		backgroundColor: '#303030',
     opacity: 0.2
 	  },
+  blank: {
+    height: 300
+  }
+    
 });

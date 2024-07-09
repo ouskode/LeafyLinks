@@ -87,12 +87,12 @@ const UserInfo: React.FC = () => {
         <View style={styles.titleWrapper}>
           <Text style={styles.title}>Status</Text>
         </View>
-        <Text style={styles.subtitle}>{user.is_admin ? 'Admin' : 'Utilisateur'}</Text>
+        <Text style={styles.subtitle}>{user.is_admin ? 'Admin' : user.is_botanic ? 'Botaniste':'Utilisateur' }</Text>
         <Text style={styles.itemChild} />
       </View>
       <View style={styles.separator} />
       <Text style={styles.title}>Bio</Text>
-      <Text style={styles.subtitle}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer condimentum pharetra libero at dapibus.</Text>
+      <Text style={styles.subtitle}>{user.bio}</Text>
       <View style={styles.separator}/>
     </View>
     

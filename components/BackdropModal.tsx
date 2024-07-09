@@ -4,6 +4,7 @@ import HeartButton from "./HeartButton";
 import ButtonAddToCart from "./ButtonAddToCart";
 import { useEffect, useState } from "react";
 import Commentary from "./Commentary";
+import * as SecureStore from 'expo-secure-store';
 
 type Props = {
 	id: any
@@ -23,9 +24,13 @@ const BackDropModal: React.FC<Props> = ({id}) => {
 	useEffect(() => {
 	  const fetchData = async () => {
 		try {
+			const token = await SecureStore.getItemAsync(`authToken`);
+			if (!token) {
+			  throw new Error('No token found');
+			}	
 		  const response = await fetch(new URL (`plants/${id.id}`,process.env.EXPO_PUBLIC_API_URL).href,{
 		  headers: {
-            Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_KEY}`,
+            Authorization: `Bearer ${token}`,
           },
         }); // Remplacez par votre URL d'API réelle
 		if (!response.ok) {

@@ -12,7 +12,7 @@ const ButtonAddToCart: React.FC<ButtonProps> = ({ onPress }) => {
       <Image
         style={styles.icon}
         resizeMode="cover"
-        source={require('../assets/images/shopping-cart.png')} // Assurez-vous d'ajuster le chemin
+        source={require('../assets/images/pot.png')} // Assurez-vous d'ajuster le chemin
       />
     </TouchableOpacity>
   );

@@ -10,8 +10,8 @@ type BillboardItem = {
 const BillBoard: React.FC = () => {
     const [billboardItems, setBillboardItems] = useState<BillboardItem[]>([
         { id: 1, type: 'text', content: "🔆Attention des fortes chaleurs aujourd'hui🔆" },
-        { id: 2, type: 'text', content: 'Ceci est un texte' },
-        { id: 3, type: 'text', content: 'Ceci est un autre texte' },
+        { id: 2, type: 'text', content: "💦N'hésitez pas a arroser vos plantes💦" },
+        { id: 3, type: 'text', content: "🫗N'oubliez pas de vous hydratez🫗" },
         //{ id: 4, type: 'image', content: require('../assets/images/iconphoto.png') },
     ]);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '500',
         textAlign: 'left',
-        width: Dimensions.get('window').width, // Prendre toute la largeur de la vue
+        width: Dimensions.get('window').width,
         backgroundColor: 'rgba(0, 0, 0, 0)',
         padding: 16,
         borderRadius: 6,

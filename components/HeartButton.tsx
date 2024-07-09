@@ -1,22 +1,37 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Image } from 'react-native';
 
-// Props type definition
+
 type ButtonProps = {
   onPress: () => void;
 };
 
-const HeartButton: React.FC<ButtonProps> = ({ onPress }) => {
-  return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
-      <Image
-        style={styles.icon}
-        resizeMode="cover"
-        source={require('../assets/images/heart.png')} // Assurez-vous d'ajuster le chemin
-      />
-    </TouchableOpacity>
-  );
-};
+interface HeartButtonState {
+  isPressed: boolean;
+}
+
+class HeartButton extends React.Component<ButtonProps, HeartButtonState> {
+  constructor(props: ButtonProps) {
+    super(props);
+    this.state = { isPressed: false };
+  }
+
+  handlePress = () => {
+    this.setState({ isPressed: !this.state.isPressed });
+  };
+
+  render() {
+    return (
+      <TouchableOpacity style={styles.button} onPress={this.handlePress}>
+        <Image
+          style={styles.icon}
+          resizeMode="cover"
+          source={this.state.isPressed ? require('../assets/images/heartfilled.png') : require('../assets/images/heart.png')}
+        />
+      </TouchableOpacity>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   button: {

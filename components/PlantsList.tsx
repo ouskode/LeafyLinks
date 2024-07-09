@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Image, Text, ImageSourcePropType } from "react-native";
 import ButtonAddToCart from "./ButtonAddToCart";
 import HeartButton from "./HeartButton";
 import { router } from 'expo-router';
+import * as SecureStore from 'expo-secure-store';
+import ButtonRemoveToCart from "./ButtonRemoveToCart";
 
 
 type SelectionProps = {
@@ -10,11 +12,50 @@ type SelectionProps = {
   title: string;
   price: number;
   image: any;
-
+  user_id: number;
 };
+type user = {
+  id: number;
+  username: string;
+  email: string;
+  phone: string | null;
+  first_name: string | null;
+  last_name: string | null;
+  bio: string | null;
+  is_botanic: boolean;
+  is_garden: boolean;
+  is_admin: boolean;
+}
 
-const PlantsList: React.FC<SelectionProps>  =  ({id, title, price, image}) => {
+const PlantsList: React.FC<SelectionProps>  =  ({id, title, price, image, user_id}) => {
 
+  const [user, setUser] = useState<user[]>([]);
+  
+  useEffect(() => {
+   const fetchData = async () => {
+     try {
+       const token = await SecureStore.getItemAsync(`authToken`);
+       if (!token) {
+         throw new Error('No token found');
+       }
+       const response = await fetch(new URL ('users/me',process.env.EXPO_PUBLIC_API_URL).href, {
+         headers: {
+           Authorization: `Bearer ${token}`,
+         },
+       });
+       if (!response.ok) {
+         throw new Error(`API request failed with status ${response.status}`);
+       }
+       const data = await response.json();
+ 
+       setUser(data.data);
+     } catch (error) {
+       console.error('Error fetching data:', error);
+     }
+   };
+
+   fetchData();
+ }, []);
 
   return (
     <View style={styles.itemRowView}>
@@ -28,6 +69,7 @@ const PlantsList: React.FC<SelectionProps>  =  ({id, title, price, image}) => {
         <View style={styles.buttonContainer}>
         <HeartButton onPress={() => console.log('Ajouté aux favoris')} />
         <ButtonAddToCart onPress={() => router.navigate({ pathname: '/(planteschild)/plantsmodal', params: {id}})} />
+        {user.id === user_id && <ButtonRemoveToCart onPress={() => console.log('Supprimé du panier')} />}
         </View>
       </View>
     </View>
