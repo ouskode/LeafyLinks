@@ -100,9 +100,11 @@ export default function PlantesChildsScreen() {
 Plantes ornementales`}</Text>
       <SearchBar onSearch={performSearch}/>
       <ScrollView style={styles.container} scrollEventThrottle={16}>
-        {products.map((plantschild, index) => (
-        <PlantsList key={index} id={plantschild.id} title={plantschild.name} price={plantschild.price} image={{ uri: plantschild.image }} user_id={plantschild.user_id}></PlantsList>
-        ))}
+      {products.map((plantschild, index) => (
+    plantschild.image_trefle ? (
+        <PlantsList key={index} id={plantschild.id} title={plantschild.name} price={plantschild.price} image={{ uri: plantschild.image_trefle }} user_id={plantschild.user_id}></PlantsList>
+    ) : <PlantsList key={index} id={plantschild.id} title={plantschild.name} price={plantschild.price} image={{ uri: plantschild.image }} user_id={plantschild.user_id}></PlantsList>
+))}
       </ScrollView>
     </View>
 

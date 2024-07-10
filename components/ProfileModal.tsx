@@ -56,7 +56,7 @@ const ProfileModal: React.FC<Props> = ({id}) => {
       <Image
         style={styles.imageIcon}
         resizeMode="cover"
-        source={require('../assets/images/iconuser3x.png')} // Ensure you use the correct path to your image
+        source={user.profile_pictures ? { uri: user.profile_pictures } : require('../assets/images/iconuser3x.png')}
       />
       <View style={styles.textContainer}>
         <Text style={styles.header}>{user.username}</Text>

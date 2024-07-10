@@ -1,47 +1,59 @@
-import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 
-interface Profile {
-    id: number;
-    name: string;
-    age: number;
-    // Add more properties as needed
+
+import ProfileHeader from '../../../components/ProfileHeader';
+import UserInfo from '../../../components/UserInfo';
+import UserProfileCommentary from '../../../components/UserProfileCommentary';
+import React from 'react';
+import { useRoute } from '@react-navigation/native';
+import OtherProfileHeader from '../../../components/OtherProfileHeader';
+import OtherUserInfo from '../../../components/OtherUserInfo';
+
+
+
+export default function viewProfile() {
+
+  const id = useRoute().params
+
+  return (
+    <View style={styles.container}>
+      <OtherProfileHeader userId={id}></OtherProfileHeader>
+      <OtherUserInfo userId={id}></OtherUserInfo>
+      <View style={styles.blank}/>
+
+    </View>
+  );
 }
 
-interface ViewProfileProps {
-    id: number;
-}
-
-const ViewProfile: React.FC<ViewProfileProps> = ({ id }) => {
-    const [profile, setProfile] = useState<Profile | null>(null);
-
-    useEffect(() => {
-        // Fetch the profile data based on the provided ID
-        const fetchProfile = async () => {
-            try {
-                const response = await fetch(`/api/users/${id}`);
-                const data = await response.json();
-                setProfile(data);
-            } catch (error) {
-                console.error('Error fetching profile:', error);
-            }
-        };
-
-        fetchProfile();
-    }, [id]);
-
-    if (!profile) {
-        return <div>Loading...</div>;
-    }
-
-    return (
-        <div>
-            <h2>Profile Details</h2>
-            <p>ID: {profile.id}</p>
-            <p>Name: {profile.name}</p>
-            <p>Age: {profile.age}</p>
-            {/* Add more profile details here */}
-        </div>
-    );
-};
-
-export default ViewProfile;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    fontSize: 20,
+    paddingVertical:10,
+    fontWeight: 'bold',
+    alignSelf: "stretch",
+    justifyContent: 'flex-start'
+    
+  },
+  subtitle: {
+    alignSelf: "stretch",
+    fontSize: 12,
+    lineHeight: 20,
+  },
+  separator: {
+		marginVertical: 5,
+		height: 1,
+		width: '95%',
+		backgroundColor: '#303030',
+    opacity: 0.2
+	  },
+  blank: {
+    height: 300
+  }
+    
+});

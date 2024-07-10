@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Image, Text, ImageSourcePropType } from "react-native";
+import { StyleSheet, View, Image, Text, ImageSourcePropType, Alert, TouchableOpacity } from "react-native";
 import ButtonAddToCart from "./ButtonAddToCart";
 import HeartButton from "./HeartButton";
 import { router } from 'expo-router';
@@ -56,6 +56,28 @@ const PlantsList: React.FC<SelectionProps>  =  ({id, title, price, image, user_i
 
    fetchData();
  }, []);
+ const handleRemoveFromCart = async () => {
+  try {
+    const token = await SecureStore.getItemAsync(`authToken`);
+    if (!token) {
+      throw new Error('No token found');
+    }
+    const response = await fetch(new URL (`plants/${id}`,process.env.EXPO_PUBLIC_API_URL).href, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response.ok) {
+      Alert.alert('Plant removed from cart');
+    } else {
+      Alert.alert('Error removing plant from cart');
+    }
+  } catch (error) {
+    console.error(error);
+    Alert.alert('Error removing plant from cart');
+  }
+};
 
   return (
     <View style={styles.itemRowView}>
@@ -69,7 +91,7 @@ const PlantsList: React.FC<SelectionProps>  =  ({id, title, price, image, user_i
         <View style={styles.buttonContainer}>
         <HeartButton onPress={() => console.log('Ajouté aux favoris')} />
         <ButtonAddToCart onPress={() => router.navigate({ pathname: '/(planteschild)/plantsmodal', params: {id}})} />
-        {(user.id) === user_id && <ButtonRemoveToCart onPress={() => fetch(new URL (`plants/${id}`,process.env.EXPO_PUBLIC_API_URL).href, {method: 'DELETE', headers:{Authorization: `Bearer ${SecureStore.getItemAsync(`authToken`)}`,}})} />}
+        {(user.id) === user_id && <ButtonRemoveToCart onPress={handleRemoveFromCart} />}
         </View>
       </View>
     </View>
