@@ -26,7 +26,7 @@ const Product = ({ data }: { data: productstype }) => {
     const fetchProductImage = async (product: productstype) => {
         try {
             if (product.image_trefle || product.image) return;
-            const imageUrl = `https://trefle.io/api/v1/plants/${product.trefle_id}?token=MQwolJ6yPyPqf-UbqV0UvBZbwDXpCecofBAC1LPt7Ac`;
+            const imageUrl = `http://trefle.io/api/v1/plants/${product.trefle_id}?token=eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJvcmlnaW4iOiJ0cmVmbGUuaW8iLCJpcCI6bnVsbCwiZXhwaXJlIjoiMjAyNC0wNy0xMCAxMzo1MzowMCArMDAwMCIsImV4cCI6MTcyMDcwNTM4MH0.A3xnzbAnSJIRGWQZZcUGeEaCIKy_51vKkMQsz8ux-I4`;
             const response = await fetch(imageUrl);
             if (!response.ok) {
                 throw new Error(`Image request failed of trefle with status ${response.status}`);
@@ -35,8 +35,9 @@ const Product = ({ data }: { data: productstype }) => {
             const imageUri = imageData.data.image_url;
             setProduct({ ...product, image_trefle: { uri: imageUri } });
         } catch (error) {
-            const image = require("../assets/images/media23x.png");
-            setProduct({ ...product, image_trefle: image });
+            //const image = require("../assets/images/media23x.png");
+            //setProduct({ ...product, image_trefle: image });
+            console.error('Error fetching image:', error);
         }
     };
 
@@ -46,12 +47,7 @@ const Product = ({ data }: { data: productstype }) => {
 
     return (
         <View style={styles.productItem}>
-            {product.image_trefle && (
-                <Image source={product.image_trefle} style={styles.productImage} />
-            )}
-            {product.image && (
-                <Image source={product.image} style={styles.productImage} />
-            )}
+            {product.image_trefle ?<Image source={product.image_trefle} style={styles.productImage}/> : product.image ? <Image source={product.image} style={styles.productImage}/> : null}
             <Text style={styles.productName}>{product.name}</Text>
             <Text style={styles.productPrice}>pour {product.day} jours</Text>
             <Text style={styles.productIcon}>🌹</Text>

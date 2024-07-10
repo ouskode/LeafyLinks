@@ -188,6 +188,8 @@ const styles = StyleSheet.create({
     section: {
         // flex: 1, // Espacement entre chaque section
         padding: 15,
+        borderWidth: 1,
+        borderRadius: 5,
     },
     location: {
         zIndex: 99,

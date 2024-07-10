@@ -69,7 +69,7 @@ const PlantsList: React.FC<SelectionProps>  =  ({id, title, price, image, user_i
         <View style={styles.buttonContainer}>
         <HeartButton onPress={() => console.log('Ajouté aux favoris')} />
         <ButtonAddToCart onPress={() => router.navigate({ pathname: '/(planteschild)/plantsmodal', params: {id}})} />
-        {user.id === user_id && <ButtonRemoveToCart onPress={() => console.log('Supprimé du panier')} />}
+        {(user.id) === user_id && <ButtonRemoveToCart onPress={() => fetch(new URL (`plants/${id}`,process.env.EXPO_PUBLIC_API_URL).href, {method: 'DELETE', headers:{Authorization: `Bearer ${SecureStore.getItemAsync(`authToken`)}`,}})} />}
         </View>
       </View>
     </View>

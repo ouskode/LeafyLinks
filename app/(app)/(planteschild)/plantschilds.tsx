@@ -74,7 +74,7 @@ export default function PlantesChildsScreen() {
     const fetchProductImage = async (product: plants) => {
       try {
         if (product.image_trefle | product.image) return;
-        const imageUrl = `https://trefle.io/api/v1/plants/${product.trefle_id}?token=-MzkPLMWtg_qzBIkk63Prcy5eiAkJ0aGf4otU9g1AKY`;
+        const imageUrl = `http://trefle.io/api/v1/plants/${product.trefle_id}?token=eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJvcmlnaW4iOiJ0cmVmbGUuaW8iLCJpcCI6bnVsbCwiZXhwaXJlIjoiMjAyNC0wNy0xMCAxMzo1MzowMCArMDAwMCIsImV4cCI6MTcyMDcwNTM4MH0.A3xnzbAnSJIRGWQZZcUGeEaCIKy_51vKkMQsz8ux-I4`;
         const response = await fetch(imageUrl);
         if (!response.ok) {
           throw new Error(`Image request failed with status ${response.status}`);
@@ -85,10 +85,7 @@ export default function PlantesChildsScreen() {
           prevProducts.map((p) => (p.id === product.id ? { ...p, image: imageUri } : p))
         );
       } catch (error) {
-        const image = "../../../assets/images/media23x.png";
-        setProducts((prevProducts: plants[]) =>
-          prevProducts.map((p) => (p.id === product.id ? { ...p, image: image } : p))
-        );
+        console.error('Error fetching image:', error);
       }
     };
 

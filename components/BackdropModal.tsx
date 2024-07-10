@@ -5,6 +5,7 @@ import ButtonAddToCart from "./ButtonAddToCart";
 import { useEffect, useState } from "react";
 import Commentary from "./Commentary";
 import * as SecureStore from 'expo-secure-store';
+import ProfileModal from "./ProfileModal";
 
 type Props = {
 	id: any
@@ -71,7 +72,7 @@ const BackDropModal: React.FC<Props> = ({id}) => {
 				</View>
 				<Text style={[styles.title, styles.titleTypo]}>Instruction spéciales</Text>
 			</View><View>
-					<Commentary></Commentary>
+					<ProfileModal />
 				</View></>
 			
 			);

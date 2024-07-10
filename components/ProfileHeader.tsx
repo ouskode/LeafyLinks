@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as SecureStore from 'expo-secure-store';
+import { router } from 'expo-router';
+
 
 
 type User = {
@@ -61,7 +63,7 @@ const ProfileHeader: React.FC = () => {
       <View style={styles.userInfoSection}>
         { user.first_name ? <Text style={styles.userName}>{user.first_name}</Text> : <Text style={styles.userName}>{user.username}</Text> }
         { user.last_name ? <Text style={styles.userName}>{user.last_name}</Text> : null }
-        <TouchableOpacity style={styles.editButton}>
+        <TouchableOpacity style={styles.editButton} onPress={() => router.navigate({ pathname: '/(profiles)/editprofile', params: {userId: user.id}})}>
           <Text style={styles.editButtonText}>Modifier le profil</Text>
           <MaterialIcons name="edit" size={20} color="black" />
         </TouchableOpacity>
