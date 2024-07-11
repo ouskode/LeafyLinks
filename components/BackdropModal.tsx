@@ -10,7 +10,7 @@ import ZoneLocation from "./ZoneLocation";
 import { router } from "expo-router";
 
 type Props = {
-	id: { id: number };
+	id: any;
   };
   
   type ApiData = {

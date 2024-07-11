@@ -31,7 +31,7 @@ const UserInfo: React.FC<prop> = (userId) => {
           throw new Error('No token found');
         }
 
-        const response = await fetch(new URL (`users/${userId}`,process.env.EXPO_PUBLIC_API_URL).href, {
+        const response = await fetch(new URL (`users/${userId.userId}`,process.env.EXPO_PUBLIC_API_URL).href, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,

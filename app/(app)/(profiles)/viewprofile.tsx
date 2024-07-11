@@ -14,7 +14,8 @@ import OtherUserInfo from '../../../components/OtherUserInfo';
 
 export default function viewProfile() {
 
-  const id = useRoute().params
+  const id = useRoute().params.id
+  //console.log(Number(id))
 
   return (
     <View style={styles.container}>

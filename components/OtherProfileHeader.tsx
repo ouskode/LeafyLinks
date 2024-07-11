@@ -6,7 +6,7 @@ import * as SecureStore from 'expo-secure-store';
 import { router } from 'expo-router';
 
 type prop = {
-    userId: any;
+    userId: number;
     };
 
 type User = {
@@ -32,8 +32,8 @@ const OtherProfileHeader: React.FC<prop> = (userId) => {
         if (!token) {
           throw new Error('No token found');
         }
-
-        const response = await fetch(new URL(`users/${userId}`, process.env.EXPO_PUBLIC_API_URL).href, {
+        console.log(userId);
+        const response = await fetch(new URL(`users/${userId.userId}`, process.env.EXPO_PUBLIC_API_URL).href, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,
@@ -65,10 +65,6 @@ const OtherProfileHeader: React.FC<prop> = (userId) => {
       <View style={styles.userInfoSection}>
         { user.first_name ? <Text style={styles.userName}>{user.first_name}</Text> : <Text style={styles.userName}>{user.username}</Text> }
         { user.last_name ? <Text style={styles.userName}>{user.last_name}</Text> : null }
-        <TouchableOpacity style={styles.editButton} onPress={() => router.navigate({ pathname: '/(profiles)/editprofile', params: {userId: user.id}})}>
-          <Text style={styles.editButtonText}>Modifier le profil</Text>
-          <MaterialIcons name="edit" size={20} color="black" />
-        </TouchableOpacity>
       </View>
     </View>
   );
