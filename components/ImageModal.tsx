@@ -18,9 +18,13 @@ const ImageModal : React.FC<Prop> = ({id}) => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
+				const token = await SecureStore.getItemAsync(`authToken`);
+                if (!token) {
+                  throw new Error('No token found');
+                }    
 			  const response = await fetch(new URL (`plants/${id.id}`,process.env.EXPO_PUBLIC_API_URL).href,{
 			  headers: {
-				Authorization: `Bearer ${SecureStore.getItem('authToken')}`,
+				Authorization: `Bearer ${token}`,
 			  },
 			}); 
 			if (!response.ok) {
@@ -36,26 +40,6 @@ const ImageModal : React.FC<Prop> = ({id}) => {
 		  fetchData();
 		}, [id]); 
 
-	useEffect(() => {
-		if (datas) {
-		  const fetchProductImage = async () => {
-			try {
-			  const imageUrl = `https://trefle.io/api/v1/plants/${datas.trefle_id}?token=-MzkPLMWtg_qzBIkk63Prcy5eiAkJ0aGf4otU9g1AKY`;
-			  const response = await fetch(imageUrl);
-			  if (!response.ok) {
-				throw new Error(`Image request failed with status ${response.status}`);
-			  }
-			  const imageData = await response.json();
-			  const imageUri = imageData.data.image_url;
-			  setData(currentData => ({ ...currentData, image: imageUri }));
-			} catch (error) {
-			  console.error('Error fetching image:', error);
-			}
-		  };
-	
-		  fetchProductImage();
-		}
-	  }, [datas]); 
 	
   	return (
     		<Image style={styles.mediaIcon} resizeMode="cover" source={{ uri: datas?.image}} />);

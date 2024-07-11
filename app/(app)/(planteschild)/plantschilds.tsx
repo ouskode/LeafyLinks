@@ -4,7 +4,7 @@ import SearchBar from '../../../components/SearchBar';
 import PlantsList from '../../../components/PlantsList';
 import AddButton from '../../../components/AddButton';
 import React, { useEffect, useState } from 'react';
-
+import * as SecureStore from 'expo-secure-store';
 
 
 // const plantschild = [
@@ -29,8 +29,11 @@ type plants = {
   day: number;
   image?: any;
   image_trefle?: any;
+  user_id: number;
+  comments: any;
 
 }
+
 
 export default function PlantesChildsScreen() {
 
@@ -39,14 +42,17 @@ export default function PlantesChildsScreen() {
     console.log('Recherche pour :', query);
   }
   const [products, setProducts] = useState<plants[]>([]);
-
   
    useEffect(() => {
     const fetchData = async () => {
       try {
+        const token = await SecureStore.getItemAsync(`authToken`);
+        if (!token) {
+          throw new Error('No token found');
+        }
         const response = await fetch(new URL ('plants',process.env.EXPO_PUBLIC_API_URL).href, {
           headers: {
-            Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_KEY}`,
+            Authorization: `Bearer ${token}`,
           },
         });
         if (!response.ok) {
@@ -56,7 +62,7 @@ export default function PlantesChildsScreen() {
   
         setProducts(data.data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching data plantschilds:', error);
       }
     };
 
@@ -67,7 +73,8 @@ export default function PlantesChildsScreen() {
   useEffect(() => {
     const fetchProductImage = async (product: plants) => {
       try {
-        const imageUrl = `https://trefle.io/api/v1/plants/${product.trefle_id}?token=-MzkPLMWtg_qzBIkk63Prcy5eiAkJ0aGf4otU9g1AKY`;
+        if (product.image_trefle | product.image) return;
+        const imageUrl = `http://trefle.io/api/v1/plants/${product.trefle_id}?token=eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJvcmlnaW4iOiJ0cmVmbGUuaW8iLCJpcCI6bnVsbCwiZXhwaXJlIjoiMjAyNC0wNy0xMCAxMzo1MzowMCArMDAwMCIsImV4cCI6MTcyMDcwNTM4MH0.A3xnzbAnSJIRGWQZZcUGeEaCIKy_51vKkMQsz8ux-I4`;
         const response = await fetch(imageUrl);
         if (!response.ok) {
           throw new Error(`Image request failed with status ${response.status}`);
@@ -84,15 +91,20 @@ export default function PlantesChildsScreen() {
 
     products.slice(0, 5).forEach(fetchProductImage);
   }, []);
+
+
+
   return (
     <View>
       <Text style={styles.title}>{`Fleurs &
 Plantes ornementales`}</Text>
       <SearchBar onSearch={performSearch}/>
-      <ScrollView style={styles.container}>
-        {products.map((plantschild, index) => (
-        <PlantsList key={index} id={plantschild.id} title={plantschild.name} price={plantschild.price} image={{ uri: plantschild.image }}></PlantsList>
-        ))}
+      <ScrollView style={styles.container} scrollEventThrottle={16}>
+      {products.map((plantschild, index) => (
+    plantschild.image_trefle ? (
+        <PlantsList key={index} id={plantschild.id} title={plantschild.name} price={plantschild.price} image={{ uri: plantschild.image_trefle }} user_id={plantschild.user_id}></PlantsList>
+    ) : <PlantsList key={index} id={plantschild.id} title={plantschild.name} price={plantschild.price} image={{ uri: plantschild.image }} user_id={plantschild.user_id}></PlantsList>
+))}
       </ScrollView>
     </View>
 
@@ -102,7 +114,9 @@ Plantes ornementales`}</Text>
 
 const styles = StyleSheet.create({
   container: {
-    margin: 15
+    margin: 10,
+    width: '100%',
+    padding: 10,
   },
   searchbar: {
     margin: 10,

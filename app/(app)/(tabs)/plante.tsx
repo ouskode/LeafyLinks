@@ -1,8 +1,48 @@
 import { StyleSheet, ScrollView, View, Image, Pressable} from 'react-native';
 import React from 'react';
 import ItemCard from '../../../components/ItemCard';
+import * as SecureStore from 'expo-secure-store';
+import { useEffect, useState } from 'react';
+
+
+// type plantsnumber = {
+//   number: number;
+//   title: string;
+
+// }
 
 export default function TabPlanteScreen() {
+  // const [plantsnumber, setplantnumber] = useState<plantsnumber | null>(null);
+
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     try {
+  //       const token = await SecureStore.getItemAsync(`authToken`);
+  //       if (!token) {
+  //         throw new Error('No token found');
+  //       }
+
+  //       const response = await fetch(new URL ('users/me',process.env.EXPO_PUBLIC_API_URL).href, {
+  //         method: 'GET',
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         }
+  //       });
+
+  //       if (!response.ok) {
+  //         throw new Error(
+  //             `Erreur d\'authentification ${response.status}`
+  //         );
+  //       }
+  //       const data = await response.json();
+  //       setplantnumber(data.data);
+  //     } catch (error) {
+  //       console.error('Erreur de connexion :', error);
+  //     }
+  //   };
+
+  //   fetchUser();
+  // }, []);
   return (
     <ScrollView style={styles.container}>
       <View style={styles.container1}>

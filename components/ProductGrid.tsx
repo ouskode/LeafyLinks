@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Image, StyleSheet, ScrollView, Text, View } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { Image, StyleSheet, ScrollView, Text, View, Dimensions } from "react-native";
 import * as SecureStore from 'expo-secure-store';
 import React from "react";
 
@@ -25,42 +25,31 @@ const Product = ({ data }: { data: productstype }) => {
 
     const fetchProductImage = async (product: productstype) => {
         try {
-            if (product.image_trefle | product.image) return;
-            const imageUrl = `https://trefle.io/api/v1/plants/${product.trefle_id}?token=MQwolJ6yPyPqf-UbqV0UvBZbwDXpCecofBAC1LPt7Ac`;
+            if (product.image_trefle || product.image) return;
+            const imageUrl = `http://trefle.io/api/v1/plants/${product.trefle_id}?token=eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJvcmlnaW4iOiJ0cmVmbGUuaW8iLCJpcCI6bnVsbCwiZXhwaXJlIjoiMjAyNC0wNy0xMCAxMzo1MzowMCArMDAwMCIsImV4cCI6MTcyMDcwNTM4MH0.A3xnzbAnSJIRGWQZZcUGeEaCIKy_51vKkMQsz8ux-I4`;
             const response = await fetch(imageUrl);
             if (!response.ok) {
-                throw new Error(
-                    `Image request failed of trefle with status ${response.status}`
-                );
+                throw new Error(`Image request failed of trefle with status ${response.status}`);
             }
             const imageData = await response.json();
             const imageUri = imageData.data.image_url;
-            setProduct({ ...product, image_trefle: imageUri });
+            setProduct({ ...product, image_trefle: { uri: imageUri } });
         } catch (error) {
-            const image = require("../assets/images/media23x.png");
-            setProduct({ ...product, image_trefle: image });
+            //const image = require("../assets/images/media23x.png");
+            //setProduct({ ...product, image_trefle: image });
+            console.error('Error fetching image:', error);
         }
     };
+
     useEffect(() => {
         fetchProductImage(product);
     }, []);
 
     return (
         <View style={styles.productItem}>
-            {product.image_trefle && (
-                <Image
-                    source={product.image_trefle}
-                    style={styles.productImage}
-                />
-            )}
-            {product.image && (
-                <Image
-                    source={product.image}
-                    style={styles.productImage}
-                />
-            )}
+            {product.image_trefle ?<Image source={product.image_trefle} style={styles.productImage}/> : product.image ? <Image source={product.image} style={styles.productImage}/> : null}
             <Text style={styles.productName}>{product.name}</Text>
-            <Text style={styles.productPrice}> pour {product.day} </Text>
+            <Text style={styles.productPrice}>pour {product.day} jours</Text>
             <Text style={styles.productIcon}>🌹</Text>
         </View>
     );
@@ -68,57 +57,74 @@ const Product = ({ data }: { data: productstype }) => {
 
 const ProductGrid: React.FC = () => {
     const [products, setProducts] = useState<productstype[]>([]);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const scrollViewRef = useRef<ScrollView>(null);
+    const screenWidth = Dimensions.get('window').width;
 
     const fetchData = async () => {
         try {
-            const response = await fetch(
-                new URL ('plants',process.env.EXPO_PUBLIC_API_URL).href,
-                {
-                    headers: {
-                        Authorization: `Bearer ${SecureStore.getItem}`,
-                    },
-                }
-            );
+            const token = await SecureStore.getItemAsync('authToken');
+            if (!token) {
+                throw new Error('No token found');
+            }
+            const response = await fetch(new URL('plants', process.env.EXPO_PUBLIC_API_URL).href, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
             if (!response.ok) {
-                throw new Error(
-                    `API request failed of LL API with status ${response.status}`
-                );
+                throw new Error(`API request failed of LL API with status ${response.status}`);
             }
             const data = await response.json();
-            const productsWithDays = data.data.map(
-                (product: {
-                    garden_end: string | number | Date;
-                    garden_start: string | number | Date;
-                }) => {
-                    if (product.garden_end && product.garden_start) {
-                        const end = new Date(product.garden_end);
-                        const start = new Date(product.garden_start);
-                        const differenceInTime =
-                            end.getTime() - start.getTime();
-                        const differenceInDays =
-                            differenceInTime / (1000 * 3600 * 24);
-                        return { ...product, day: differenceInDays };
-                    }
-                    return product;
+            const productsWithDays = data.data.map((product: any) => {
+                if (product.garden_end && product.garden_start) {
+                    const end = new Date(product.garden_end);
+                    const start = new Date(product.garden_start);
+                    const differenceInTime = end.getTime() - start.getTime();
+                    const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+                    return { ...product, day: differenceInDays };
                 }
-            );
+                return product;
+            });
             setProducts(productsWithDays);
         } catch (error) {
-            console.error("Error fetching data:", error);
+            console.error('Error fetching data:', error);
         }
     };
+
     useEffect(() => {
         fetchData();
     }, []);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentIndex((prevIndex) => {
+                const nextIndex = prevIndex + 1;
+                const maxIndex = products.length - 1;
+
+                if (scrollViewRef.current) {
+                    scrollViewRef.current.scrollTo({ x: (nextIndex % (maxIndex + 1)) * screenWidth, animated: true });
+                }
+
+                return nextIndex % (maxIndex + 1);
+            });
+        }, 1500); // Change interval time as needed
+
+        return () => clearInterval(interval);
+    }, [products, screenWidth]);
 
     return (
         <ScrollView
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             style={styles.grid}
+            pagingEnabled={true}
+            ref={scrollViewRef}
         >
             {products.map((product, index) => (
-                <Product key={index} data={product} />
+                <View key={index} style={{ width: screenWidth }}>
+                    <Product data={product} />
+                </View>
             ))}
         </ScrollView>
     );
@@ -126,15 +132,15 @@ const ProductGrid: React.FC = () => {
 
 const styles = StyleSheet.create({
     grid: {
-        padding: 10,
+        flexDirection: 'row',
     },
     productItem: {
         borderWidth: 1,
         borderColor: "#ddd",
         borderRadius: 4,
         padding: 5,
-        marginBottom: 50,
-        minWidth: 230,
+        minWidth: '100%',
+        alignItems: 'center',
     },
     productImage: {
         width: "100%",

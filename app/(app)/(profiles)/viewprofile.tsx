@@ -6,15 +6,21 @@ import ProfileHeader from '../../../components/ProfileHeader';
 import UserInfo from '../../../components/UserInfo';
 import UserProfileCommentary from '../../../components/UserProfileCommentary';
 import React from 'react';
+import { useRoute } from '@react-navigation/native';
+import OtherProfileHeader from '../../../components/OtherProfileHeader';
+import OtherUserInfo from '../../../components/OtherUserInfo';
 
 
 
-export default function TabProfileScreen() {
+export default function viewProfile() {
+
+  const id = useRoute().params.id
+  //console.log(Number(id))
+
   return (
     <View style={styles.container}>
-      <ProfileHeader></ProfileHeader>
-      <UserInfo></UserInfo>
-      <UserProfileCommentary></UserProfileCommentary>
+      <OtherProfileHeader userId={id}></OtherProfileHeader>
+      <OtherUserInfo userId={id}></OtherUserInfo>
       <View style={styles.blank}/>
 
     </View>

@@ -4,9 +4,10 @@ import HeartButton from "./HeartButton";
 import ButtonAddToCart from "./ButtonAddToCart";
 import { useEffect, useState } from "react";
 import Commentary from "./Commentary";
+import * as SecureStore from 'expo-secure-store';
 
 type prop = {
-	id: object;
+	id: any;
 };
 
 type reviews = {
@@ -23,7 +24,7 @@ type user = {
 	username: string;
   };
 
-  const ReviewModal: React.FC<prop> = ({ id }) => {
+  const ReviewModal: React.FC<prop> = ({id}) => {
 	const [reviews, setReviews] = useState<reviews[]>([]);
 	const [user, setUser] = useState<user | null>(null);
 	const [loading, setLoading] = useState(true);
@@ -31,16 +32,20 @@ type user = {
 	useEffect(() => {
 		const fetchComment = async () => {
 			try {
+				const token = await SecureStore.getItemAsync(`authToken`);
+				if (!token) {
+				  throw new Error('No token found');
+				}
 				const response = await fetch(new URL(`comments/${id}`, process.env.EXPO_PUBLIC_API_URL).href, {
 					headers: {
 						'Content-Type': 'application/json',
-						Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_KEY}`,
+						Authorization: `Bearer ${token}`,
 					},
 				});
 
 				if (response.ok) {
 					const data = await response.json();
-					setReviews(data.data.comments); // Assurez-vous que la structure de la réponse correspond à cette ligne
+					setReviews(data.data.comments);
 				} else {
 					console.log('Erreur d\'authentification');
 				}
@@ -51,16 +56,20 @@ type user = {
 
 		const fetchUser = async () => {
 			try {
+				const token = await SecureStore.getItemAsync(`authToken`);
+				if (!token) {
+				  throw new Error('No token found');
+				}
 				const response = await fetch(new URL(`users/${id}`, process.env.EXPO_PUBLIC_API_URL).href, {
 					headers: {
 						'Content-Type': 'application/json',
-						Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_KEY}`,
+						Authorization: `Bearer ${token}`,
 					},
 				});
 
 				if (response.ok) {
 					const data = await response.json();
-					setUser(data.data.user); // Assurez-vous que la structure de la réponse correspond à cette ligne
+					setUser(data.data.user);
 				} else {
 					console.log('Erreur d\'authentification');
 				}
@@ -90,7 +99,7 @@ type user = {
 							<Text style={[styles.xxx, styles.xxxLayout]}></Text>
 							<Text style={[styles.jours, styles.xxxLayout]}> / Jours</Text>
 						</View>
-						<Text style={[styles.title, styles.titleTypo]}>Contenu de l'article</Text>
+						<Text style={[styles.title, styles.titleTypo]}>Contenu de la review</Text>
 						<Text style={[styles.text, styles.textTypo]}>{review.comment}</Text>
 						<View style={[styles.buttonSecondary, styles.priceFlexBox]}>
 							<HeartButton onPress={() => console.log('Ajouté aux favoris')} />

@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Text, StyleSheet, View} from "react-native";
 import * as SecureStore from 'expo-secure-store';
 
+type prop = {
+    userId: any;
+    };
 
 type User = {
   id: number;
@@ -16,7 +19,7 @@ type User = {
   is_admin: boolean;
 };
 
-const UserInfo: React.FC = () => {
+const UserInfo: React.FC<prop> = (userId) => {
 
   const [user, setUser] = useState<User | null>(null);
 
@@ -28,7 +31,7 @@ const UserInfo: React.FC = () => {
           throw new Error('No token found');
         }
 
-        const response = await fetch(new URL ('users/me',process.env.EXPO_PUBLIC_API_URL).href, {
+        const response = await fetch(new URL (`users/${userId.userId}`,process.env.EXPO_PUBLIC_API_URL).href, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,

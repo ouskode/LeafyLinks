@@ -5,11 +5,9 @@ import { router } from "expo-router";
 
 const article = [
     { id: 1, author: 'Botaniste', contains: "Les 5 astuces à absolument faire", image: require('../assets/images/image5.png') },
+    { id: 2, author: 'Client 2', contains: "J'adore la couleur de mes fleurs", image: require('../assets/images/noflower.jpg') },
 ];
 
-const opinion = [
-    { id: 1, author: 'Client 2', contains: "J'adore la couleur de mes fleurs", image: require('../assets/images/imageRose.png') },
-  ];
 
 
 
@@ -40,25 +38,6 @@ const TopProduct =  () => {
   </Pressable>
   ))}
 
-{opinion.map((opinion, index) => (
-  <View key={opinion.id} style={styles.productItem}>
-    <Image key={index} source={opinion.image} style={styles.productImage} />
-    <View style={styles.textContent}>
-          <Text style={styles.title}>{opinion.contains}</Text>
-          <Tags label="Client satisfait" />
-        </View>
-        <View style={[styles.avatar, styles.avatarFlexBox]}>
-            <View style={styles.avatar1} />
-            <View style={styles.titleWrapper}>
-            <Text style={[styles.title1, styles.subtitleTypo]} numberOfLines={1}>{opinion.author}</Text>
-            </View>
-        </View>
-        <View style={[styles.iconButtons, styles.avatarFlexBox]}>
-            <Text style={styles.icon} numberOfLines={1}>👍</Text>
-            <Text style={styles.icon} numberOfLines={1}>💬</Text>
-        </View>
-  </View>
-  ))}
 </ScrollView>
   );
 };

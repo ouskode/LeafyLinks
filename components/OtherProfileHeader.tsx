@@ -5,7 +5,9 @@ import { MaterialIcons } from '@expo/vector-icons';
 import * as SecureStore from 'expo-secure-store';
 import { router } from 'expo-router';
 
-
+type prop = {
+    userId: number;
+    };
 
 type User = {
   id: number;
@@ -20,7 +22,7 @@ type User = {
   is_admin: boolean;
 };
 
-const ProfileHeader: React.FC = () => {
+const OtherProfileHeader: React.FC<prop> = (userId) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -30,8 +32,8 @@ const ProfileHeader: React.FC = () => {
         if (!token) {
           throw new Error('No token found');
         }
-
-        const response = await fetch(new URL('users/me', process.env.EXPO_PUBLIC_API_URL).href, {
+        console.log(userId);
+        const response = await fetch(new URL(`users/${userId.userId}`, process.env.EXPO_PUBLIC_API_URL).href, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,
@@ -63,10 +65,6 @@ const ProfileHeader: React.FC = () => {
       <View style={styles.userInfoSection}>
         { user.first_name ? <Text style={styles.userName}>{user.first_name}</Text> : <Text style={styles.userName}>{user.username}</Text> }
         { user.last_name ? <Text style={styles.userName}>{user.last_name}</Text> : null }
-        <TouchableOpacity style={styles.editButton} onPress={() => router.navigate({ pathname: '/(profiles)/editprofile', params: {userId: user.id}})}>
-          <Text style={styles.editButtonText}>Modifier le profil</Text>
-          <MaterialIcons name="edit" size={20} color="black" />
-        </TouchableOpacity>
       </View>
     </View>
   );
@@ -108,4 +106,4 @@ avatar1: {
   },
 });
 
-export default ProfileHeader;
+export default OtherProfileHeader;
