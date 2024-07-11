@@ -1,8 +1,9 @@
-import { Link, Stack, Tabs } from 'expo-router';
-import { Pressable, useColorScheme, Animated } from 'react-native';
-import AddButton from '../../components/AddButton';
-import { AntDesign, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Redirect, Stack } from 'expo-router';
+import { Pressable, Text,  } from 'react-native';
+import AddButton from '../../../components/AddButton';
+
 import React from 'react';
+import { useSession } from '../../../context/AuthContext';
 
 export const unstable_settings = {
 
@@ -11,7 +12,21 @@ export const unstable_settings = {
 
 
 export default function Layout() {
+  const { session, isLoading } = useSession();
 
+  // You can keep the splash screen open, or render a loading screen like we do here.
+  if (isLoading) {
+    return <Text>Loading...</Text>;
+  }
+
+  // Only require authentication within the (app) group's layout as users
+  // need to be able to access the (auth) group and sign in again.
+  if (!session) {
+    // On web, static rendering will stop here as the user is not authenticated
+    // in the headless Node process that the pages are rendered in.
+    return <Redirect href="/welcome" />;
+  }
+  
   return (
     <Stack
           screenOptions={{

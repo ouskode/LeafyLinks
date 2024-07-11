@@ -1,76 +1,130 @@
-import * as React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, Image, FlatList, StyleSheet, Dimensions } from 'react-native';
 
-const BillBoard = () => {
+type BillboardItem = {
+    id: number;
+    type: 'image' | 'text';
+    content: any;
+};
+
+const BillBoard: React.FC = () => {
+    const [billboardItems, setBillboardItems] = useState<BillboardItem[]>([
+        { id: 1, type: 'text', content: "🔆Attention des fortes chaleurs aujourd'hui🔆" },
+        { id: 2, type: 'text', content: "💦N'hésitez pas a arroser vos plantes💦" },
+        { id: 3, type: 'text', content: "🫗N'oubliez pas de vous hydratez🫗" },
+        //{ id: 4, type: 'image', content: require('../assets/images/iconphoto.png') },
+    ]);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const flatListRef = useRef<FlatList>(null);
+
+    const renderItem = ({ item }: { item: BillboardItem }) => {
+        if (item.type === 'image') {
+            return (
+                <Image source={item.content} style={styles.imageContent} resizeMode="cover" />
+            );
+        } else {
+            return <Text style={styles.title}>{item.content}</Text>;
+        }
+    };
+
+    const handleScroll = (event: any) => {
+        const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
+        const screenWidth = layoutMeasurement.width;
+        const scrollPosition = contentOffset.x + (screenWidth / 2);
+        const itemWidth = contentSize.width / billboardItems.length;
+        const index = Math.floor(scrollPosition / itemWidth);
+        setCurrentIndex(index);
+    };
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const nextIndex = (currentIndex + 1) % billboardItems.length;
+            setCurrentIndex(nextIndex);
+            flatListRef.current?.scrollToIndex({ index: nextIndex, animated: true });
+        }, 2500);
+
+        return () => {
+            clearInterval(interval);
+        };
+    }, [currentIndex, billboardItems.length]);
+
     return (
-        <View style={styles.image}>
-            <View style={[styles.titleContainer, styles.titleFlexBox]}>
-                <Text style={styles.title}>
-                    Découvre les plantes autour de chez toi
-                </Text>
-            </View>
+        <View style={styles.container}>
+            <FlatList
+                ref={flatListRef}
+                data={billboardItems}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.id.toString()}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                pagingEnabled={true}
+                onScroll={handleScroll}
+                contentContainerStyle={styles.flatListContent}
+            />
             <View style={[styles.pagination, styles.titleFlexBox]}>
-                <View
-                    style={[styles.paginationChild, styles.paginationLayout]}
-                />
-                <View
-                    style={[styles.paginationItem, styles.paginationLayout]}
-                />
-                <View
-                    style={[styles.paginationItem, styles.paginationLayout]}
-                />
-                <View
-                    style={[styles.paginationItem, styles.paginationLayout]}
-                />
+                {billboardItems.map((_, index) => (
+                    <View
+                        key={index}
+                        style={[
+                            styles.paginationItem,
+                            index === currentIndex ? styles.paginationActiveItem : styles.paginationInactiveItem,
+                        ]}
+                    />
+                ))}
             </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    titleFlexBox: {
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    paginationLayout: {
-        height: 4,
-        borderRadius: 100,
-    },
-    titleContainer: {
-        textAlign: "center",
-        display: "flex",
-        alignContent: "center",
+    container: {
         flex: 1,
-        //backgroundColor: "transparant",
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(0, 226, 50, 0.12)', // Fond vert
+        padding: 8,
+        borderRadius: 6,
+        borderStyle: 'solid',
+        borderColor: '#68ec18',
+        borderWidth: 1,
+    },
+    titleFlexBox: {
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     title: {
         fontSize: 16,
-        fontWeight: "500",
-    },
-    paginationChild: {
-        backgroundColor: "#fff",
-        width: 20,
-        marginLeft: 4,
+        fontWeight: '500',
+        textAlign: 'left',
+        width: Dimensions.get('window').width,
+        backgroundColor: 'rgba(0, 0, 0, 0)',
+        padding: 16,
+        borderRadius: 6,
     },
     paginationItem: {
-        backgroundColor: "rgba(0, 0, 0, 0.23)",
-        width: 4,
-        marginLeft: 4,
+        width: 8,
+        height: 8,
+        borderRadius: 4,
+        margin: 4,
+    },
+    paginationActiveItem: {
+        backgroundColor: '#fff',
+    },
+    paginationInactiveItem: {
+        backgroundColor: 'rgba(0, 0, 0, 0.23)',
     },
     pagination: {
-        flexDirection: "row",
-        //backgroundColor: "transparant",
+        flexDirection: 'row',
+        marginTop: 10,
     },
-    image: {
-        flex: 1,
+    imageContent: {
+        width: Dimensions.get('window').width - 32, // Adjust for padding/margin
+        height: 200,
         borderRadius: 6,
-        backgroundColor: "rgba(0, 226, 50, 0.12)",
-        borderStyle: "solid",
-        borderColor: "#68ec18",
-        borderWidth: 1,
-        padding: 8,
-        minHeight: 120,
-        marginBottom: 15,
+        marginHorizontal: 16,
+    },
+    flatListContent: {
+        alignItems: 'flex-start', // Center items in FlatList
     },
 });
 

@@ -1,39 +1,33 @@
 import React, { useState } from 'react'; // Correction ici
 import { StyleSheet, Text, View, ScrollView, Alert, TouchableOpacity } from 'react-native';
-import ImageUpload from '../../components/ImageUpload';
-import DropDown from '../../components/DropDown';
-import Location from '../../components/Location';
-import DateTime from '../../components/DateTime';
+import * as SecureStore from 'expo-secure-store';
 
-export default function AddPlants() {
+export default function AddComments() {
   const [location, setLocation] = useState<{ latitude: number; longitude: number; } | null>(null);
-  const [selectedImageUri, setSelectedImageUri] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedId, setSelectedId] = useState('');
   
   const options = ["Plantes d'intérieur", "Plantes d'extérieur", "Plantes aromatiques", "Plantes grasses", "Plantes à fleurs", "Plantes facile d'entretien", "Plantes de saison", "Plantes potagères"];
 
   const handleSelect = (option: any) => {
-    setSelectedCategory(option);
+    setSelectedId(option);
     console.log('Selected:', option);
   };
 
-  const handleLocationSelect = (selectedLocation: { latitude: number; longitude: number; }) => {
-    setLocation(selectedLocation);
-    // Ici, vous pouvez également effectuer d'autres actions comme préparer les données à envoyer à une API
-  };
   const sendDataToAPI = async () => {
     try {
-      const response = await fetch('URL_DE_VOTRE_API', {
+      const token = await SecureStore.getItemAsync(`authToken`);
+      if (!token) {
+        throw new Error('No token found');
+      }    
+      const response = await fetch(new URL ('users/comments',process.env.EXPO_PUBLIC_API_URL).href, {
         method: 'POST',
         headers: {
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           location,
-          imageUri: selectedImageUri,
-          category: selectedCategory,
-          date: selectedDate,
+          category: selectedId,
         }),
       });
 
@@ -55,19 +49,6 @@ export default function AddPlants() {
     <ScrollView contentContainerStyle={styles.scrollView}>
       <Text style={styles.title}>Prendre ou upload Photo</Text>
       <View style={styles.section}>
-      <ImageUpload />
-      </View>
-      <View style={styles.section}>
-      <Location onSelect={handleLocationSelect}/>
-      </View>
-      <View style={styles.section}>
-        <Text style={styles.title}>Catégorie de plantes</Text>
-        <DropDown options={options} onSelect={handleSelect} />
-      </View>
-      <View style={styles.section}>
-        <Text style={styles.title}>Durée de la garde</Text>
-        <DateTime title={"Date de début"} />
-        <DateTime title={"Date de Fin"} />
       </View>
       <TouchableOpacity onPress={sendDataToAPI} style={styles.submitButton}>
         <Text style={styles.submitButtonText}>Envoyer</Text>

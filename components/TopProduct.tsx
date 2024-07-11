@@ -1,18 +1,17 @@
 import React from "react";
-import { ScrollView, Image, StyleSheet, View, Text } from "react-native";
+import { ScrollView, Image, StyleSheet, View, Text, Pressable } from "react-native";
 import Tags from "./Tags";
+import { router } from "expo-router";
 
 const article = [
     { id: 1, author: 'Botaniste', contains: "Les 5 astuces à absolument faire", image: require('../assets/images/image5.png') },
+    { id: 2, author: 'Client 2', contains: "J'adore la couleur de mes fleurs", image: require('../assets/images/noflower.jpg') },
 ];
 
-const opinion = [
-    { id: 1, author: 'Client 2', contains: "J'adore la couleur de mes fleurs", image: require('../assets/images/imageRose.png') },
-  ];
 
 
 
-const TopProduct = () => {
+const TopProduct =  () => {
   return (
     <ScrollView
       style={styles.grid}
@@ -20,7 +19,7 @@ const TopProduct = () => {
       showsHorizontalScrollIndicator={false}
     >
 {article.map((article, index) => (
-  <View key={article.id} style={styles.productItem}>
+  <Pressable key={article.id} style={styles.productItem} onPress={() => router.navigate({ pathname: '/(reviews)/reviewsmodal', params: {id:article.id}})}>
     <Image key={index} source={article.image} style={styles.productImage} />
     <View style={styles.textContent}>
           <Text style={styles.title}>{article.contains}</Text>
@@ -36,39 +35,18 @@ const TopProduct = () => {
             <Text style={styles.icon} numberOfLines={1}>💧</Text>
             <Text style={styles.icon} numberOfLines={1}>💬</Text>
         </View>
-  </View>
+  </Pressable>
   ))}
 
-{opinion.map((opinion, index) => (
-  <View key={opinion.id} style={styles.productItem}>
-    <Image key={index} source={opinion.image} style={styles.productImage} />
-    <View style={styles.textContent}>
-          <Text style={styles.title}>{opinion.contains}</Text>
-          <Tags label="Client satisfait" />
-        </View>
-        <View style={[styles.avatar, styles.avatarFlexBox]}>
-            <View style={styles.avatar1} />
-            <View style={styles.titleWrapper}>
-            <Text style={[styles.title1, styles.subtitleTypo]} numberOfLines={1}>{opinion.author}</Text>
-            </View>
-        </View>
-        <View style={[styles.iconButtons, styles.avatarFlexBox]}>
-            <Text style={styles.icon} numberOfLines={1}>👍</Text>
-            <Text style={styles.icon} numberOfLines={1}>💬</Text>
-        </View>
-  </View>
-  ))}
 </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
     grid: {
-        // Styles pour la vue englobante de la grille
         padding: 10,
       },
       productItem: {
-        // Styles pour chaque élément de produit
         borderWidth: 1,
         borderColor: '#ddd',
         borderRadius: 4,

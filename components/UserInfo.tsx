@@ -1,7 +1,59 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Text, StyleSheet, View} from "react-native";
+import * as SecureStore from 'expo-secure-store';
 
-const UserInfo = () => {
+
+type User = {
+  id: number;
+  username: string;
+  email: string;
+  phone: string | null;
+  first_name: string | null;
+  last_name: string | null;
+  bio: string | null;
+  is_botanic: boolean;
+  is_garden: boolean;
+  is_admin: boolean;
+};
+
+const UserInfo: React.FC = () => {
+
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const token = await SecureStore.getItemAsync(`authToken`);
+        if (!token) {
+          throw new Error('No token found');
+        }
+
+        const response = await fetch(new URL ('users/me',process.env.EXPO_PUBLIC_API_URL).href, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(
+              `Erreur d\'authentification ${response.status}`
+          );
+        }
+        const data = await response.json();
+        setUser(data.data);
+      } catch (error) {
+        console.error('Erreur de connexion :', error);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  if (!user) {
+    return <Text>Chargement...</Text>;
+  }
+
   return (
     <View style={styles.list}>
       <View style={styles.item}>
@@ -11,11 +63,10 @@ const UserInfo = () => {
         <View style={styles.titleWrapper}>
           <Text style={styles.title}>Phone</Text>
         </View>
-        <Text style={styles.subtitle}>+33XXXXXXX</Text>
-        <Text style={styles.itemChild}  />
+        <Text style={styles.subtitle}>{user.phone ? user.phone : 'Non renseigné'}</Text>
+        <Text style={styles.itemChild} />
       </View>
       <View style={styles.separator} />
-
 
       <View style={styles.item}>
         <View style={styles.frame}>
@@ -24,8 +75,8 @@ const UserInfo = () => {
         <View style={styles.titleWrapper}>
           <Text style={styles.title}>Email</Text>
         </View>
-        <Text style={styles.subtitle}>johndoe@example.com</Text>
-        <Text style={styles.itemChild}  />
+        <Text style={styles.subtitle}>{user.email}</Text>
+        <Text style={styles.itemChild} />
       </View>
       <View style={styles.separator} />
 
@@ -36,11 +87,15 @@ const UserInfo = () => {
         <View style={styles.titleWrapper}>
           <Text style={styles.title}>Status</Text>
         </View>
-        <Text style={styles.subtitle}>Client</Text>
-        <Text style={styles.itemChild}  />
+        <Text style={styles.subtitle}>{user.is_admin ? 'Admin' : user.is_botanic ? 'Botaniste':'Utilisateur' }</Text>
+        <Text style={styles.itemChild} />
       </View>
       <View style={styles.separator} />
+      <Text style={styles.title}>Bio</Text>
+      <Text style={styles.subtitle}>{user.bio}</Text>
+      <View style={styles.separator}/>
     </View>
+    
   );
 };
 

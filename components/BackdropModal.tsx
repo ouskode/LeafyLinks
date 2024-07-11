@@ -1,67 +1,121 @@
 import * as React from "react";
-import {StyleSheet, View, Text, Image} from "react-native";
+import {StyleSheet, View, Text, Image, TouchableOpacity} from "react-native";
 import HeartButton from "./HeartButton";
 import ButtonAddToCart from "./ButtonAddToCart";
 import { useEffect, useState } from "react";
 import Commentary from "./Commentary";
+import * as SecureStore from 'expo-secure-store';
+import ProfileModal from "./ProfileModal";
+import ZoneLocation from "./ZoneLocation";
+import { router } from "expo-router";
 
 type Props = {
-	id: number
-}
-
-type ApiData = {
-
-	name: string;
-	description: string;
-	assistant_start : EpochTimeStamp
-	assistant_end : EpochTimeStamp
-	price: string;
+	id: any;
   };
-
-const BackDropModal: React.FC<Props> = ({id}) => {
+  
+  type ApiData = {
+	name: string;
+	desc: string;
+	location_id: number;
+	user_id: number;
+  };
+  
+  type ZoneCoordinate = {
+	latitude: number;
+	longitude: number;
+  };
+  
+  const BackDropModal: React.FC<Props> = ({ id }) => {
 	const [data, setData] = useState<ApiData | null>(null);
-
+	const [zoneCoordinates, setZoneCoordinates] = useState<ZoneCoordinate[]>([]);
+  
 	useEffect(() => {
 	  const fetchData = async () => {
 		try {
-		  const response = await fetch(`URL_DE_VOTRE_API/${id}`); // Remplacez par votre URL d'API réelle
+		  const token = await SecureStore.getItemAsync('authToken');
+		  if (!token) {
+			throw new Error('No token found');
+		  }
+		  const response = await fetch(new URL(`plants/${id.id}`, process.env.EXPO_PUBLIC_API_URL).href, {
+			headers: {
+			  Authorization: `Bearer ${token}`,
+			},
+		  });
+		  if (!response.ok) {
+			throw new Error(`API request failed with status ${response.status}`);
+		  }
 		  const jsonData = await response.json();
-		  setData(jsonData); // Stockez les données de l'API dans l'état
+		  setData(jsonData.data);
 		} catch (error) {
-		  console.error("Erreur lors du fetch des données de l'API :", error);
+		  console.error('Erreur lors du fetch des données de l\'API :', error);
 		}
 	  };
   
 	  fetchData();
-	}, [id]); // Le fetch est redéclenché si l'id change
+	}, [id]);
   
-	// Affichage conditionnel selon que les données sont chargées ou non
+	useEffect(() => {
+	  if (data) {
+		const fetchLocationData = async () => {
+		  try {
+			const token = await SecureStore.getItemAsync('authToken');
+			if (!token) {
+			  throw new Error('No token found');
+			}
+  
+			const response = await fetch(new URL(`locations/${data.location_id}`, process.env.EXPO_PUBLIC_API_URL).href, {
+			  headers: {
+				Authorization: `Bearer ${token}`,
+			  },
+			});
+			if (!response.ok) {
+			  throw new Error(`API request failed with status ${response.status}`);
+			}
+			const jsonData = await response.json();
+			const locationData = jsonData.data;
+			setZoneCoordinates([{
+			  latitude: locationData.lat,
+			  longitude: locationData.lng,
+			}]);
+		  } catch (error) {
+			console.error('Erreur lors du fetch des données de l\'API :', error);
+		  }
+		};
+  
+		fetchLocationData();
+	  }
+	}, [data]);
+  
 	if (!data) {
 	  return <Text>Chargement...</Text>;
 	}
   
+  
   	return (
-    		<View style={styles.backdrop}>
-      			<View style={styles.backdropBase} />
-      			<Text style={styles.bonsaiUlmusParvifolia}>Bonsai Ulmus Parvifolia</Text>
-      		
-      			<View style={[styles.price, styles.priceFlexBox]}>
-        				<Text style={[styles.xxx, styles.xxxLayout]}>{data.price}</Text>
-        				<Text style={[styles.jours, styles.xxxLayout]}>€ / Jours</Text>
-      			</View>
-      			<Text style={[styles.title, styles.titleTypo]}>Instruction spéciales</Text>
-      			<Text style={[styles.text, styles.textTypo]}>{data.description}</Text>
-      			<Text style={[styles.text1, styles.textTypo]}>{`~ Durée estimée de X Jours
+    		<><View style={styles.backdrop}>
+				<View style={styles.backdropBase} />
+				<Text style={styles.bonsaiUlmusParvifolia}>{data.name}</Text>
+				<View style={[styles.price, styles.priceFlexBox]}>
+					<Text style={[styles.xxx, styles.xxxLayout]}></Text>
+					<Text style={[styles.jours, styles.xxxLayout]}> / Jours</Text>
+				</View>
+				<Text style={[styles.title, styles.titleTypo]}>Instruction spéciales</Text>
+				<Text style={[styles.text, styles.textTypo]}>{data.desc}</Text>
+				<Text style={[styles.text1, styles.textTypo]}>{`~ Durée estimée de X Jours
         				Du  au XX/XX/XXXX`}</Text>
 				<View style={[styles.buttonSecondary, styles.priceFlexBox]}>
-                  <HeartButton onPress={() => console.log('Ajouté aux favoris')} />
-      			</View>
-      			<View style={[styles.buttonprimaryWithIcon, styles.priceFlexBox]}>
-                    <ButtonAddToCart onPress={() => console.log('Ajout au panier')} />
-      			</View>
-      			<Text style={[styles.title, styles.titleTypo]}>Instruction spéciales</Text>
-				<Commentary></Commentary>
-    		</View>
+					<HeartButton onPress={() => console.log('Ajouté aux favoris')} />
+				</View>
+				<View style={[styles.buttonprimaryWithIcon, styles.priceFlexBox]}>
+					<ButtonAddToCart onPress={() => console.log('Ajout au panier')} />
+				</View>
+				<Text style={[styles.title, styles.titleTypo]}>Instruction spéciales</Text>
+			</View><View style={styles.backdrop}>
+					<TouchableOpacity onPress={() => router.navigate({ pathname: '/(profiles)/viewprofile', params: { id: data.user_id } })}>
+					<ProfileModal id={data.user_id} />
+					</TouchableOpacity>
+					<ZoneLocation zoneCoordinates={zoneCoordinates} />
+				</View></>
 			
 			);
 };
@@ -120,7 +174,7 @@ const styles = StyleSheet.create({
     		marginLeft: -187,
     		borderStyle: "solid",
     		borderColor: "#5cc71a",
-    		borderWidth: 1,
+    		borderWidth: 0,
     		paddingHorizontal: 29,
     		paddingVertical: 10,
     		overflow: "hidden",

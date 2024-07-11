@@ -50,10 +50,27 @@
           "photosPermission": "Allow $LeafyLinks to access your photos.",
           "savePhotosPermission": "Allow $LeafyLinks to save photos."
         }
-      ]
+      ],
+      "expo-secure-store",
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "dc1bfdf5-8f35-417b-bc54-557846dfb768"
+      }
+    },
+    "owner": "leafylinks",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/dc1bfdf5-8f35-417b-bc54-557846dfb768"
     }
   }
 }

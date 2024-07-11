@@ -1,19 +1,83 @@
-import React from "react";
-import { StyleSheet, View, Image, Text, ImageSourcePropType } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, Image, Text, ImageSourcePropType, Alert, TouchableOpacity } from "react-native";
 import ButtonAddToCart from "./ButtonAddToCart";
 import HeartButton from "./HeartButton";
-import { router } from "expo-router";
+import { router } from 'expo-router';
+import * as SecureStore from 'expo-secure-store';
+import ButtonRemoveToCart from "./ButtonRemoveToCart";
 
 
 type SelectionProps = {
+  id: number;
   title: string;
   price: number;
-  image: ImageSourcePropType;
-
+  image: any;
+  user_id: number;
 };
+type user = {
+  id: number;
+  username: string;
+  email: string;
+  phone: string | null;
+  first_name: string | null;
+  last_name: string | null;
+  bio: string | null;
+  is_botanic: boolean;
+  is_garden: boolean;
+  is_admin: boolean;
+}
 
-const PlantsList: React.FC<SelectionProps>  =  ({title, price, image}) => {
+const PlantsList: React.FC<SelectionProps>  =  ({id, title, price, image, user_id}) => {
 
+  const [user, setUser] = useState<user[]>([]);
+  
+  useEffect(() => {
+   const fetchData = async () => {
+     try {
+       const token = await SecureStore.getItemAsync(`authToken`);
+       if (!token) {
+         throw new Error('No token found');
+       }
+       const response = await fetch(new URL ('users/me',process.env.EXPO_PUBLIC_API_URL).href, {
+         headers: {
+           Authorization: `Bearer ${token}`,
+         },
+       });
+       if (!response.ok) {
+         throw new Error(`API request failed with status ${response.status}`);
+       }
+       const data = await response.json();
+ 
+       setUser(data.data);
+     } catch (error) {
+       console.error('Error fetching data:', error);
+     }
+   };
+
+   fetchData();
+ }, []);
+ const handleRemoveFromCart = async () => {
+  try {
+    const token = await SecureStore.getItemAsync(`authToken`);
+    if (!token) {
+      throw new Error('No token found');
+    }
+    const response = await fetch(new URL (`plants/${id}`,process.env.EXPO_PUBLIC_API_URL).href, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response.ok) {
+      Alert.alert('Plant removed from cart');
+    } else {
+      Alert.alert('Error removing plant from cart');
+    }
+  } catch (error) {
+    console.error(error);
+    Alert.alert('Error removing plant from cart');
+  }
+};
 
   return (
     <View style={styles.itemRowView}>
@@ -22,11 +86,12 @@ const PlantsList: React.FC<SelectionProps>  =  ({title, price, image}) => {
         <Text style={[styles.bostonLettuce, styles.textTypo]}>{title}</Text>
         <View style={styles.priceContainer}>
           <Text style={[styles.text, styles.textTypo]}>{price}</Text>
-          <Text style={styles.piece}>€ / Jours</Text>
+          <Text style={styles.piece}> / Jours</Text>
         </View>
         <View style={styles.buttonContainer}>
         <HeartButton onPress={() => console.log('Ajouté aux favoris')} />
-        <ButtonAddToCart onPress={() => router.push('/(planteschild)/plantsmodal')} />
+        <ButtonAddToCart onPress={() => router.navigate({ pathname: '/(planteschild)/plantsmodal', params: {id}})} />
+        {(user.id) === user_id && <ButtonRemoveToCart onPress={handleRemoveFromCart} />}
         </View>
       </View>
     </View>

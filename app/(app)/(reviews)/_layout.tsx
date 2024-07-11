@@ -5,7 +5,7 @@ import { Pressable, useColorScheme, Animated } from 'react-native';
 
 export const unstable_settings = {
 
-    initialRouteName: '(crud)',
+    initialRouteName: '(reviews)',
   };
 
 

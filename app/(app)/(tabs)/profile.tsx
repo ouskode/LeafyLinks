@@ -2,9 +2,9 @@ import { StyleSheet, Text, View } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
 
-import ProfileHeader from '../../components/ProfileHeader';
-import UserInfo from '../../components/UserInfo';
-import UserProfileCommentary from '../../components/UserProfileCommentary';
+import ProfileHeader from '../../../components/ProfileHeader';
+import UserInfo from '../../../components/UserInfo';
+import UserProfileCommentary from '../../../components/UserProfileCommentary';
 import React from 'react';
 
 
@@ -14,11 +14,9 @@ export default function TabProfileScreen() {
     <View style={styles.container}>
       <ProfileHeader></ProfileHeader>
       <UserInfo></UserInfo>
-      <Text style={styles.title}>Bio</Text>
-      <Text style={styles.subtitle}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer condimentum pharetra libero at dapibus.</Text>
-      <View style={styles.separator}/>
       <UserProfileCommentary></UserProfileCommentary>
-      <Text style={styles.title}>Plantes à garder</Text>
+      <View style={styles.blank}/>
+
     </View>
   );
 }
@@ -49,4 +47,8 @@ const styles = StyleSheet.create({
 		backgroundColor: '#303030',
     opacity: 0.2
 	  },
+  blank: {
+    height: 300
+  }
+    
 });
